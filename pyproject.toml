@@ -1,0 +1,27 @@
+[project]
+name = "ida-cyberchef"
+version = "0.1.0"
+description = "A Qt-based CyberChef interface designed for malware analysis workflows, particularly in IDA Pro"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0",
+    "pyside6>=6.10.0",
+    "rich>=13.0.0",
+    "stpyv8>=13.1.201.22",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-qt>=4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["ida_cyberchef"]
+
+[project.scripts]
+cyberchef-qt = "ida_cyberchef.main:main"
+
+[tool.pytest.ini_options]
+pythonpath = "."
