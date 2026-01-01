@@ -37,10 +37,12 @@ class RecipeExecutor:
 
                 chef_recipe = []
                 for s in recipe_prefix:
-                    if s["args"]:
+                    # Always use dict format for consistency
+                    # Note: "if s["args"]:" would fail for empty dict {} since it's falsy
+                    if s.get("args"):
                         chef_recipe.append({"op": s["operation"], "args": s["args"]})
                     else:
-                        chef_recipe.append(s["operation"])
+                        chef_recipe.append({"op": s["operation"]})
 
                 output = bake(input_data, chef_recipe)  # type: ignore[arg-type]
                 results.append(StepResult(success=True, data=output, error=None))

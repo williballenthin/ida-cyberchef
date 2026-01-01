@@ -227,7 +227,18 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
             else:
                 return {"value": list(v), "type": DishType.ARRAY_BUFFER}
         elif isinstance(v, str):
-            return {"value": v, "type": DishType.STRING}
+            if chef is not None and hasattr(chef, "_stpyv8_context"):
+                ctx = chef._stpyv8_context
+                # Use JSON.stringify to properly escape the string for JavaScript
+                str_json = json.dumps(v)
+                dish = ctx.eval(f"""
+                (function() {{
+                    return new module.exports.Dish({str_json}, module.exports.Dish.STRING);
+                }})
+                """)()
+                return dish
+            else:
+                return {"value": v, "type": DishType.STRING}
         elif isinstance(v, (int, float)):
             return {"value": v, "type": DishType.NUMBER}
         elif isinstance(v, (dict, list)):
@@ -246,25 +257,47 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
             - A dict with op and args: {"op": "SHA2", "args": {"size": 256}}
 
     Returns: Result as bytes or string depending on the final operation output
+
+    Note: This function creates the CyberChef Dish object entirely in JavaScript
+    to avoid STPyV8 JSObject bridging issues. Passing JSObjects through ctx.locals
+    back into JavaScript code causes "TypeError: no access" errors.
     """
     chef = get_chef()
-
-    if isinstance(input_data, bytes):
-        input_dish = plate(input_data, chef)
-    elif isinstance(input_data, str):
-        input_dish = plate(input_data, chef)
-    else:
-        input_dish = input_data
-
+    ctx = chef._stpyv8_context
     recipe_json = json.dumps(recipe)
 
-    ctx = chef._stpyv8_context
-    ctx.locals.input_dish = input_dish
-    result = ctx.eval(f"""
-    (function() {{
-        const recipe = {recipe_json};
-        return module.exports.bake(input_dish, recipe);
-    }})
-    """)()
+    # Create the Dish and execute bake() entirely in JavaScript to avoid
+    # STPyV8 JSObject bridging issues with ctx.locals
+    if isinstance(input_data, bytes):
+        byte_list = list(input_data)
+        byte_json = json.dumps(byte_list)
+        result = ctx.eval(f"""
+        (function() {{
+            const byteArray = {byte_json};
+            const uint8 = new Uint8Array(byteArray);
+            const inputDish = new module.exports.Dish(uint8.buffer, module.exports.Dish.ARRAY_BUFFER);
+            const recipe = {recipe_json};
+            return module.exports.bake(inputDish, recipe);
+        }})
+        """)()
+    elif isinstance(input_data, str):
+        str_json = json.dumps(input_data)
+        result = ctx.eval(f"""
+        (function() {{
+            const inputDish = new module.exports.Dish({str_json}, module.exports.Dish.STRING);
+            const recipe = {recipe_json};
+            return module.exports.bake(inputDish, recipe);
+        }})
+        """)()
+    else:
+        # Fallback for other types - serialize as JSON
+        data_json = json.dumps(input_data)
+        result = ctx.eval(f"""
+        (function() {{
+            const inputDish = new module.exports.Dish({data_json});
+            const recipe = {recipe_json};
+            return module.exports.bake(inputDish, recipe);
+        }})
+        """)()
 
     return plate(result, chef)  # type: ignore[return-value]

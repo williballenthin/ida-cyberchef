@@ -2,25 +2,34 @@
 
 from pathlib import Path
 
+import pytest
+
 from tools.generate_operation_schema import (
     enhance_schema_with_categories,
     extract_categories_and_favorites,
 )
 
+# Path to Categories.json in CyberChef source
+CATEGORIES_JSON_PATH = (
+    Path(__file__).parent.parent
+    / "deps"
+    / "CyberChef"
+    / "src"
+    / "core"
+    / "config"
+    / "Categories.json"
+)
+
+# Skip tests if CyberChef source is not available
+pytestmark = pytest.mark.skipif(
+    not CATEGORIES_JSON_PATH.exists(),
+    reason="CyberChef source (deps/CyberChef) not available - Categories.json missing",
+)
+
 
 def test_extract_categories_and_favorites():
     """Test extracting category and favorites data from Categories.json."""
-    categories_json_path = (
-        Path(__file__).parent.parent
-        / "deps"
-        / "CyberChef"
-        / "src"
-        / "core"
-        / "config"
-        / "Categories.json"
-    )
-
-    result = extract_categories_and_favorites(categories_json_path)
+    result = extract_categories_and_favorites(CATEGORIES_JSON_PATH)
 
     # Should have categories dict mapping operation name to category
     assert "categories" in result
@@ -42,16 +51,6 @@ def test_extract_categories_and_favorites():
 
 def test_enhance_schema_with_categories():
     """Test enhancing schema with category and favorites data."""
-    categories_json_path = (
-        Path(__file__).parent.parent
-        / "deps"
-        / "CyberChef"
-        / "src"
-        / "core"
-        / "config"
-        / "Categories.json"
-    )
-
     schema = {
         "operations": [
             {"name": "To Base64", "module": "Data", "description": "Encode to base64"},
@@ -64,7 +63,7 @@ def test_enhance_schema_with_categories():
         ]
     }
 
-    enhanced = enhance_schema_with_categories(schema, categories_json_path)
+    enhanced = enhance_schema_with_categories(schema, CATEGORIES_JSON_PATH)
 
     # All operations should have category field
     assert all("category" in op for op in enhanced["operations"])
