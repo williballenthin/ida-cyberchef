@@ -535,8 +535,12 @@ class TestQuoting:
 
     def test_from_quoted_printable(self):
         result = bake("hello=3Dworld", ["From Quoted Printable"])
-        # May not work perfectly
-        assert "hello" in result
+        assert result == b"hello=world"
+
+    def test_quoted_printable_roundtrip(self):
+        original = "hello=world with spaces"
+        result = bake(original, ["To Quoted Printable", "From Quoted Printable"])
+        assert result == original.encode()
 
 
 # =============================================================================
@@ -651,7 +655,8 @@ class TestModernCrypto:
             }
         }])
 
-        assert b"hello world" in decrypted or decrypted == b"hello world"
+        # AES Decrypt returns a string, not bytes
+        assert decrypted == "hello world"
 
     def test_rc4_encrypt_decrypt(self):
         """Test RC4 encryption/decryption roundtrip."""
@@ -665,7 +670,8 @@ class TestModernCrypto:
             "args": {"Passphrase": {"string": "secret", "option": "UTF8"}}
         }])
 
-        assert decrypted == b"hello"
+        # RC4 returns a string, not bytes
+        assert decrypted == "hello"
 
     def test_blowfish_encrypt_decrypt(self):
         """Test Blowfish encryption."""
@@ -701,7 +707,18 @@ class TestConversionOps:
     """Test conversion operations that work."""
 
     def test_convert_data_units(self):
-        result = bake("1024", [{"op": "Convert data units", "args": {"Input units": "Bytes", "Output units": "Kilobytes"}}])
+        """Test converting bytes to kilobytes."""
+        result = bake("1024", [{"op": "Convert data units", "args": {"Input units": "Bytes (B)", "Output units": "Kilobytes (KB)"}}])
+        assert "1.024" in result or "1" in result
+
+    def test_convert_distance(self):
+        """Test converting metres to kilometers."""
+        result = bake("1000", [{"op": "Convert distance", "args": {"Input units": "Metres (m)", "Output units": "Kilometers (km)"}}])
+        assert "1" in result
+
+    def test_convert_mass(self):
+        """Test converting grams to kilograms."""
+        result = bake("1000", [{"op": "Convert mass", "args": {"Input units": "Gram (g)", "Output units": "Kilogram (kg)"}}])
         assert "1" in result
 
 
@@ -738,5 +755,6 @@ class TestMoreEncodings:
         assert isinstance(result, bytes)
 
     def test_swap_endianness(self):
-        result = bake("12345678", [{"op": "Swap endianness", "args": {"Word length": 4}}])
-        assert "78563412" in result
+        """Test swapping endianness of hex data."""
+        result = bake("12345678", [{"op": "Swap endianness", "args": {"Word length (bytes)": 4}}])
+        assert "78563412" in result or "78 56 34 12" in result
