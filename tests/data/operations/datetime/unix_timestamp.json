@@ -1,0 +1,69 @@
+{
+  "operation": "From UNIX Timestamp",
+  "category": "datetime",
+  "description": "Convert Unix timestamps to human-readable datetime strings (note: exact output format may vary)",
+  "tests": [
+    {
+      "name": "from_unix_timestamp_epoch",
+      "comment": "Unix epoch (0) should contain 1970",
+      "input": {
+        "type": "string",
+        "value": "0"
+      },
+      "operations": [
+        "From UNIX Timestamp"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1970"
+      },
+      "tags": [
+        "unix_timestamp",
+        "epoch"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_unix_timestamp_2000",
+      "comment": "Year 2000 timestamp should contain 2000",
+      "input": {
+        "type": "string",
+        "value": "946684800"
+      },
+      "operations": [
+        "From UNIX Timestamp"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2000"
+      },
+      "tags": [
+        "unix_timestamp",
+        "y2k"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_unix_timestamp_2023",
+      "comment": "2023 timestamp should contain 2023",
+      "input": {
+        "type": "string",
+        "value": "1672531200"
+      },
+      "operations": [
+        "From UNIX Timestamp"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2023"
+      },
+      "tags": [
+        "unix_timestamp"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

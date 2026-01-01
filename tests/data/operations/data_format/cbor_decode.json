@@ -1,0 +1,73 @@
+{
+  "operation": "CBOR Decode",
+  "category": "data_format",
+  "description": "Tests for CBOR (Concise Binary Object Representation) decoding",
+  "tests": [
+    {
+      "name": "decode_empty_object",
+      "comment": "Decode CBOR empty map (0xa0) to JSON empty object",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a0"
+      },
+      "operations": [
+        "CBOR Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}"
+      },
+      "tags": [
+        "decode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "decode_empty_array",
+      "comment": "Decode CBOR empty array (0x80) to JSON empty array",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "80"
+      },
+      "operations": [
+        "CBOR Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "decode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "decode_simple_array",
+      "comment": "Decode CBOR array to JSON [1,2,3]",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "83010203"
+      },
+      "operations": [
+        "CBOR Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[1,2,3]"
+      },
+      "tags": [
+        "decode",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "operation": "ADD",
+  "category": "arithmetic",
+  "description": "ADD arithmetic operation tests with modulo 256 behavior",
+  "tests": [
+    {
+      "name": "add_with_hex_key",
+      "comment": "Add 1 to each byte",
+      "input": {"type": "bytes", "encoding": "hex", "value": "00010203"},
+      "operations": [{"op": "ADD", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "01020304"},
+      "tags": ["add", "basic"]
+    },
+    {
+      "name": "add_with_modulo",
+      "comment": "0xFF + 0x02 = 0x01 (wraps), 0xFE + 0x02 = 0x00, 0xFD + 0x02 = 0xFF",
+      "input": {"type": "bytes", "encoding": "hex", "value": "fffefd"},
+      "operations": [{"op": "ADD", "args": [{"option": "Hex", "string": "02"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0100ff"},
+      "tags": ["add", "overflow"]
+    },
+    {
+      "name": "add_zero",
+      "comment": "Add 0 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "ADD", "args": [{"option": "Hex", "string": "00"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["add", "identity"]
+    },
+    {
+      "name": "add_byte_boundary",
+      "comment": "0xFE + 1 = 0xFF, 0xFF + 1 = 0x00 (wraps)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "feff"},
+      "operations": [{"op": "ADD", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ff00"},
+      "tags": ["add", "boundary"]
+    },
+    {
+      "name": "add_empty_input",
+      "comment": "ADD on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "ADD", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["add", "edge_case"]
+    }
+  ]
+}

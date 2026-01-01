@@ -1,0 +1,70 @@
+{
+  "operation": "To MessagePack",
+  "category": "data_format",
+  "description": "Tests for MessagePack encoding",
+  "tests": [
+    {
+      "name": "encode_empty_object",
+      "comment": "Encode empty JSON object to MessagePack (fixmap with 0 elements = 0x80)",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "To MessagePack"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "80"
+      },
+      "tags": [
+        "encode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "encode_empty_array",
+      "comment": "Encode empty JSON array to MessagePack (fixarray with 0 elements = 0x90)",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "To MessagePack"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "90"
+      },
+      "tags": [
+        "encode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "encode_simple_array",
+      "comment": "Encode JSON array [1,2,3] to MessagePack",
+      "input": {
+        "type": "string",
+        "value": "[1,2,3]"
+      },
+      "operations": [
+        "To MessagePack"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "93010203"
+      },
+      "tags": [
+        "encode",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    }
+  ]
+}

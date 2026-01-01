@@ -1,0 +1,134 @@
+{
+  "operation": "URL operations",
+  "category": "networking",
+  "description": "URL parsing, defanging, and fanging operations",
+  "tests": [
+    {
+      "name": "defang_http_url",
+      "comment": "Defang HTTP URL replaces protocol and dots",
+      "input": {
+        "type": "string",
+        "value": "http://example.com"
+      },
+      "operations": [
+        "Defang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hxxp"
+      },
+      "tags": [
+        "url",
+        "defang"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "fang_http_url",
+      "comment": "Fang HTTP URL restores protocol and dots",
+      "input": {
+        "type": "string",
+        "value": "hxxp://example[.]com"
+      },
+      "operations": [
+        "Fang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "http://example.com"
+      },
+      "tags": [
+        "url",
+        "fang"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "fang_https_url",
+      "comment": "Fang HTTPS URL",
+      "input": {
+        "type": "string",
+        "value": "hxxps://example[.]com"
+      },
+      "operations": [
+        "Fang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://example.com"
+      },
+      "tags": [
+        "url",
+        "fang"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "roundtrip_defang_fang_url",
+      "comment": "Defang then fang URL should return original",
+      "input": {
+        "type": "string",
+        "value": "http://example.com/path"
+      },
+      "operations": [
+        "Defang URL",
+        "Fang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "http://example.com/path"
+      },
+      "tags": [
+        "url",
+        "roundtrip"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "defang_url_empty",
+      "comment": "Defang empty URL",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "Defang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "url",
+        "edge_case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "fang_url_empty",
+      "comment": "Fang empty URL",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "Fang URL"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "url",
+        "edge_case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

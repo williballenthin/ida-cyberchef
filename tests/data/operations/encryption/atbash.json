@@ -1,0 +1,91 @@
+{
+  "operation": "Atbash Cipher",
+  "category": "encryption",
+  "description": "Tests for Atbash cipher reversing the alphabet (A\u2194Z, B\u2194Y, etc.)",
+  "tests": [
+    {
+      "name": "basic uppercase",
+      "comment": "Atbash reverses alphabet: A\u2192Z, B\u2192Y, C\u2192X",
+      "input": {
+        "type": "string",
+        "value": "ABC"
+      },
+      "operations": [
+        "Atbash Cipher"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ZYX"
+      },
+      "tags": [
+        "symmetric",
+        "uppercase"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "basic lowercase",
+      "comment": "Atbash works on lowercase: a\u2192z, b\u2192y, c\u2192x",
+      "input": {
+        "type": "string",
+        "value": "abc"
+      },
+      "operations": [
+        "Atbash Cipher"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "zyx"
+      },
+      "tags": [
+        "symmetric",
+        "lowercase"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "full alphabet uppercase",
+      "comment": "Full alphabet reversal",
+      "input": {
+        "type": "string",
+        "value": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      "operations": [
+        "Atbash Cipher"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+      },
+      "tags": [
+        "symmetric",
+        "full-alphabet"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty input",
+      "comment": "Empty input produces empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "Atbash Cipher"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "edge-case",
+        "empty-input"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

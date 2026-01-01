@@ -1,0 +1,59 @@
+{
+  "operation": "XOR",
+  "category": "encryption",
+  "description": "Tests for XOR encryption with various key formats and edge cases",
+  "tests": [
+    {
+      "name": "single byte key repeating",
+      "comment": "XOR 0x41 ('A') with 0xFF produces 0xBE",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41414141"
+      },
+      "operations": [
+        {
+          "op": "XOR",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "FF"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "bebebebe"
+      },
+      "tags": ["symmetric", "single-byte-key"]
+    },
+    {
+      "name": "empty input",
+      "comment": "XOR with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "XOR",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "FF"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

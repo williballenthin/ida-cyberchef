@@ -1,0 +1,39 @@
+{
+  "operation": "Remove whitespace",
+  "category": "utils",
+  "description": "Remove whitespace characters including spaces, tabs, and newlines",
+  "tests": [
+    {
+      "name": "remove_whitespace_basic",
+      "comment": "Remove spaces from text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "202068656c6c6f202020776f726c642020"},
+      "operations": ["Remove whitespace"],
+      "expected": {"type": "string", "value": "helloworld"},
+      "tags": ["whitespace", "spaces"]
+    },
+    {
+      "name": "remove_whitespace_empty",
+      "comment": "Remove whitespace from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Remove whitespace"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["whitespace", "edge_case"]
+    },
+    {
+      "name": "remove_whitespace_tabs_newlines",
+      "comment": "Remove tabs and newlines",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f090a776f726c640a"},
+      "operations": ["Remove whitespace"],
+      "expected": {"type": "string", "value": "helloworld"},
+      "tags": ["whitespace", "tabs", "newlines"]
+    },
+    {
+      "name": "remove_whitespace_only_whitespace",
+      "comment": "Remove when input is only whitespace",
+      "input": {"type": "bytes", "encoding": "hex", "value": "2020090a2020"},
+      "operations": ["Remove whitespace"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["whitespace", "only_whitespace"]
+    }
+  ]
+}

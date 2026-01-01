@@ -1,0 +1,55 @@
+{
+  "operation": "Line operations",
+  "category": "utils",
+  "description": "Line-based operations including reverse and sort",
+  "tests": [
+    {
+      "name": "reverse_basic",
+      "comment": "Reverse text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": ["Reverse"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "6f6c6c6568"},
+      "tags": ["line", "reverse"]
+    },
+    {
+      "name": "reverse_multiline",
+      "comment": "Reverse multi-line text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e6532"},
+      "operations": ["Reverse"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "32656e696c0a31656e696c"},
+      "tags": ["line", "reverse", "multiline"]
+    },
+    {
+      "name": "reverse_empty",
+      "comment": "Reverse empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Reverse"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["line", "reverse", "edge_case"]
+    },
+    {
+      "name": "sort_basic",
+      "comment": "Sort lines alphabetically",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7a656272610a6170706c650a62616e616e61"},
+      "operations": ["Sort"],
+      "expected": {"type": "string", "value": "apple\nbanana\nzebra"},
+      "tags": ["line", "sort"]
+    },
+    {
+      "name": "sort_empty",
+      "comment": "Sort empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Sort"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["line", "sort", "edge_case"]
+    },
+    {
+      "name": "sort_single_line",
+      "comment": "Sort single line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "73696e676c65"},
+      "operations": ["Sort"],
+      "expected": {"type": "string", "value": "single"},
+      "tags": ["line", "sort"]
+    }
+  ]
+}

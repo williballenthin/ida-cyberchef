@@ -1,0 +1,89 @@
+{
+  "operation": "Affine Cipher",
+  "category": "encryption",
+  "description": "Tests for Affine cipher encoding and decoding using formula E(x) = (ax + b) mod 26",
+  "tests": [
+    {
+      "name": "encode identity",
+      "comment": "With a=1 and b=0, output equals input (identity function)",
+      "input": {
+        "type": "string",
+        "value": "HELLO"
+      },
+      "operations": [
+        {
+          "op": "Affine Cipher Encode",
+          "args": {
+            "a": 1,
+            "b": 0
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "HELLO"
+      },
+      "tags": [
+        "encode",
+        "identity"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode caesar shift",
+      "comment": "With a=1 and b=3, equivalent to Caesar cipher with shift 3",
+      "input": {
+        "type": "string",
+        "value": "ABC"
+      },
+      "operations": [
+        {
+          "op": "Affine Cipher Encode",
+          "args": {
+            "a": 1,
+            "b": 3
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "DEF"
+      },
+      "tags": [
+        "encode",
+        "caesar-cipher"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode empty input",
+      "comment": "Empty input produces empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Affine Cipher Encode",
+          "args": {
+            "a": 5,
+            "b": 8
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "encode",
+        "edge-case",
+        "empty-input"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

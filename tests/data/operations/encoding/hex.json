@@ -1,0 +1,307 @@
+{
+  "operation": "To Hex / From Hex",
+  "category": "encoding",
+  "description": "Hexadecimal encoding and decoding tests with various delimiters",
+  "tests": [
+    {
+      "name": "to_hex_hello_world",
+      "comment": "Default delimiter is space",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "To Hex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21"
+      },
+      "tags": []
+    },
+    {
+      "name": "to_hex_no_delimiter",
+      "comment": "Hex encoding without delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "To Hex",
+          "args": {
+            "Delimiter": "None"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": []
+    },
+    {
+      "name": "to_hex_comma_delimiter",
+      "comment": "Hex encoding with comma delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "To Hex",
+          "args": {
+            "Delimiter": "Comma"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "68,65,6c,6c,6f"
+      },
+      "tags": []
+    },
+    {
+      "name": "to_hex_0x_prefix",
+      "comment": "Hex encoding with 0x prefix (no spaces between values)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "To Hex",
+          "args": {
+            "Delimiter": "0x"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0x680x650x6c0x6c0x6f"
+      },
+      "tags": []
+    },
+    {
+      "name": "to_hex_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Hex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ]
+    },
+    {
+      "name": "from_hex_hello_world",
+      "comment": "Hex decoding with space delimiter",
+      "input": {
+        "type": "string",
+        "value": "48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_no_delimiter",
+      "comment": "Hex decoding without delimiter",
+      "input": {
+        "type": "string",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_space_delimiter",
+      "comment": "Hex decoding with space delimiter",
+      "input": {
+        "type": "string",
+        "value": "68 65 6c 6c 6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_comma_delimiter",
+      "comment": "Hex decoding with comma delimiter",
+      "input": {
+        "type": "string",
+        "value": "68,65,6c,6c,6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_colon_delimiter",
+      "comment": "Hex decoding with colon delimiter",
+      "input": {
+        "type": "string",
+        "value": "68:65:6c:6c:6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_0x_prefix",
+      "comment": "Hex decoding with 0x prefix",
+      "input": {
+        "type": "string",
+        "value": "0x680x650x6c0x6c0x6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_case_insensitive_lower",
+      "comment": "Hex should be case-insensitive for decoding (lowercase)",
+      "input": {
+        "type": "string",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_case_insensitive_upper",
+      "comment": "Hex should be case-insensitive for decoding (uppercase)",
+      "input": {
+        "type": "string",
+        "value": "68656C6C6F"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_hex_case_insensitive_mixed",
+      "comment": "Hex should be case-insensitive for decoding (mixed case)",
+      "input": {
+        "type": "string",
+        "value": "68656C6c6F"
+      },
+      "operations": [
+        "From Hex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

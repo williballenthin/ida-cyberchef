@@ -1,0 +1,142 @@
+{
+  "operation": "MD5",
+  "category": "hashing",
+  "description": "MD5 hash algorithm tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty",
+      "comment": "MD5 of empty string - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      "tags": [
+        "standard-vector",
+        "empty"
+      ]
+    },
+    {
+      "name": "single_a",
+      "comment": "MD5 of single character 'a' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61"
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0cc175b9c0f1b6a831c399e269772661"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "abc",
+      "comment": "MD5 of 'abc' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "900150983cd24fb0d6963f7d28e17f72"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "message_digest",
+      "comment": "MD5 of 'message digest' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6d65737361676520646967657374"
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "f96b697d7cb7938d525a2f31aaf161d0"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "hello",
+      "comment": "MD5 of 'hello' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "5d41402abc4b2a76b9719d911017c592"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "all_bytes",
+      "comment": "MD5 of all 256 byte values (0x00-0xFF)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "operations": [
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "e2c865db4162bed963bfaa9ef6ac18f0"
+      },
+      "tags": [
+        "all-bytes"
+      ]
+    },
+    {
+      "name": "double_md5",
+      "comment": "Double MD5 hashing - MD5(MD5('hello'))",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "MD5",
+        "MD5"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "69a329523ce1ec88bf63061863d9cb14"
+      },
+      "tags": [
+        "chaining"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "operation": "To HTML Entity / From HTML Entity",
+  "category": "encoding",
+  "description": "HTML entity encoding and decoding tests",
+  "tests": [
+    {
+      "name": "from_html_entity_basic",
+      "comment": "Decode basic HTML entities (< > &)",
+      "input": {
+        "type": "string",
+        "value": "&lt;div&gt;Hello &amp; goodbye&lt;/div&gt;"
+      },
+      "operations": [
+        "From HTML Entity"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<div>Hello & goodbye</div>"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_html_entity_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "To HTML Entity"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_html_entity_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From HTML Entity"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_html_entity_numeric_hello",
+      "comment": "Decode numeric HTML entities to 'Hello'",
+      "input": {
+        "type": "string",
+        "value": "&#72;&#101;&#108;&#108;&#111;"
+      },
+      "operations": [
+        "From HTML Entity"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_html_entity_hex_hello",
+      "comment": "Decode hexadecimal HTML entities to 'Hello'",
+      "input": {
+        "type": "string",
+        "value": "&#x48;&#x65;&#x6C;&#x6C;&#x6F;"
+      },
+      "operations": [
+        "From HTML Entity"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

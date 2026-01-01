@@ -1,0 +1,63 @@
+{
+  "operation": "String manipulation",
+  "category": "utils",
+  "description": "String manipulation operations including split, strip HTML tags, and drop bytes",
+  "tests": [
+    {
+      "name": "split_basic",
+      "comment": "Split string by delimiter",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c622c63"},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": "a\nb\nc"},
+      "tags": ["string", "split"]
+    },
+    {
+      "name": "split_empty",
+      "comment": "Split empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["string", "split", "edge_case"]
+    },
+    {
+      "name": "strip_html_tags_basic",
+      "comment": "Remove HTML tags",
+      "input": {"type": "bytes", "encoding": "hex", "value": "3c703e48656c6c6f203c623e576f726c643c2f623e3c2f703e"},
+      "operations": ["Strip HTML tags"],
+      "expected": {"type": "string", "value": "Hello World"},
+      "tags": ["string", "html"]
+    },
+    {
+      "name": "strip_html_tags_empty",
+      "comment": "Strip HTML from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Strip HTML tags"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["string", "html", "edge_case"]
+    },
+    {
+      "name": "strip_html_tags_no_tags",
+      "comment": "Strip HTML when there are no tags",
+      "input": {"type": "bytes", "encoding": "hex", "value": "506c61696e2074657874"},
+      "operations": ["Strip HTML tags"],
+      "expected": {"type": "string", "value": "Plain text"},
+      "tags": ["string", "html"]
+    },
+    {
+      "name": "drop_bytes_beginning",
+      "comment": "Drop bytes from beginning",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": [{"op": "Drop bytes", "args": [0, 6, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "776f726c64"},
+      "tags": ["string", "drop_bytes"]
+    },
+    {
+      "name": "drop_bytes_empty",
+      "comment": "Drop bytes from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Drop bytes", "args": [0, 5, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["string", "drop_bytes", "edge_case"]
+    }
+  ]
+}

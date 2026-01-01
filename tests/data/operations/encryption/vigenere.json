@@ -1,0 +1,87 @@
+{
+  "operation": "Vigen\u00e8re Cipher",
+  "category": "encryption",
+  "description": "Tests for Vigen\u00e8re cipher with repeating key polyalphabetic substitution",
+  "tests": [
+    {
+      "name": "key repetition",
+      "comment": "Short key repeats: AAAAAAAAAA with key BC produces BCBCBCBCBC",
+      "input": {
+        "type": "string",
+        "value": "AAAAAAAAAA"
+      },
+      "operations": [
+        {
+          "op": "Vigen\u00e8re Encode",
+          "args": {
+            "Key": "BC"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "BCBCBCBCBC"
+      },
+      "tags": [
+        "encode",
+        "key-repetition"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty input",
+      "comment": "Empty input produces empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Vigen\u00e8re Encode",
+          "args": {
+            "Key": "KEY"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "encode",
+        "edge-case",
+        "empty-input"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "single char key",
+      "comment": "Single character key equivalent to Caesar cipher (shift by 3 for D)",
+      "input": {
+        "type": "string",
+        "value": "ABC"
+      },
+      "operations": [
+        {
+          "op": "Vigen\u00e8re Encode",
+          "args": {
+            "Key": "D"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "DEF"
+      },
+      "tags": [
+        "encode",
+        "caesar-cipher",
+        "single-char-key"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

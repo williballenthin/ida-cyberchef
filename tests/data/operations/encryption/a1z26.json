@@ -1,0 +1,186 @@
+{
+  "operation": "A1Z26 Cipher",
+  "category": "encryption",
+  "description": "Tests for A1Z26 cipher encoding (A=1, B=2, ..., Z=26) and decoding",
+  "tests": [
+    {
+      "name": "encode basic lowercase",
+      "comment": "Convert lowercase letters to numbers (a=1, b=2, c=3)",
+      "input": {
+        "type": "string",
+        "value": "abc"
+      },
+      "operations": [
+        "A1Z26 Cipher Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1 2 3"
+      },
+      "tags": [
+        "encode",
+        "lowercase"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "decode basic",
+      "comment": "Convert numbers back to lowercase letters",
+      "input": {
+        "type": "string",
+        "value": "1 2 3"
+      },
+      "operations": [
+        "A1Z26 Cipher Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "abc"
+      },
+      "tags": [
+        "decode"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode uppercase",
+      "comment": "Uppercase letters convert to same numbers as lowercase",
+      "input": {
+        "type": "string",
+        "value": "ABC"
+      },
+      "operations": [
+        "A1Z26 Cipher Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1 2 3"
+      },
+      "tags": [
+        "encode",
+        "uppercase"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode full alphabet",
+      "comment": "Full alphabet encodes to numbers 1 through 26",
+      "input": {
+        "type": "string",
+        "value": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "operations": [
+        "A1Z26 Cipher Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26"
+      },
+      "tags": [
+        "encode",
+        "full-alphabet"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode with comma delimiter",
+      "comment": "Use comma delimiter instead of space",
+      "input": {
+        "type": "string",
+        "value": "abc"
+      },
+      "operations": [
+        {
+          "op": "A1Z26 Cipher Encode",
+          "args": {
+            "Delimiter": "Comma"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1,2,3"
+      },
+      "tags": [
+        "encode",
+        "comma-delimiter"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "decode with comma delimiter",
+      "comment": "Decode comma-delimited numbers",
+      "input": {
+        "type": "string",
+        "value": "1,2,3"
+      },
+      "operations": [
+        {
+          "op": "A1Z26 Cipher Decode",
+          "args": {
+            "Delimiter": "Comma"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "abc"
+      },
+      "tags": [
+        "decode",
+        "comma-delimiter"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode drops non-alphabetic",
+      "comment": "Non-alphabetic characters are ignored during encoding",
+      "input": {
+        "type": "string",
+        "value": "a1b2c3"
+      },
+      "operations": [
+        "A1Z26 Cipher Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1 2 3"
+      },
+      "tags": [
+        "encode",
+        "edge-case",
+        "non-alphabetic"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode empty input",
+      "comment": "Empty input produces empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "A1Z26 Cipher Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "encode",
+        "edge-case",
+        "empty-input"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

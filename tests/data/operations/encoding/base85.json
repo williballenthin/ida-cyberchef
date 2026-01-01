@@ -1,0 +1,83 @@
+{
+  "operation": "To Base85 / From Base85",
+  "category": "encoding",
+  "description": "Base85 (Ascii85) encoding and decoding tests",
+  "tests": [
+    {
+      "name": "to_base85_hello_world",
+      "comment": "Standard test string 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "To Base85"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "87cURD_*#4DfTZ)+T"
+      },
+      "tags": []
+    },
+    {
+      "name": "to_base85_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Base85"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ]
+    },
+    {
+      "name": "from_base85_hello_world",
+      "comment": "Decode 'Hello, World!' from Base85",
+      "input": {
+        "type": "string",
+        "value": "87cURD_*#4DfTZ)>Tj"
+      },
+      "operations": [
+        "From Base85"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base85_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Base85"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

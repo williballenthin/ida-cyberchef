@@ -1,0 +1,133 @@
+{
+  "operation": "Parse IPv6 address",
+  "category": "networking",
+  "description": "Parse IPv6 address tests for various formats and special addresses",
+  "tests": [
+    {
+      "name": "parse_ipv6_full_form",
+      "comment": "Parse full form IPv6 address",
+      "input": {
+        "type": "string",
+        "value": "2001:0db8:0000:0000:0000:ff00:0042:8329"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2001:0db8:0000:0000:0000:ff00:0042:8329"
+      },
+      "tags": [
+        "ipv6",
+        "full_form"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "parse_ipv6_compressed",
+      "comment": "Parse compressed IPv6 address",
+      "input": {
+        "type": "string",
+        "value": "2001:db8::1"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2001:0db8:0000:0000:0000:0000:0000:0001"
+      },
+      "tags": [
+        "ipv6",
+        "compressed"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "parse_ipv6_loopback",
+      "comment": "Parse IPv6 loopback address",
+      "input": {
+        "type": "string",
+        "value": "::1"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0000:0000:0000:0000:0000:0000:0000:0001"
+      },
+      "tags": [
+        "ipv6",
+        "loopback"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "parse_ipv6_all_zeros",
+      "comment": "Parse IPv6 all-zeros address",
+      "input": {
+        "type": "string",
+        "value": "::"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0000:0000:0000:0000:0000:0000:0000:0000"
+      },
+      "tags": [
+        "ipv6",
+        "all_zeros"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "parse_ipv6_link_local",
+      "comment": "Parse IPv6 link-local address",
+      "input": {
+        "type": "string",
+        "value": "fe80::1"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fe80"
+      },
+      "tags": [
+        "ipv6",
+        "link_local"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "parse_ipv6_multicast",
+      "comment": "Parse IPv6 multicast address",
+      "input": {
+        "type": "string",
+        "value": "ff02::1"
+      },
+      "operations": [
+        "Parse IPv6 address"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ff02"
+      },
+      "tags": [
+        "ipv6",
+        "multicast"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

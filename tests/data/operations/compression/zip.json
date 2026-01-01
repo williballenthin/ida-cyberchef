@@ -1,0 +1,6 @@
+{
+  "operation": "Zip",
+  "category": "compression",
+  "description": "Tests for Zip and Unzip operations",
+  "tests": []
+}

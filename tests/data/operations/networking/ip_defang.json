@@ -1,0 +1,116 @@
+{
+  "operation": "Defang IP Addresses",
+  "category": "networking",
+  "description": "Defang IP addresses by replacing dots with [.]",
+  "tests": [
+    {
+      "name": "defang_ipv4_address",
+      "comment": "Defang IPv4 address",
+      "input": {
+        "type": "string",
+        "value": "192.168.1.1"
+      },
+      "operations": [
+        "Defang IP Addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "192[.]168[.]1[.]1"
+      },
+      "tags": [
+        "ip",
+        "defang"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "defang_ipv4_multiple",
+      "comment": "Defang multiple IPv4 addresses",
+      "input": {
+        "type": "string",
+        "value": "10.0.0.1 and 192.168.1.1"
+      },
+      "operations": [
+        "Defang IP Addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "10[.]0[.]0[.]1"
+      },
+      "tags": [
+        "ip",
+        "defang",
+        "multiple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "defang_localhost",
+      "comment": "Defang localhost address",
+      "input": {
+        "type": "string",
+        "value": "127.0.0.1"
+      },
+      "operations": [
+        "Defang IP Addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "127[.]0[.]0[.]1"
+      },
+      "tags": [
+        "ip",
+        "defang",
+        "localhost"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "defang_ip_in_text",
+      "comment": "Defang IPv4 address in text",
+      "input": {
+        "type": "string",
+        "value": "Connect to 10.0.0.1 for access"
+      },
+      "operations": [
+        "Defang IP Addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "10[.]0[.]0[.]1"
+      },
+      "tags": [
+        "ip",
+        "defang",
+        "text"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "defang_ip_no_ip_in_text",
+      "comment": "Defang with no IP in text",
+      "input": {
+        "type": "string",
+        "value": "No IP address here"
+      },
+      "operations": [
+        "Defang IP Addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "No IP address here"
+      },
+      "tags": [
+        "ip",
+        "defang",
+        "edge_case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

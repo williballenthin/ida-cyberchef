@@ -1,0 +1,15 @@
+{
+  "operation": "To Base62 / From Base62",
+  "category": "encoding",
+  "description": "Base62 encoding and decoding tests (uses 0-9, A-Z, a-z)",
+  "tests": [
+    {
+      "name": "to_base62_empty",
+      "comment": "Empty input produces empty output in CyberChef",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["To Base62"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["empty", "edge-case"]
+    }
+  ]
+}

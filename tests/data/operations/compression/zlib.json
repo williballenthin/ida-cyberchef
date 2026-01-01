@@ -1,0 +1,191 @@
+{
+  "operation": "Zlib",
+  "category": "compression",
+  "description": "Tests for Zlib Deflate and Inflate operations",
+  "tests": [
+    {
+      "name": "zlib_inflate_hello_world",
+      "comment": "Decompress Python zlib.compress() output to 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "789cf348cdc9c9d75108cf2fca495104001f9e046a"
+      },
+      "operations": ["Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["decompress", "python-interop"]
+    },
+    {
+      "name": "zlib_inflate_empty",
+      "comment": "Decompress zlib-compressed empty data",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "789c030000000001"
+      },
+      "operations": ["Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["decompress", "empty", "edge-case"]
+    },
+    {
+      "name": "zlib_roundtrip_hello_world",
+      "comment": "Test Zlib Deflate/Inflate roundtrip with 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": ["Zlib Deflate", "Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip"]
+    },
+    {
+      "name": "zlib_roundtrip_all_bytes",
+      "comment": "Test Zlib roundtrip with all 256 possible byte values",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "operations": ["Zlib Deflate", "Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "tags": ["compress", "roundtrip", "binary"]
+    },
+    {
+      "name": "zlib_roundtrip_utf8_simple",
+      "comment": "Test Zlib roundtrip with UTF-8 text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "operations": ["Zlib Deflate", "Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "tags": ["compress", "roundtrip", "utf8"]
+    },
+    {
+      "name": "zlib_roundtrip_empty",
+      "comment": "Test Zlib roundtrip with empty input",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Zlib Deflate", "Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["compress", "roundtrip", "empty", "edge-case"]
+    },
+    {
+      "name": "zlib_deflate_compression_type_dynamic",
+      "comment": "Test Zlib Deflate with dynamic Huffman coding and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Zlib Deflate",
+          "args": {
+            "Compression type": "Dynamic Huffman Coding"
+          }
+        },
+        "Zlib Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    },
+    {
+      "name": "zlib_deflate_compression_type_fixed",
+      "comment": "Test Zlib Deflate with fixed Huffman coding and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Zlib Deflate",
+          "args": {
+            "Compression type": "Fixed Huffman Coding"
+          }
+        },
+        "Zlib Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    },
+    {
+      "name": "zlib_deflate_compression_type_none",
+      "comment": "Test Zlib Deflate with no compression (store only) and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Zlib Deflate",
+          "args": {
+            "Compression type": "None (Store)"
+          }
+        },
+        "Zlib Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    },
+    {
+      "name": "zlib_roundtrip_null_bytes",
+      "comment": "Test Zlib roundtrip with data containing null bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f000000776f726c640000007465737400"
+      },
+      "operations": ["Zlib Deflate", "Zlib Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f000000776f726c640000007465737400"
+      },
+      "tags": ["compress", "roundtrip", "null-bytes", "edge-case"]
+    }
+  ]
+}

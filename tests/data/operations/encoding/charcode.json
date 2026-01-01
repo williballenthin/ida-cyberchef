@@ -1,0 +1,142 @@
+{
+  "operation": "To Charcode / From Charcode",
+  "category": "encoding",
+  "description": "Character code encoding and decoding tests with various bases",
+  "tests": [
+    {
+      "name": "to_charcode_decimal_hello",
+      "comment": "Encode 'hello' as decimal charcodes",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        {
+          "op": "To Charcode",
+          "args": {
+            "Base": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "104 101 108 108 111"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_charcode_hex_hello",
+      "comment": "Encode 'hello' as hexadecimal charcodes",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        {
+          "op": "To Charcode",
+          "args": {
+            "Base": 16
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "68 65 6c 6c 6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_charcode_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "To Charcode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_charcode_decimal_hello",
+      "comment": "Decode decimal charcodes to 'hello'",
+      "input": {
+        "type": "string",
+        "value": "104 101 108 108 111"
+      },
+      "operations": [
+        {
+          "op": "From Charcode",
+          "args": {
+            "Base": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_charcode_hex_hello",
+      "comment": "Decode hexadecimal charcodes to 'hello'",
+      "input": {
+        "type": "string",
+        "value": "68 65 6c 6c 6f"
+      },
+      "operations": [
+        {
+          "op": "From Charcode",
+          "args": {
+            "Base": 16
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_charcode_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Charcode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

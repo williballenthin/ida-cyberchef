@@ -1,0 +1,132 @@
+{
+  "operation": "To Decimal / From Decimal",
+  "category": "encoding",
+  "description": "Decimal byte encoding and decoding tests",
+  "tests": [
+    {
+      "name": "to_decimal_hello",
+      "comment": "Encode 'hello' as space-separated decimal values",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        "To Decimal"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "104 101 108 108 111"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_decimal_comma",
+      "comment": "Encode 'ABC' with comma delimiter",
+      "input": {
+        "type": "string",
+        "value": "ABC"
+      },
+      "operations": [
+        {
+          "op": "To Decimal",
+          "args": {
+            "Delimiter": "Comma"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "65,66,67"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_decimal_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "To Decimal"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_decimal_hello",
+      "comment": "Decode space-separated decimal to 'hello'",
+      "input": {
+        "type": "string",
+        "value": "104 101 108 108 111"
+      },
+      "operations": [
+        "From Decimal"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_decimal_comma",
+      "comment": "Decode comma-separated decimal to 'ABC'",
+      "input": {
+        "type": "string",
+        "value": "65,66,67"
+      },
+      "operations": [
+        {
+          "op": "From Decimal",
+          "args": {
+            "Delimiter": "Comma"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_decimal_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Decimal"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "operation": "NOT",
+  "category": "arithmetic",
+  "description": "NOT bitwise operation tests for bit inversion",
+  "tests": [
+    {
+      "name": "not_basic",
+      "comment": "NOT inverts all bits",
+      "input": {"type": "bytes", "encoding": "hex", "value": "00ffaa55"},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ff0055aa"},
+      "tags": ["not", "invert"]
+    },
+    {
+      "name": "not_hello",
+      "comment": "NOT on ASCII text: 'h'=0x68, NOT 0x68=0x97",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "979a939390"},
+      "tags": ["not", "ascii"]
+    },
+    {
+      "name": "not_double_application",
+      "comment": "NOT(NOT(A)) = A",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": ["NOT", "NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["not", "roundtrip"]
+    },
+    {
+      "name": "not_all_zeros",
+      "comment": "NOT on all zeros gives all ones",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0000000000000000"},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ffffffffffffffff"},
+      "tags": ["not", "zeros"]
+    },
+    {
+      "name": "not_all_ones",
+      "comment": "NOT on all ones gives all zeros",
+      "input": {"type": "bytes", "encoding": "hex", "value": "ffffffffffffffff"},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0000000000000000"},
+      "tags": ["not", "ones"]
+    },
+    {
+      "name": "not_alternating_bits",
+      "comment": "NOT 0xAA = 0x55, NOT 0x55 = 0xAA",
+      "input": {"type": "bytes", "encoding": "hex", "value": "aa55"},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "55aa"},
+      "tags": ["not", "bit_patterns"]
+    },
+    {
+      "name": "not_empty_input",
+      "comment": "NOT on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["NOT"],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["not", "edge_case"]
+    }
+  ]
+}

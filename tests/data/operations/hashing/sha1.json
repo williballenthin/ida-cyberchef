@@ -1,0 +1,55 @@
+{
+  "operation": "SHA1",
+  "category": "hashing",
+  "description": "SHA1 hash algorithm tests with NIST standard test vectors",
+  "tests": [
+    {
+      "name": "empty",
+      "comment": "SHA1 of empty string - NIST test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["SHA1"],
+      "expected": {"type": "string", "value": "da39a3ee5e6b4b0d3255bfef95601890afd80709"},
+      "tags": ["nist", "standard-vector", "empty"]
+    },
+    {
+      "name": "abc",
+      "comment": "SHA1 of 'abc' - NIST test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": "616263"},
+      "operations": ["SHA1"],
+      "expected": {"type": "string", "value": "a9993e364706816aba3e25717850c26c9cd0d89d"},
+      "tags": ["nist", "standard-vector"]
+    },
+    {
+      "name": "long_string",
+      "comment": "SHA1 of long string - NIST test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071"},
+      "operations": ["SHA1"],
+      "expected": {"type": "string", "value": "84983e441c3bd26ebaae4aa1f95129e5e54670f1"},
+      "tags": ["nist", "standard-vector"]
+    },
+    {
+      "name": "hello",
+      "comment": "SHA1 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": ["SHA1"],
+      "expected": {"type": "string", "value": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"},
+      "tags": ["standard-vector"]
+    },
+    {
+      "name": "with_rounds",
+      "comment": "SHA1 with explicit Rounds parameter (default is 80)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA1", "args": {"Rounds": 80}}],
+      "expected": {"type": "string", "value": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"},
+      "tags": ["with-args"]
+    },
+    {
+      "name": "all_bytes",
+      "comment": "SHA1 of all 256 byte values (0x00-0xFF)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"},
+      "operations": ["SHA1"],
+      "expected": {"type": "string", "value": "4916d6bdb7f78e6803698cab32d1586ea457dfc8"},
+      "tags": ["all-bytes"]
+    }
+  ]
+}

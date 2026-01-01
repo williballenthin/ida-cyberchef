@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/williballenthin/ida-cyberchef/tests/data/schema.json",
+  "title": "CyberChef Operation Test Schema",
+  "description": "Schema for data-driven CyberChef operation tests. Designed to be language-agnostic for use in both Python and JavaScript test runners.",
+  "type": "object",
+  "required": ["operation", "category", "tests"],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "description": "The primary CyberChef operation being tested"
+    },
+    "category": {
+      "type": "string",
+      "description": "The category this operation belongs to",
+      "enum": ["encoding", "hashing", "compression", "encryption", "data_format", "arithmetic", "networking", "datetime", "utils"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of what this test file covers"
+    },
+    "tests": {
+      "type": "array",
+      "description": "Array of test cases",
+      "items": {
+        "$ref": "#/definitions/testCase"
+      }
+    }
+  },
+  "definitions": {
+    "testCase": {
+      "type": "object",
+      "required": ["name", "input", "operations", "expected"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Short descriptive name for the test case"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Optional explanation of what this test verifies or why it exists"
+        },
+        "input": {
+          "$ref": "#/definitions/dataValue",
+          "description": "Input data for the test"
+        },
+        "operations": {
+          "type": "array",
+          "description": "Array of operations to apply (CyberChef recipe)",
+          "items": {
+            "$ref": "#/definitions/operation"
+          }
+        },
+        "expected": {
+          "$ref": "#/definitions/dataValue",
+          "description": "Expected output after applying operations"
+        },
+        "skip": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, skip this test (e.g., known broken)"
+        },
+        "skipReason": {
+          "type": "string",
+          "description": "Explanation for why this test is skipped"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for filtering tests (e.g., 'edge-case', 'rfc', 'roundtrip')"
+        }
+      }
+    },
+    "dataValue": {
+      "type": "object",
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "bytes"],
+          "description": "The data type: 'string' for UTF-8 text, 'bytes' for binary data"
+        },
+        "value": {
+          "type": "string",
+          "description": "The actual value. For 'bytes' type, this is encoded per the 'encoding' field"
+        },
+        "encoding": {
+          "type": "string",
+          "enum": ["base64", "hex"],
+          "default": "base64",
+          "description": "Encoding used for 'bytes' type values in JSON. Ignored for 'string' type."
+        }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Simple operation name with no arguments"
+        },
+        {
+          "type": "object",
+          "required": ["op"],
+          "properties": {
+            "op": {
+              "type": "string",
+              "description": "Operation name"
+            },
+            "args": {
+              "type": "object",
+              "description": "Operation arguments (CyberChef native format)",
+              "additionalProperties": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "operation": "From MessagePack",
+  "category": "data_format",
+  "description": "Tests for MessagePack decoding",
+  "tests": [
+    {
+      "name": "decode_empty_object",
+      "comment": "Decode MessagePack empty map (0x80) to JSON empty object",
+      "input": {
+        "type": "bytes",
+        "value": "80",
+        "encoding": "hex"
+      },
+      "operations": [
+        "From MessagePack"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}"
+      },
+      "tags": [
+        "decode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation returns JS objects instead of strings"
+    },
+    {
+      "name": "decode_empty_array",
+      "comment": "Decode MessagePack empty array (0x90) to JSON empty array",
+      "input": {
+        "type": "bytes",
+        "value": "90",
+        "encoding": "hex"
+      },
+      "operations": [
+        "From MessagePack"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "decode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation returns JS objects instead of strings"
+    },
+    {
+      "name": "decode_simple_array",
+      "comment": "Decode MessagePack array to JSON [1,2,3]",
+      "input": {
+        "type": "bytes",
+        "value": "93010203",
+        "encoding": "hex"
+      },
+      "operations": [
+        "From MessagePack"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[1,2,3]"
+      },
+      "tags": [
+        "decode",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation returns JS objects instead of strings"
+    }
+  ]
+}

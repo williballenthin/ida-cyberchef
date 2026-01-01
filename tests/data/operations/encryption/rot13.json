@@ -1,0 +1,117 @@
+{
+  "operation": "ROT13",
+  "category": "encryption",
+  "description": "Tests for ROT13 cipher with various rotation amounts (Caesar cipher variants)",
+  "tests": [
+    {
+      "name": "basic uppercase",
+      "comment": "Standard ROT13 on uppercase letters",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": ["ROT13"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5552595942"
+      },
+      "tags": ["symmetric", "uppercase"]
+    },
+    {
+      "name": "basic lowercase",
+      "comment": "Standard ROT13 on lowercase letters",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": ["ROT13"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7572797962"
+      },
+      "tags": ["symmetric", "lowercase"]
+    },
+    {
+      "name": "mixed case with space",
+      "comment": "ROT13 preserves case and non-alphabetic characters",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": ["ROT13"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5572797962204a62657971"
+      },
+      "tags": ["symmetric", "mixed-case", "special-chars"]
+    },
+    {
+      "name": "empty input",
+      "comment": "ROT13 with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["ROT13"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    },
+    {
+      "name": "custom amount ROT1",
+      "comment": "Caesar cipher with shift of 1 (A→B, B→C, C→D)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": [
+        {
+          "op": "ROT13",
+          "args": {
+            "Amount": 1
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "424344"
+      },
+      "tags": ["caesar-cipher", "custom-amount"]
+    },
+    {
+      "name": "custom amount ROT25",
+      "comment": "ROT25 is equivalent to ROT-1 (shift backward by 1)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "424344"
+      },
+      "operations": [
+        {
+          "op": "ROT13",
+          "args": {
+            "Amount": 25
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "tags": ["caesar-cipher", "custom-amount"]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "operation": "BSON deserialise",
+  "category": "data_format",
+  "description": "Tests for BSON (Binary JSON) deserialisation",
+  "tests": [
+    {
+      "name": "deserialise_empty_object",
+      "comment": "Deserialise BSON empty document to JSON empty object",
+      "input": {
+        "type": "bytes",
+        "value": "0500000000",
+        "encoding": "hex"
+      },
+      "operations": [
+        "BSON deserialise"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}"
+      },
+      "tags": [
+        "deserialise",
+        "empty"
+      ]
+    }
+  ]
+}

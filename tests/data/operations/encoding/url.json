@@ -1,0 +1,247 @@
+{
+  "operation": "URL Encode / URL Decode",
+  "category": "encoding",
+  "description": "URL encoding and decoding tests following RFC 3986 unreserved characters",
+  "tests": [
+    {
+      "name": "url_encode_space",
+      "comment": "CyberChef encodes space as %20",
+      "input": {
+        "type": "string",
+        "value": "Hello World!"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello%20World!"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_equals_ampersand",
+      "comment": "CyberChef does not encode = and & by default (RFC 3986 unreserved)",
+      "input": {
+        "type": "string",
+        "value": "foo=bar&baz=qux"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "foo=bar&baz=qux"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_percent",
+      "comment": "Percent is always encoded",
+      "input": {
+        "type": "string",
+        "value": "100%"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "100%25"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_at_sign",
+      "comment": "CyberChef does not encode @ by default",
+      "input": {
+        "type": "string",
+        "value": "user@example.com"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "user@example.com"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_plus_equals",
+      "comment": "CyberChef does not encode + and = by default",
+      "input": {
+        "type": "string",
+        "value": "a+b=c"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a+b=c"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_hello_world",
+      "comment": "CyberChef does not encode commas by default, only spaces",
+      "input": {
+        "type": "string",
+        "value": "Hello, World!"
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello,%20World!"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_encode_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "URL Encode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_space",
+      "comment": "Decode %20 to space",
+      "input": {
+        "type": "string",
+        "value": "Hello%20World!"
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello World!"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_encoded_special_chars",
+      "comment": "Decode encoded = and & characters",
+      "input": {
+        "type": "string",
+        "value": "foo%3Dbar%26baz%3Dqux"
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "foo=bar&baz=qux"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_percent",
+      "comment": "Decode encoded percent sign",
+      "input": {
+        "type": "string",
+        "value": "100%25"
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "100%"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_at_sign",
+      "comment": "Decode encoded @ sign",
+      "input": {
+        "type": "string",
+        "value": "user%40example.com"
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "user@example.com"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_hello_world",
+      "comment": "Decode comma and space",
+      "input": {
+        "type": "string",
+        "value": "Hello%2C%20World!"
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello, World!"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "url_decode_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "URL Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

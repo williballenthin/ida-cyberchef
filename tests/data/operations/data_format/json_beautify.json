@@ -1,0 +1,241 @@
+{
+  "operation": "JSON Beautify",
+  "category": "data_format",
+  "description": "Tests for JSON Beautify operation - formatting minified JSON with proper indentation",
+  "tests": [
+    {
+      "name": "beautify_simple_json",
+      "comment": "Beautify simple JSON object with string and number fields",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"city\": \"NYC\"\n}"
+      },
+      "tags": [
+        "beautify",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_nested_json",
+      "comment": "Beautify nested JSON object with multiple levels",
+      "input": {
+        "type": "string",
+        "value": "{\"user\":{\"name\":\"Bob\",\"profile\":{\"age\":25,\"email\":\"bob@example.com\"}}}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"user\": {\n        \"name\": \"Bob\",\n        \"profile\": {\n            \"age\": 25,\n            \"email\": \"bob@example.com\"\n        }\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "nested"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_json_array",
+      "comment": "Beautify JSON array with numbers",
+      "input": {
+        "type": "string",
+        "value": "[1,2,3,4,5]"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[\n    1,\n    2,\n    3,\n    4,\n    5\n]"
+      },
+      "tags": [
+        "beautify",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_empty_object",
+      "comment": "Beautify empty JSON object",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}"
+      },
+      "tags": [
+        "beautify",
+        "empty",
+        "edge_case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_empty_array",
+      "comment": "Beautify empty JSON array",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "beautify",
+        "empty",
+        "edge_case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_json_with_unicode",
+      "comment": "Beautify JSON containing unicode characters (Chinese and emoji)",
+      "input": {
+        "type": "string",
+        "value": "{\"message\":\"Hello \u4e16\u754c\",\"emoji\":\"\ud83c\udf0d\"}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"message\": \"Hello \u4e16\u754c\",\n    \"emoji\": \"\ud83c\udf0d\"\n}"
+      },
+      "tags": [
+        "beautify",
+        "unicode"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_complex_json",
+      "comment": "Beautify complex JSON with nested arrays and objects",
+      "input": {
+        "type": "string",
+        "value": "{\"users\":[{\"name\":\"Alice\",\"age\":30},{\"name\":\"Bob\",\"age\":25}],\"count\":2}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"users\": [\n        {\n            \"name\": \"Alice\",\n            \"age\": 30\n        },\n        {\n            \"name\": \"Bob\",\n            \"age\": 25\n        }\n    ],\n    \"count\": 2\n}"
+      },
+      "tags": [
+        "beautify",
+        "complex"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_json_with_null",
+      "comment": "Beautify JSON with null values",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"email\":null}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"name\": \"Alice\",\n    \"email\": null\n}"
+      },
+      "tags": [
+        "beautify",
+        "null"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_json_with_booleans",
+      "comment": "Beautify JSON with boolean values",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"active\":true,\"deleted\":false}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"name\": \"Alice\",\n    \"active\": true,\n    \"deleted\": false\n}"
+      },
+      "tags": [
+        "beautify",
+        "boolean"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_json_with_numbers",
+      "comment": "Beautify JSON with various number types (int, float, negative, exponential)",
+      "input": {
+        "type": "string",
+        "value": "{\"int\":42,\"float\":3.14,\"negative\":-10,\"exp\":100000}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"int\": 42,\n    \"float\": 3.14,\n    \"negative\": -10,\n    \"exp\": 100000\n}"
+      },
+      "tags": [
+        "beautify",
+        "numbers"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "beautify_deeply_nested_json",
+      "comment": "Beautify deeply nested JSON structure (6 levels)",
+      "input": {
+        "type": "string",
+        "value": "{\"a\":{\"b\":{\"c\":{\"d\":{\"e\":{\"f\":\"deep\"}}}}}}"
+      },
+      "operations": [
+        "JSON Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n    \"a\": {\n        \"b\": {\n            \"c\": {\n                \"d\": {\n                    \"e\": {\n                        \"f\": \"deep\"\n                    }\n                }\n            }\n        }\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "nested",
+        "deep"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

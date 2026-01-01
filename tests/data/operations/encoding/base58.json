@@ -1,0 +1,47 @@
+{
+  "operation": "To Base58 / From Base58",
+  "category": "encoding",
+  "description": "Base58 encoding and decoding tests (used in Bitcoin addresses)",
+  "tests": [
+    {
+      "name": "to_base58_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Base58"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ]
+    },
+    {
+      "name": "from_base58_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Base58"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

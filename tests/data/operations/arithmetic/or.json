@@ -1,0 +1,55 @@
+{
+  "operation": "OR",
+  "category": "arithmetic",
+  "description": "OR bitwise operation tests for setting bits",
+  "tests": [
+    {
+      "name": "or_with_hex_key",
+      "comment": "0x00 OR 0x0F = 0x0F",
+      "input": {"type": "bytes", "encoding": "hex", "value": "00000000"},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "0f"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0f0f0f0f"},
+      "tags": ["or", "set_bits"]
+    },
+    {
+      "name": "or_set_lower_bits",
+      "comment": "Set lower nibble using OR",
+      "input": {"type": "bytes", "encoding": "hex", "value": "f0a05000"},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "0f"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ffaf5f0f"},
+      "tags": ["or", "set_bits"]
+    },
+    {
+      "name": "or_with_all_zeros",
+      "comment": "OR with 0x00 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "00"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["or", "identity"]
+    },
+    {
+      "name": "or_with_all_ones",
+      "comment": "OR with 0xFF always gives 0xFF",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "ff"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ffffffffff"},
+      "tags": ["or", "all_ones"]
+    },
+    {
+      "name": "or_set_high_bit",
+      "comment": "Set high bit: 0x41 OR 0x80 = 0xC1",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243"},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "80"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "c1c2c3"},
+      "tags": ["or", "set_high_bit"]
+    },
+    {
+      "name": "or_empty_input",
+      "comment": "OR on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "OR", "args": [{"option": "Hex", "string": "ff"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["or", "edge_case"]
+    }
+  ]
+}

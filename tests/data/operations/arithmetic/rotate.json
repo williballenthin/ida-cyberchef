@@ -1,0 +1,71 @@
+{
+  "operation": "Rotate",
+  "category": "arithmetic",
+  "description": "Rotate left and right operations with and without carry",
+  "tests": [
+    {
+      "name": "rotate_left_by_one",
+      "comment": "0x80 rotated left 1 = 0x01, 0x01 rotated left 1 = 0x02",
+      "input": {"type": "bytes", "encoding": "hex", "value": "8001"},
+      "operations": [{"op": "Rotate left", "args": [1, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0102"},
+      "tags": ["rotate", "left"]
+    },
+    {
+      "name": "rotate_left_by_four",
+      "comment": "Rotate left by 4 swaps nibbles: 0x12 -> 0x21, 0xAB -> 0xBA",
+      "input": {"type": "bytes", "encoding": "hex", "value": "12ab"},
+      "operations": [{"op": "Rotate left", "args": [4, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "21ba"},
+      "tags": ["rotate", "left", "nibble_swap"]
+    },
+    {
+      "name": "rotate_left_full_byte",
+      "comment": "8-bit rotation returns to original",
+      "input": {"type": "bytes", "encoding": "hex", "value": "abcd"},
+      "operations": [{"op": "Rotate left", "args": [8, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "abcd"},
+      "tags": ["rotate", "left", "full_rotation"]
+    },
+    {
+      "name": "rotate_left_with_carry",
+      "comment": "With carry: bits rotate across byte boundaries",
+      "input": {"type": "bytes", "encoding": "hex", "value": "8001"},
+      "operations": [{"op": "Rotate left", "args": [1, true]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0003"},
+      "tags": ["rotate", "left", "carry"]
+    },
+    {
+      "name": "rotate_right_by_one",
+      "comment": "0x01 rotated right 1 = 0x80, 0x80 rotated right 1 = 0x40",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0180"},
+      "operations": [{"op": "Rotate right", "args": [1, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "8040"},
+      "tags": ["rotate", "right"]
+    },
+    {
+      "name": "rotate_right_by_four",
+      "comment": "Rotate right by 4 swaps nibbles: 0x12 -> 0x21, 0xAB -> 0xBA",
+      "input": {"type": "bytes", "encoding": "hex", "value": "12ab"},
+      "operations": [{"op": "Rotate right", "args": [4, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "21ba"},
+      "tags": ["rotate", "right", "nibble_swap"]
+    },
+    {
+      "name": "rotate_right_full_byte",
+      "comment": "8-bit rotation returns to original",
+      "input": {"type": "bytes", "encoding": "hex", "value": "abcd"},
+      "operations": [{"op": "Rotate right", "args": [8, false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "abcd"},
+      "tags": ["rotate", "right", "full_rotation"]
+    },
+    {
+      "name": "rotate_right_with_carry",
+      "comment": "With carry: bits rotate across byte boundaries",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0180"},
+      "operations": [{"op": "Rotate right", "args": [1, true]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "00c0"},
+      "tags": ["rotate", "right", "carry"]
+    }
+  ]
+}
