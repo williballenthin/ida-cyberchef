@@ -2,14 +2,12 @@
 
 from pathlib import Path
 
-import pytest
-
 from tools.generate_operation_schema import (
     enhance_schema_with_categories,
     extract_categories_and_favorites,
 )
 
-# Path to Categories.json in CyberChef source
+# Path to Categories.json in CyberChef source (from deps/CyberChef submodule)
 CATEGORIES_JSON_PATH = (
     Path(__file__).parent.parent
     / "deps"
@@ -18,12 +16,6 @@ CATEGORIES_JSON_PATH = (
     / "core"
     / "config"
     / "Categories.json"
-)
-
-# Skip tests if CyberChef source is not available
-pytestmark = pytest.mark.skipif(
-    not CATEGORIES_JSON_PATH.exists(),
-    reason="CyberChef source (deps/CyberChef) not available - Categories.json missing",
 )
 
 
