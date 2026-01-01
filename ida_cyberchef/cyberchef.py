@@ -1,5 +1,9 @@
+import bz2
+import gzip
 import json
+import zlib
 from enum import IntEnum
+from io import BytesIO
 from typing import Any, TypedDict
 
 import quickjs
@@ -36,6 +40,194 @@ class RecipeOperation(TypedDict, total=False):
 
     op: str
     args: dict[str, Any]
+
+
+# =============================================================================
+# Python Compression Fallbacks
+# =============================================================================
+# QuickJS has stricter typed array bounds checking than V8, which causes
+# CyberChef's embedded zlib.js to fail. These Python implementations provide
+# equivalent functionality using Python's standard library.
+
+
+def _get_compression_level(args: dict) -> int:
+    """Convert CyberChef compression type to zlib level.
+
+    Args:
+        args: Operation arguments dict
+
+    Returns:
+        zlib compression level (0-9)
+    """
+    compression_type = args.get("Compression type", "Dynamic Huffman Coding")
+    if compression_type == "None (Store)":
+        return 0
+    elif compression_type == "Fixed Huffman Coding":
+        return 1
+    else:  # Dynamic Huffman Coding (default)
+        return 6
+
+
+def _python_zlib_deflate(data: bytes, args: dict) -> bytes:
+    """Python implementation of Zlib Deflate.
+
+    Compresses data using zlib format (with header and checksum).
+
+    Args:
+        data: Input bytes to compress
+        args: Operation arguments (Compression type)
+
+    Returns:
+        Zlib-compressed bytes
+    """
+    level = _get_compression_level(args)
+    return zlib.compress(data, level=level)
+
+
+def _python_zlib_inflate(data: bytes, args: dict) -> bytes:
+    """Python implementation of Zlib Inflate.
+
+    Decompresses zlib-formatted data.
+
+    Args:
+        data: Zlib-compressed bytes
+        args: Operation arguments (Start index, etc.)
+
+    Returns:
+        Decompressed bytes
+    """
+    start_index = int(args.get("Start index", 0))
+    if start_index > 0:
+        data = data[start_index:]
+    return zlib.decompress(data)
+
+
+def _python_raw_deflate(data: bytes, args: dict) -> bytes:
+    """Python implementation of Raw Deflate.
+
+    Compresses data using raw deflate (no zlib header/checksum).
+
+    Args:
+        data: Input bytes to compress
+        args: Operation arguments (Compression type)
+
+    Returns:
+        Raw deflate compressed bytes
+    """
+    level = _get_compression_level(args)
+    # wbits=-15 means raw deflate without header
+    compressor = zlib.compressobj(level=level, wbits=-15)
+    return compressor.compress(data) + compressor.flush()
+
+
+def _python_raw_inflate(data: bytes, args: dict) -> bytes:
+    """Python implementation of Raw Inflate.
+
+    Decompresses raw deflate data (no zlib header).
+
+    Args:
+        data: Raw deflate compressed bytes
+        args: Operation arguments (Start index, etc.)
+
+    Returns:
+        Decompressed bytes
+    """
+    start_index = int(args.get("Start index", 0))
+    if start_index > 0:
+        data = data[start_index:]
+    # wbits=-15 means raw deflate without header
+    return zlib.decompress(data, wbits=-15)
+
+
+def _python_gzip_compress(data: bytes, args: dict) -> bytes:
+    """Python implementation of Gzip.
+
+    Compresses data using gzip format.
+
+    Args:
+        data: Input bytes to compress
+        args: Operation arguments (Compression type, Filename, Comment, etc.)
+
+    Returns:
+        Gzip-compressed bytes
+    """
+    level = _get_compression_level(args)
+    # Map level 0 to 1 for gzip (gzip doesn't support level 0)
+    if level == 0:
+        level = 1
+
+    buf = BytesIO()
+    with gzip.GzipFile(fileobj=buf, mode="wb", compresslevel=level) as f:
+        f.write(data)
+    return buf.getvalue()
+
+
+def _python_gunzip(data: bytes, args: dict) -> bytes:
+    """Python implementation of Gunzip.
+
+    Decompresses gzip-formatted data.
+
+    Args:
+        data: Gzip-compressed bytes
+        args: Operation arguments (unused)
+
+    Returns:
+        Decompressed bytes
+    """
+    buf = BytesIO(data)
+    with gzip.GzipFile(fileobj=buf, mode="rb") as f:
+        return f.read()
+
+
+def _python_bzip2_compress(data: bytes, args: dict) -> bytes:
+    """Python implementation of Bzip2 Compress.
+
+    Compresses data using bzip2 format.
+
+    Args:
+        data: Input bytes to compress
+        args: Operation arguments (Block size)
+
+    Returns:
+        Bzip2-compressed bytes
+    """
+    # Block size is in 100s of kb (1-9), default 9
+    block_size = int(args.get("Block size (100s of kb)", 9))
+    block_size = max(1, min(9, block_size))  # Clamp to 1-9
+    return bz2.compress(data, compresslevel=block_size)
+
+
+def _python_bzip2_decompress(data: bytes, args: dict) -> bytes:
+    """Python implementation of Bzip2 Decompress.
+
+    Decompresses bzip2-formatted data.
+
+    Args:
+        data: Bzip2-compressed bytes
+        args: Operation arguments (unused in Python impl)
+
+    Returns:
+        Decompressed bytes
+    """
+    return bz2.decompress(data)
+
+
+# Map of operations that should use Python implementations instead of QuickJS
+PYTHON_OPERATION_OVERRIDES: dict[str, callable] = {
+    "Zlib Deflate": _python_zlib_deflate,
+    "Zlib Inflate": _python_zlib_inflate,
+    "Raw Deflate": _python_raw_deflate,
+    "Raw Inflate": _python_raw_inflate,
+    "Gzip": _python_gzip_compress,
+    "Gunzip": _python_gunzip,
+    "Bzip2 Compress": _python_bzip2_compress,
+    "Bzip2 Decompress": _python_bzip2_decompress,
+}
+
+
+# =============================================================================
+# Core CyberChef Integration
+# =============================================================================
 
 
 def get_chef():
@@ -232,16 +424,36 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
             return {"value": str(v), "type": int(DishType.STRING)}
 
 
-def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes | str:
-    """Execute CyberChef operations using native bake() function.
+def _execute_python_operation(op_name: str, data: bytes | str, args: dict) -> bytes:
+    """Execute a Python-implemented operation.
+
+    Args:
+        op_name: Name of the operation
+        data: Input data (bytes or string)
+        args: Operation arguments
+
+    Returns:
+        Result as bytes
+    """
+    # Ensure data is bytes
+    if isinstance(data, str):
+        data = data.encode("utf-8")
+
+    func = PYTHON_OPERATION_OVERRIDES[op_name]
+    return func(data, args)
+
+
+def _bake_with_quickjs(
+    input_data: bytes | str, recipe: list[str | RecipeOperation]
+) -> bytes | str:
+    """Execute recipe using QuickJS/CyberChef.
 
     Args:
         input_data: Input data as bytes or string
-        recipe: List of operations. Each operation is either:
-            - A string operation name: "To Base64"
-            - A dict with op and args: {"op": "SHA2", "args": {"size": 256}}
+        recipe: List of operations
 
-    Returns: Result as bytes or string depending on the final operation output
+    Returns:
+        Result as bytes or string
     """
     chef = get_chef()
 
@@ -298,4 +510,55 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
     """)
 
     result = json.loads(result_json)
-    return plate(result)  # type: ignore[return-value]
+    return plate(result)
+
+
+def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes | str:
+    """Execute CyberChef operations.
+
+    This function intelligently routes operations:
+    - Compression operations use Python stdlib (faster, more reliable)
+    - All other operations use QuickJS/CyberChef
+
+    Args:
+        input_data: Input data as bytes or string
+        recipe: List of operations. Each operation is either:
+            - A string operation name: "To Base64"
+            - A dict with op and args: {"op": "SHA2", "args": {"size": 256}}
+
+    Returns:
+        Result as bytes or string depending on the final operation output
+    """
+    if not recipe:
+        return input_data
+
+    current_data = input_data
+    pending_recipe: list[str | RecipeOperation] = []
+
+    for step in recipe:
+        # Extract operation name and args
+        if isinstance(step, str):
+            op_name = step
+            op_args = {}
+        else:
+            op_name = step.get("op", "")
+            op_args = step.get("args", {})
+
+        # Check if this operation should use Python implementation
+        if op_name in PYTHON_OPERATION_OVERRIDES:
+            # First, execute any pending QuickJS operations
+            if pending_recipe:
+                current_data = _bake_with_quickjs(current_data, pending_recipe)
+                pending_recipe = []
+
+            # Execute Python operation
+            current_data = _execute_python_operation(op_name, current_data, op_args)
+        else:
+            # Queue for QuickJS execution
+            pending_recipe.append(step)
+
+    # Execute any remaining QuickJS operations
+    if pending_recipe:
+        current_data = _bake_with_quickjs(current_data, pending_recipe)
+
+    return current_data

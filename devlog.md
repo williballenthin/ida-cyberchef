@@ -120,6 +120,57 @@ PYTHON_OPERATION_OVERRIDES = {
 4. **Argument names are literal** - Include suffixes like `"(bytes)"`
 
 ### Future Work
-- [ ] Implement Python fallbacks for compression operations
 - [ ] Add schema validation helper for test writing
 - [ ] Performance benchmark vs STPyV8
+
+---
+
+## 2026-01-01: Python Compression Fallbacks - IMPLEMENTED ✓
+
+### Problem
+QuickJS typed array bounds checking breaks CyberChef's embedded zlib.js Huffman encoding.
+
+### Solution
+Route compression operations to Python stdlib, transparently via `bake()`.
+
+### Implementation
+
+```python
+PYTHON_OPERATION_OVERRIDES = {
+    "Zlib Deflate": _python_zlib_deflate,
+    "Zlib Inflate": _python_zlib_inflate,
+    "Raw Deflate": _python_raw_deflate,
+    "Raw Inflate": _python_raw_inflate,
+    "Gzip": _python_gzip_compress,
+    "Gunzip": _python_gunzip,
+    "Bzip2 Compress": _python_bzip2_compress,
+    "Bzip2 Decompress": _python_bzip2_decompress,
+}
+```
+
+### How It Works
+`bake()` intelligently routes operations:
+1. Queues QuickJS operations until a Python operation is encountered
+2. Executes pending QuickJS batch
+3. Executes Python operation
+4. Continues with remaining operations
+
+This allows mixed chains like `["To Base64", "Gzip", "To Hex"]` to work seamlessly.
+
+### Supported Arguments
+- **Compression type**: `"Dynamic Huffman Coding"`, `"Fixed Huffman Coding"`, `"None (Store)"`
+- **Start index**: Skip bytes before decompression
+- **Block size (100s of kb)**: Bzip2 block size (1-9)
+
+### Test Coverage
+- `tests/test_compression.py`: 63 tests
+- Roundtrip tests for all 4 compression formats
+- Edge cases: empty data, null bytes, high entropy, repeated compression
+- Mixed operations: compression combined with encoding/hashing
+- stdlib compatibility verification
+
+### Final Test Results
+- **203 passed, 0 failed (100%)**
+  - test_cyberchef.py: 21 tests
+  - test_operations_comprehensive.py: 119 tests
+  - test_compression.py: 63 tests
