@@ -2,7 +2,7 @@ import json
 from enum import IntEnum
 from typing import Any, TypedDict
 
-import STPyV8
+import quickjs
 
 _chef_instance = None
 
@@ -41,7 +41,7 @@ class RecipeOperation(TypedDict, total=False):
 def get_chef():
     """Get or create a cached CyberChef instance.
 
-    Returns: CyberChef module exports object
+    Returns: CyberChef module exports object (QuickJS Context)
     """
     global _chef_instance
     if _chef_instance is None:
@@ -50,19 +50,23 @@ def get_chef():
 
 
 def load_cyberchef(path: str | None = None):
-    """Load CyberChef bundle into V8 context and return exports.
+    """Load CyberChef bundle into QuickJS context and return exports.
 
     Args:
         path: Path to CyberChef.js bundle. If None, uses package data path.
 
-    Returns: CyberChef module exports object
+    Returns: QuickJS Context with CyberChef loaded
     """
     if path is None:
         from pathlib import Path
 
         path = str(Path(__file__).parent / "data" / "CyberChef.js")
-    ctx = STPyV8.JSContext()
-    ctx.enter()
+
+    ctx = quickjs.Context()
+
+    # Set generous limits for CyberChef operations
+    ctx.set_memory_limit(256 * 1024 * 1024)  # 256MB
+    ctx.set_time_limit(-1)  # No time limit initially
 
     # Setup minimal global environment for CyberChef
     ctx.eval("""
@@ -87,7 +91,7 @@ def load_cyberchef(path: str | None = None):
         cwd: () => '/',
         version: 'v18.0.0',
         versions: {node: 'v18.0.0'},
-        nextTick: (fn) => setTimeout(fn, 0)
+        nextTick: (fn) => fn()
     };
 
     // TextEncoder/TextDecoder polyfill
@@ -107,8 +111,15 @@ def load_cyberchef(path: str | None = None):
     if (typeof TextDecoder === 'undefined') {
         globalThis.TextDecoder = class TextDecoder {
             decode(bytes) {
+                if (bytes instanceof ArrayBuffer) {
+                    bytes = new Uint8Array(bytes);
+                }
                 const utf8 = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
-                return decodeURIComponent(escape(utf8));
+                try {
+                    return decodeURIComponent(escape(utf8));
+                } catch (e) {
+                    return utf8;
+                }
             }
         };
     }
@@ -136,6 +147,17 @@ def load_cyberchef(path: str | None = None):
     };
     globalThis.clearTimeout = function(id) {};
     globalThis.clearInterval = function(id) {};
+
+    // Console polyfill
+    if (typeof console === 'undefined') {
+        globalThis.console = {
+            log: function() {},
+            warn: function() {},
+            error: function() {},
+            info: function() {},
+            debug: function() {}
+        };
+    }
     """)
 
     # Setup minimal CommonJS environment
@@ -143,12 +165,13 @@ def load_cyberchef(path: str | None = None):
 
     # Load and execute CyberChef
     with open(path, "rb") as f:
-        ctx.eval(f.read().decode("utf-8"))
+        cyberchef_code = f.read().decode("utf-8")
+    ctx.eval(cyberchef_code)
 
-    # Extract exports and attach context for later use
-    chef = ctx.eval("module.exports")
-    chef._stpyv8_context = ctx
-    return chef
+    # Store reference to exports
+    ctx.eval("globalThis._cyberchef = module.exports;")
+
+    return ctx
 
 
 def plate(v: Dish | Any, chef=None) -> Dish | Any:
@@ -156,30 +179,24 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
 
     Args:
         v: Either a Dish object or a native Python type
-        chef: Optional CyberChef module for creating proper Dish instances from bytes
+        chef: Optional CyberChef context (QuickJS Context) for creating proper Dish instances from bytes
 
     Returns: Native Python type if input is Dish, Dish dict/instance if input is Python type
     """
-    is_dish_object = (isinstance(v, dict) and "value" in v and "type" in v) or (
-        hasattr(v, "value") and hasattr(v, "type")
-    )
+    is_dish_object = isinstance(v, dict) and "value" in v and "type" in v
 
     if is_dish_object:
-        dish_type = DishType(int(v["type"] if isinstance(v, dict) else v.type))
-        value = v["value"] if isinstance(v, dict) else v.value
+        dish_type = DishType(int(v["type"]))
+        value = v["value"]
 
         if dish_type == DishType.BYTE_ARRAY:
-            if isinstance(value, list) or hasattr(value, "__iter__"):
-                value_list = list(value) if not isinstance(value, list) else value
-                if value_list and isinstance(value_list[0], float):
-                    return bytes(int(v) for v in value_list)
-                elif value_list and isinstance(value_list[0], int):
-                    return bytes(value_list)
-                elif value_list:
-                    raise NotImplementedError
+            if isinstance(value, list):
+                if value and isinstance(value[0], float):
+                    return bytes(int(x) for x in value)
+                elif value and isinstance(value[0], int):
+                    return bytes(value)
                 return b""
-
-            return value
+            return value if isinstance(value, bytes) else b""
         elif dish_type == DishType.STRING:
             return str(value)
         elif dish_type == DishType.NUMBER:
@@ -187,21 +204,13 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
         elif dish_type == DishType.HTML:
             return str(value)
         elif dish_type == DishType.ARRAY_BUFFER:
-            if isinstance(value, STPyV8.JSObject):
-                if chef and hasattr(chef, "_stpyv8_context"):
-                    ctx = chef._stpyv8_context
-                    ctx.locals.array_buffer_value = value
-                    array_data = ctx.eval("""
-                    (function() {
-                        return Array.from(new Uint8Array(array_buffer_value));
-                    })
-                    """)()
-                    return bytes(list(array_data))
-                else:
-                    return value
-            elif isinstance(value, list) or hasattr(value, "__iter__"):
-                return bytes(list(value))
-            return value
+            if isinstance(value, list):
+                if value and isinstance(value[0], float):
+                    return bytes(int(x) for x in value)
+                elif value and isinstance(value[0], int):
+                    return bytes(value)
+                return b""
+            return value if isinstance(value, bytes) else b""
         elif dish_type == DishType.BIG_NUMBER:
             return int(value) if isinstance(value, (int, float)) else value
         elif dish_type == DishType.JSON:
@@ -212,39 +221,15 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
             return value
     else:
         if isinstance(v, bytes):
-            if chef is not None and hasattr(chef, "_stpyv8_context"):
-                byte_list = list(v)
-                byte_json = json.dumps(byte_list)
-                ctx = chef._stpyv8_context
-                dish = ctx.eval(f"""
-                (function() {{
-                    const byteArray = {byte_json};
-                    const uint8 = new Uint8Array(byteArray);
-                    return new module.exports.Dish(uint8.buffer, module.exports.Dish.ARRAY_BUFFER);
-                }})
-                """)()
-                return dish
-            else:
-                return {"value": list(v), "type": DishType.ARRAY_BUFFER}
+            return {"value": list(v), "type": int(DishType.ARRAY_BUFFER)}
         elif isinstance(v, str):
-            if chef is not None and hasattr(chef, "_stpyv8_context"):
-                ctx = chef._stpyv8_context
-                # Use JSON.stringify to properly escape the string for JavaScript
-                str_json = json.dumps(v)
-                dish = ctx.eval(f"""
-                (function() {{
-                    return new module.exports.Dish({str_json}, module.exports.Dish.STRING);
-                }})
-                """)()
-                return dish
-            else:
-                return {"value": v, "type": DishType.STRING}
+            return {"value": v, "type": int(DishType.STRING)}
         elif isinstance(v, (int, float)):
-            return {"value": v, "type": DishType.NUMBER}
+            return {"value": v, "type": int(DishType.NUMBER)}
         elif isinstance(v, (dict, list)):
-            return {"value": v, "type": DishType.JSON}
+            return {"value": v, "type": int(DishType.JSON)}
         else:
-            return {"value": str(v), "type": DishType.STRING}
+            return {"value": str(v), "type": int(DishType.STRING)}
 
 
 def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes | str:
@@ -257,47 +242,60 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
             - A dict with op and args: {"op": "SHA2", "args": {"size": 256}}
 
     Returns: Result as bytes or string depending on the final operation output
-
-    Note: This function creates the CyberChef Dish object entirely in JavaScript
-    to avoid STPyV8 JSObject bridging issues. Passing JSObjects through ctx.locals
-    back into JavaScript code causes "TypeError: no access" errors.
     """
     chef = get_chef()
-    ctx = chef._stpyv8_context
+
+    # Convert input to Dish format
+    if isinstance(input_data, bytes):
+        input_dish = plate(input_data)
+    elif isinstance(input_data, str):
+        input_dish = plate(input_data)
+    else:
+        input_dish = {"value": input_data, "type": int(DishType.STRING)}
+
+    input_json = json.dumps(input_dish)
     recipe_json = json.dumps(recipe)
 
-    # Create the Dish and execute bake() entirely in JavaScript to avoid
-    # STPyV8 JSObject bridging issues with ctx.locals
-    if isinstance(input_data, bytes):
-        byte_list = list(input_data)
-        byte_json = json.dumps(byte_list)
-        result = ctx.eval(f"""
-        (function() {{
-            const byteArray = {byte_json};
-            const uint8 = new Uint8Array(byteArray);
-            const inputDish = new module.exports.Dish(uint8.buffer, module.exports.Dish.ARRAY_BUFFER);
-            const recipe = {recipe_json};
-            return module.exports.bake(inputDish, recipe);
-        }})
-        """)()
-    elif isinstance(input_data, str):
-        str_json = json.dumps(input_data)
-        result = ctx.eval(f"""
-        (function() {{
-            const inputDish = new module.exports.Dish({str_json}, module.exports.Dish.STRING);
-            const recipe = {recipe_json};
-            return module.exports.bake(inputDish, recipe);
-        }})
-        """)()
-    else:
-        # Fallback for other types - serialize as JSON
-        data_json = json.dumps(input_data)
-        result = ctx.eval(f"""
-        (function() {{
-            const inputDish = new module.exports.Dish({data_json});
-            const recipe = {recipe_json};
-            return module.exports.bake(inputDish, recipe);
-        }})
-        """)()
+    # Execute bake and get result as JSON
+    result_json = chef.eval(f"""
+    (function() {{
+        const inputDish = {input_json};
+        const recipe = {recipe_json};
 
-    return plate(result, chef)  # type: ignore[return-value]
+        // Create a proper Dish object from the input
+        let dish;
+        if (inputDish.type === {int(DishType.ARRAY_BUFFER)} || inputDish.type === {int(DishType.BYTE_ARRAY)}) {{
+            const uint8 = new Uint8Array(inputDish.value);
+            dish = new _cyberchef.Dish(uint8.buffer, _cyberchef.Dish.ARRAY_BUFFER);
+        }} else if (inputDish.type === {int(DishType.STRING)}) {{
+            dish = new _cyberchef.Dish(inputDish.value, _cyberchef.Dish.STRING);
+        }} else {{
+            dish = new _cyberchef.Dish(inputDish.value, inputDish.type);
+        }}
+
+        // Execute bake
+        const result = _cyberchef.bake(dish, recipe);
+
+        // Convert result to JSON-serializable format
+        const resultType = result.type;
+        let resultValue = result.value;
+
+        if (resultType === _cyberchef.Dish.ARRAY_BUFFER || resultType === _cyberchef.Dish.BYTE_ARRAY) {{
+            if (resultValue instanceof ArrayBuffer) {{
+                resultValue = Array.from(new Uint8Array(resultValue));
+            }} else if (resultValue instanceof Uint8Array) {{
+                resultValue = Array.from(resultValue);
+            }} else if (Array.isArray(resultValue)) {{
+                resultValue = resultValue;
+            }}
+        }}
+
+        return JSON.stringify({{
+            value: resultValue,
+            type: resultType
+        }});
+    }})()
+    """)
+
+    result = json.loads(result_json)
+    return plate(result)  # type: ignore[return-value]
