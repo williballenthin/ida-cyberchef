@@ -1,0 +1,128 @@
+{
+  "operation": "RIPEMD",
+  "category": "hashing",
+  "description": "RIPEMD family hash algorithm tests (RIPEMD-128, RIPEMD-160, RIPEMD-256, RIPEMD-320)",
+  "tests": [
+    {
+      "name": "ripemd160_hello",
+      "comment": "RIPEMD-160 of 'hello' - most commonly used RIPEMD variant",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "RIPEMD",
+          "args": {
+            "Size": "160"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "108f07b8382412612c048d07d13f814118445acd"
+      },
+      "tags": [
+        "ripemd-160"
+      ]
+    },
+    {
+      "name": "ripemd160_empty",
+      "comment": "RIPEMD-160 of empty string",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "RIPEMD",
+          "args": {
+            "Size": "160"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "9c1185a5c5e9fc54612808977ee8f548b2258d31"
+      },
+      "tags": [
+        "ripemd-160",
+        "empty"
+      ]
+    },
+    {
+      "name": "ripemd128_hello",
+      "comment": "RIPEMD-128 of 'hello'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "RIPEMD",
+          "args": {
+            "Size": "128"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "789d569f08ed7055e94b4289a4195012"
+      },
+      "tags": [
+        "ripemd-128"
+      ]
+    },
+    {
+      "name": "ripemd256_hello",
+      "comment": "RIPEMD-256 of 'hello'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "RIPEMD",
+          "args": {
+            "Size": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "cc1d2594aece0a064b7aed75a57283d9490fd5705ed3d66bf9adfe3a58b25de5"
+      },
+      "tags": [
+        "ripemd-256"
+      ]
+    },
+    {
+      "name": "ripemd320_hello",
+      "comment": "RIPEMD-320 of 'hello'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "RIPEMD",
+          "args": {
+            "Size": "320"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "eb0cf45114c56a8421fbcb33430fa22e0cd607560a88bbe14ce70bdf59bf55b11a3906987c487992"
+      },
+      "tags": [
+        "ripemd-320"
+      ]
+    }
+  ]
+}

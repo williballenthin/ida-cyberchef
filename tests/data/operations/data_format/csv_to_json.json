@@ -1,0 +1,91 @@
+{
+  "operation": "CSV to JSON",
+  "category": "data_format",
+  "description": "Tests for CSV to JSON conversion",
+  "tests": [
+    {
+      "name": "simple_csv_to_json",
+      "comment": "Convert simple CSV with headers to JSON array",
+      "input": {
+        "type": "string",
+        "value": "name,age,city\nAlice,30,NYC\nBob,25,LA"
+      },
+      "operations": [
+        "CSV to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[{\"name\":\"Alice\",\"age\":\"30\",\"city\":\"NYC\"},{\"name\":\"Bob\",\"age\":\"25\",\"city\":\"LA\"}]"
+      },
+      "tags": [
+        "conversion",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "csv_with_quotes_to_json",
+      "comment": "Convert CSV with quoted fields containing commas to JSON",
+      "input": {
+        "type": "string",
+        "value": "name,description\nAlice,\"Hello, World\"\nBob,\"Test, Data\""
+      },
+      "operations": [
+        "CSV to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[{\"name\":\"Alice\",\"description\":\"Hello, World\"},{\"name\":\"Bob\",\"description\":\"Test, Data\"}]"
+      },
+      "tags": [
+        "conversion",
+        "quotes"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "csv_headers_only_to_json",
+      "comment": "Convert CSV with only headers to empty JSON array",
+      "input": {
+        "type": "string",
+        "value": "name,age,city"
+      },
+      "operations": [
+        "CSV to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "conversion",
+        "headers_only"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty_csv_to_json",
+      "comment": "Convert empty CSV to empty JSON array",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "CSV to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "conversion",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

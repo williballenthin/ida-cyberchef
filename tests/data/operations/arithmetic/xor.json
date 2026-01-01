@@ -1,0 +1,74 @@
+{
+  "operation": "XOR",
+  "category": "arithmetic",
+  "description": "XOR bitwise operation tests covering keys, self-cancellation, and bit patterns",
+  "tests": [
+    {
+      "name": "xor_with_hex_key",
+      "comment": "XOR with 0xFF inverts all bits",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "XOR", "args": [{"option": "Hex", "string": "ff"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "979a939390"},
+      "tags": ["xor", "hex_key"]
+    },
+    {
+      "name": "xor_with_utf8_key",
+      "comment": "'A' (0x41) XOR 'K' (0x4B) = 0x0A",
+      "input": {"type": "bytes", "encoding": "hex", "value": "4141414141"},
+      "operations": [{"op": "XOR", "args": [{"option": "UTF8", "string": "K"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0a0a0a0a0a"},
+      "tags": ["xor", "utf8_key"]
+    },
+    {
+      "name": "xor_self_cancel",
+      "comment": "A XOR A = 0",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "XOR", "args": [{"option": "UTF8", "string": "test"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "00000000"},
+      "tags": ["xor", "self_cancel"]
+    },
+    {
+      "name": "xor_double_application",
+      "comment": "(A XOR B) XOR B = A - encryption and decryption",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c6421"},
+      "operations": [
+        {"op": "XOR", "args": [{"option": "Hex", "string": "deadbeef"}, "Standard", false]},
+        {"op": "XOR", "args": [{"option": "Hex", "string": "deadbeef"}, "Standard", false]}
+      ],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c6421"},
+      "tags": ["xor", "roundtrip"]
+    },
+    {
+      "name": "xor_with_null_key",
+      "comment": "XOR with 0x00 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "XOR", "args": [{"option": "Hex", "string": "00"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "tags": ["xor", "identity"]
+    },
+    {
+      "name": "xor_all_ones",
+      "comment": "XOR with 0xFF inverts all bits: 0x00 becomes 0xFF",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0000000000000000"},
+      "operations": [{"op": "XOR", "args": [{"option": "Hex", "string": "ff"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ffffffffffffffff"},
+      "tags": ["xor", "invert"]
+    },
+    {
+      "name": "xor_alternating_bits",
+      "comment": "0xAA XOR 0x55 = 0xFF",
+      "input": {"type": "bytes", "encoding": "hex", "value": "aaaaaaaa"},
+      "operations": [{"op": "XOR", "args": [{"option": "Hex", "string": "55"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "ffffffff"},
+      "tags": ["xor", "bit_patterns"]
+    },
+    {
+      "name": "xor_empty_input",
+      "comment": "XOR on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "XOR", "args": [{"option": "Hex", "string": "ff"}, "Standard", false]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["xor", "edge_case"]
+    }
+  ]
+}

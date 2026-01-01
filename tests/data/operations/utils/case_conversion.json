@@ -1,0 +1,119 @@
+{
+  "operation": "Case conversion",
+  "category": "utils",
+  "description": "Case conversion operations including upper, lower, swap, and alternating caps",
+  "tests": [
+    {
+      "name": "to_upper_case_basic",
+      "comment": "Convert text to upper case",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": ["To Upper case"],
+      "expected": {"type": "string", "value": "HELLO WORLD"},
+      "tags": ["case", "upper"]
+    },
+    {
+      "name": "to_upper_case_mixed",
+      "comment": "Upper case with mixed case input",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48654c4c6f20576f524c64"},
+      "operations": ["To Upper case"],
+      "expected": {"type": "string", "value": "HELLO WORLD"},
+      "tags": ["case", "upper"]
+    },
+    {
+      "name": "to_upper_case_empty",
+      "comment": "Upper case with empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["To Upper case"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "upper", "edge_case"]
+    },
+    {
+      "name": "to_upper_case_numbers",
+      "comment": "Upper case with numbers and symbols",
+      "input": {"type": "bytes", "encoding": "hex", "value": "746573743132332140232324"},
+      "operations": ["To Upper case"],
+      "expected": {"type": "string", "value": "TEST123!@##$"},
+      "tags": ["case", "upper"]
+    },
+    {
+      "name": "to_lower_case_basic",
+      "comment": "Convert text to lower case",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48454c4c4f20574f524c44"},
+      "operations": ["To Lower case"],
+      "expected": {"type": "string", "value": "hello world"},
+      "tags": ["case", "lower"]
+    },
+    {
+      "name": "to_lower_case_mixed",
+      "comment": "Lower case with mixed case input",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48654c4c6f20576f524c64"},
+      "operations": ["To Lower case"],
+      "expected": {"type": "string", "value": "hello world"},
+      "tags": ["case", "lower"]
+    },
+    {
+      "name": "to_lower_case_empty",
+      "comment": "Lower case with empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["To Lower case"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "lower", "edge_case"]
+    },
+    {
+      "name": "to_lower_case_numbers",
+      "comment": "Lower case with numbers and symbols",
+      "input": {"type": "bytes", "encoding": "hex", "value": "544553543132332140232324"},
+      "operations": ["To Lower case"],
+      "expected": {"type": "string", "value": "test123!@##$"},
+      "tags": ["case", "lower"]
+    },
+    {
+      "name": "swap_case_basic",
+      "comment": "Swap case of text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "hELLO wORLD"},
+      "tags": ["case", "swap"]
+    },
+    {
+      "name": "swap_case_all_upper",
+      "comment": "Swap case with all upper case",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48454c4c4f"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "hello"},
+      "tags": ["case", "swap"]
+    },
+    {
+      "name": "swap_case_all_lower",
+      "comment": "Swap case with all lower case",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "HELLO"},
+      "tags": ["case", "swap"]
+    },
+    {
+      "name": "swap_case_empty",
+      "comment": "Swap case with empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "swap", "edge_case"]
+    },
+    {
+      "name": "alternating_caps_basic",
+      "comment": "Alternating caps (spongecase)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "hElLo WoRlD"},
+      "tags": ["case", "alternating"]
+    },
+    {
+      "name": "alternating_caps_empty",
+      "comment": "Alternating caps with empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "alternating", "edge_case"]
+    }
+  ]
+}

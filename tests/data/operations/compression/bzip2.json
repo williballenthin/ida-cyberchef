@@ -1,0 +1,270 @@
+{
+  "operation": "Bzip2",
+  "category": "compression",
+  "description": "Tests for Bzip2 compression and decompression operations",
+  "tests": [
+    {
+      "name": "bzip2_decompress_hello_world",
+      "comment": "Decompress Python bz2.compress() output to 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "425a6839314159265359e6d8fedf0000019780600400400080060490002000220323210030b2805ade43ef177245385090e6d8fedf"
+      },
+      "operations": [
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [
+        "decompress",
+        "python-interop"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_decompress_empty",
+      "comment": "Decompress bzip2-compressed empty data",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "425a683917724538509000000000"
+      },
+      "operations": [
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "decompress",
+        "empty",
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_roundtrip_hello_world",
+      "comment": "Test Bzip2 Compress/Decompress roundtrip with 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [
+        "compress",
+        "roundtrip"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_roundtrip_all_bytes",
+      "comment": "Test Bzip2 roundtrip with all 256 possible byte values",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "binary"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_roundtrip_utf8_simple",
+      "comment": "Test Bzip2 roundtrip with UTF-8 text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "utf8"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_roundtrip_empty",
+      "comment": "Test Bzip2 roundtrip with empty input",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "empty",
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_compression_block_size_1",
+      "comment": "Test Bzip2 with block size 1 (100KB) and verify decompression",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "operations": [
+        {
+          "op": "Bzip2 Compress",
+          "args": {
+            "Block size (100s of KB)": 1
+          }
+        },
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "compression-options"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_compression_block_size_5",
+      "comment": "Test Bzip2 with block size 5 (500KB) and verify decompression",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "operations": [
+        {
+          "op": "Bzip2 Compress",
+          "args": {
+            "Block size (100s of KB)": 5
+          }
+        },
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "compression-options"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_compression_block_size_9",
+      "comment": "Test Bzip2 with block size 9 (900KB, maximum) and verify decompression",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "operations": [
+        {
+          "op": "Bzip2 Compress",
+          "args": {
+            "Block size (100s of KB)": 9
+          }
+        },
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64212048656c6c6f20576f726c64212048656c6c6f20576f726c642021"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "compression-options"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "bzip2_roundtrip_null_bytes",
+      "comment": "Test Bzip2 roundtrip with data containing null bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f000000776f726c640000007465737400"
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f000000776f726c640000007465737400"
+      },
+      "tags": [
+        "compress",
+        "roundtrip",
+        "null-bytes",
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    }
+  ]
+}

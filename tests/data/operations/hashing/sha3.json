@@ -1,0 +1,71 @@
+{
+  "operation": "SHA3",
+  "category": "hashing",
+  "description": "SHA3 family hash algorithm tests (SHA3-224, SHA3-256, SHA3-384, SHA3-512)",
+  "tests": [
+    {
+      "name": "sha3_256_empty",
+      "comment": "SHA3-256 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA3", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a"},
+      "tags": ["empty", "sha3-256"]
+    },
+    {
+      "name": "sha3_256_hello",
+      "comment": "SHA3-256 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA3", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "3338be694f50c5f338814986cdf0686453a888b84f424d792af4b9202398f392"},
+      "tags": ["sha3-256"]
+    },
+    {
+      "name": "sha3_224_empty",
+      "comment": "SHA3-224 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA3", "args": {"Size": "224"}}],
+      "expected": {"type": "string", "value": "6b4e03423667dbb73b6e15454f0eb1abd4597f9a1b078e3f5b5a6bc7"},
+      "tags": ["empty", "sha3-224"]
+    },
+    {
+      "name": "sha3_224_hello",
+      "comment": "SHA3-224 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA3", "args": {"Size": "224"}}],
+      "expected": {"type": "string", "value": "b87f88c72702fff1748e58b87e9141a42c0dbedc29a78cb0d4a5cd81"},
+      "tags": ["sha3-224"]
+    },
+    {
+      "name": "sha3_384_empty",
+      "comment": "SHA3-384 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA3", "args": {"Size": "384"}}],
+      "expected": {"type": "string", "value": "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004"},
+      "tags": ["empty", "sha3-384"]
+    },
+    {
+      "name": "sha3_384_hello",
+      "comment": "SHA3-384 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA3", "args": {"Size": "384"}}],
+      "expected": {"type": "string", "value": "720aea11019ef06440fbf05d87aa24680a2153df3907b23631e7177ce620fa1330ff07c0fddee54699a4c3ee0ee9d887"},
+      "tags": ["sha3-384"]
+    },
+    {
+      "name": "sha3_512_empty",
+      "comment": "SHA3-512 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA3", "args": {"Size": "512"}}],
+      "expected": {"type": "string", "value": "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26"},
+      "tags": ["empty", "sha3-512"]
+    },
+    {
+      "name": "sha3_512_hello",
+      "comment": "SHA3-512 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA3", "args": {"Size": "512"}}],
+      "expected": {"type": "string", "value": "75d527c368f2efe848ecf6b073a36767800805e9eef2b1857d5f984f036eb6df891d75f72d9b154518c1cd58835286d1da9a38deba3de98b5a53e5ed78a84976"},
+      "tags": ["sha3-512"]
+    }
+  ]
+}

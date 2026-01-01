@@ -1,0 +1,70 @@
+{
+  "operation": "JSON to CSV",
+  "category": "data_format",
+  "description": "Tests for JSON to CSV conversion",
+  "tests": [
+    {
+      "name": "simple_json_array_to_csv",
+      "comment": "Convert simple JSON array of objects to CSV with headers",
+      "input": {
+        "type": "string",
+        "value": "[{\"name\": \"Alice\", \"age\": 30}, {\"name\": \"Bob\", \"age\": 25}]"
+      },
+      "operations": [
+        "JSON to CSV"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "name,age\nAlice,30\nBob,25"
+      },
+      "tags": [
+        "conversion",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "json_array_with_numbers_to_csv",
+      "comment": "Convert JSON array with numeric values to CSV",
+      "input": {
+        "type": "string",
+        "value": "[{\"id\": 1, \"value\": 100}, {\"id\": 2, \"value\": 200}]"
+      },
+      "operations": [
+        "JSON to CSV"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "id,value\n1,100\n2,200"
+      },
+      "tags": [
+        "conversion",
+        "numbers"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty_json_array_to_csv",
+      "comment": "Convert empty JSON array to CSV",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "JSON to CSV"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "conversion",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "operation": "Bit shift",
+  "category": "arithmetic",
+  "description": "Bit shift left and right operations (logical and arithmetic)",
+  "tests": [
+    {
+      "name": "bit_shift_left_by_one",
+      "comment": "Left shift by 1: multiply by 2",
+      "input": {"type": "bytes", "encoding": "hex", "value": "01020408"},
+      "operations": [{"op": "Bit shift left", "args": [1]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "02040810"},
+      "tags": ["bit_shift", "left"]
+    },
+    {
+      "name": "bit_shift_left_overflow",
+      "comment": "0x80 << 1 = 0x00 (high bit lost), 0xFF << 1 = 0xFE",
+      "input": {"type": "bytes", "encoding": "hex", "value": "80ff"},
+      "operations": [{"op": "Bit shift left", "args": [1]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "00fe"},
+      "tags": ["bit_shift", "left", "overflow"]
+    },
+    {
+      "name": "bit_shift_left_by_four",
+      "comment": "0x01 << 4 = 0x10, 0x0F << 4 = 0xF0",
+      "input": {"type": "bytes", "encoding": "hex", "value": "010f"},
+      "operations": [{"op": "Bit shift left", "args": [4]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "10f0"},
+      "tags": ["bit_shift", "left", "nibble"]
+    },
+    {
+      "name": "bit_shift_left_by_eight",
+      "comment": "Shifting 8 bits in a byte zeros it out",
+      "input": {"type": "bytes", "encoding": "hex", "value": "ffaa55"},
+      "operations": [{"op": "Bit shift left", "args": [8]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "000000"},
+      "tags": ["bit_shift", "left", "overflow"]
+    },
+    {
+      "name": "bit_shift_left_zero",
+      "comment": "Shift by 0 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "Bit shift left", "args": [0]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["bit_shift", "left", "identity"]
+    },
+    {
+      "name": "bit_shift_right_logical_by_one",
+      "comment": "Logical right shift by 1: divide by 2",
+      "input": {"type": "bytes", "encoding": "hex", "value": "80402010"},
+      "operations": [{"op": "Bit shift right", "args": [1, "Logical shift"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "40201008"},
+      "tags": ["bit_shift", "right", "logical"]
+    },
+    {
+      "name": "bit_shift_right_logical_by_four",
+      "comment": "0xF0 >> 4 = 0x0F, 0x10 >> 4 = 0x01",
+      "input": {"type": "bytes", "encoding": "hex", "value": "f010"},
+      "operations": [{"op": "Bit shift right", "args": [4, "Logical shift"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0f01"},
+      "tags": ["bit_shift", "right", "logical"]
+    },
+    {
+      "name": "bit_shift_right_arithmetic_positive",
+      "comment": "Arithmetic right shift on positive (MSB=0) is same as logical",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7f40"},
+      "operations": [{"op": "Bit shift right", "args": [1, "Arithmetic shift"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "3f20"},
+      "tags": ["bit_shift", "right", "arithmetic"]
+    },
+    {
+      "name": "bit_shift_right_arithmetic_negative",
+      "comment": "Arithmetic right shift on negative (MSB=1) preserves sign bit",
+      "input": {"type": "bytes", "encoding": "hex", "value": "80ff"},
+      "operations": [{"op": "Bit shift right", "args": [1, "Arithmetic shift"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "c0ff"},
+      "tags": ["bit_shift", "right", "arithmetic", "sign_extend"]
+    },
+    {
+      "name": "bit_shift_right_zero",
+      "comment": "Shift by 0 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "Bit shift right", "args": [0, "Logical shift"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["bit_shift", "right", "identity"]
+    }
+  ]
+}

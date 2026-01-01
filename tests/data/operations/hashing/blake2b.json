@@ -1,0 +1,47 @@
+{
+  "operation": "BLAKE2b",
+  "category": "hashing",
+  "description": "BLAKE2b hash algorithm tests. Note: CyberChef's Size parameter only works correctly for 512-bit output; other sizes are broken.",
+  "tests": [
+    {
+      "name": "blake2b_512_empty",
+      "comment": "BLAKE2b-512 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "BLAKE2b", "args": {"Size": 512}}],
+      "expected": {"type": "string", "value": "786a02f742015903c6c6fd852552d272912f4740e15847618a86e217f71f5419d25e1031afee585313896444934eb04b903a685b1448b755d56f701afe9be2ce"},
+      "tags": ["empty", "blake2b-512"]
+    },
+    {
+      "name": "blake2b_512_hello",
+      "comment": "BLAKE2b-512 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "BLAKE2b", "args": {"Size": 512}}],
+      "expected": {"type": "string", "value": "e4cfa39a3d37be31c59609e807970799caa68a19bfaa15135f165085e01d41a65ba1e1b146aeb6bd0092b49eac214c103ccfa3a365954bbbe52f74a2b3620c94"},
+      "tags": ["blake2b-512"]
+    },
+    {
+      "name": "blake2b_512_test_data",
+      "comment": "BLAKE2b-512 of 'test data'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7465737420646174"},
+      "operations": [{"op": "BLAKE2b", "args": {"Size": 512}}],
+      "expected": {"type": "string", "value": "dc73b73a138a072b685759222db9bbe5beec686155e0be95438d2da021941a565302627ade85c749a6c3c2715cd3e28855dc033c9fbfbca7dd183d7ebfd5f4d2"},
+      "tags": ["blake2b-512"]
+    },
+    {
+      "name": "blake2b_512_with_key",
+      "comment": "BLAKE2b-512 with key 'secret_key'. Note: Key parameter expects UTF-8 string, not hex.",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "BLAKE2b", "args": {"Size": 512, "Key": "secret_key"}}],
+      "expected": {"type": "string", "value": "9e0f46ea1d9647e6d0f830acdfa8772b12e4268d2ab59bbb07bb5f14c5820578a86a4700238c8c3b291be3b51ec7638e980226e79dd18f7d0a06e2191556bfa6"},
+      "tags": ["with-key", "blake2b-512"]
+    },
+    {
+      "name": "blake2b_512_all_bytes",
+      "comment": "BLAKE2b-512 of all 256 byte values (0x00-0xFF)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"},
+      "operations": [{"op": "BLAKE2b", "args": {"Size": 512}}],
+      "expected": {"type": "string", "value": "1ecc896f34d3f9cac484c73f75f6a5fb58ee6784be41b35f46067b9c65c63a6794d3d744112c653f73dd7deb6666204c5a9bfa5b46081fc10fdbe7884fa5cbf8"},
+      "tags": ["all-bytes", "blake2b-512"]
+    }
+  ]
+}

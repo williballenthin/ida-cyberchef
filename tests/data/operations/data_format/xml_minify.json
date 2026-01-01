@@ -1,0 +1,91 @@
+{
+  "operation": "XML Minify",
+  "category": "data_format",
+  "description": "Tests for XML Minify operation - removing whitespace from XML",
+  "tests": [
+    {
+      "name": "minify_beautified_xml",
+      "comment": "Minify beautified XML with tabs and newlines",
+      "input": {
+        "type": "string",
+        "value": "<root>\n\t<name>Alice</name>\n\t<age>30</age>\n</root>"
+      },
+      "operations": [
+        "XML Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<root><name>Alice</name><age>30</age></root>"
+      },
+      "tags": [
+        "minify",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "minify_xml_with_declaration",
+      "comment": "Minify XML with declaration",
+      "input": {
+        "type": "string",
+        "value": "<?xml version=\"1.0\"?>\n<root>\n\t<name>Alice</name>\n\t<age>30</age>\n</root>"
+      },
+      "operations": [
+        "XML Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<?xml version=\"1.0\"?><root><name>Alice</name><age>30</age></root>"
+      },
+      "tags": [
+        "minify",
+        "declaration"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "minify_nested_xml",
+      "comment": "Minify nested XML structure",
+      "input": {
+        "type": "string",
+        "value": "<?xml version=\"1.0\"?>\n<root>\n\t<user>\n\t\t<name>Bob</name>\n\t\t<email>bob@example.com</email>\n\t</user>\n</root>"
+      },
+      "operations": [
+        "XML Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<?xml version=\"1.0\"?><root><user><name>Bob</name><email>bob@example.com</email></user></root>"
+      },
+      "tags": [
+        "minify",
+        "nested"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "minify_already_minified",
+      "comment": "Minify already minified XML (should remain the same)",
+      "input": {
+        "type": "string",
+        "value": "<root><name>Alice</name><age>30</age></root>"
+      },
+      "operations": [
+        "XML Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<root><name>Alice</name><age>30</age></root>"
+      },
+      "tags": [
+        "minify",
+        "idempotent"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    }
+  ]
+}

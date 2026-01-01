@@ -1,0 +1,58 @@
+{
+  "operation": "SUB",
+  "category": "arithmetic",
+  "description": "SUB arithmetic operation tests with modulo 256 behavior",
+  "tests": [
+    {
+      "name": "sub_with_hex_key",
+      "comment": "Subtract 1 from each byte",
+      "input": {"type": "bytes", "encoding": "hex", "value": "05040302"},
+      "operations": [{"op": "SUB", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "04030201"},
+      "tags": ["sub", "basic"]
+    },
+    {
+      "name": "sub_with_modulo",
+      "comment": "0x00 - 0x02 = 0xFE (wraps), 0x01 - 0x02 = 0xFF, 0x02 - 0x02 = 0x00",
+      "input": {"type": "bytes", "encoding": "hex", "value": "000102"},
+      "operations": [{"op": "SUB", "args": [{"option": "Hex", "string": "02"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "feff00"},
+      "tags": ["sub", "underflow"]
+    },
+    {
+      "name": "sub_zero",
+      "comment": "Subtract 0 is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "SUB", "args": [{"option": "Hex", "string": "00"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["sub", "identity"]
+    },
+    {
+      "name": "sub_byte_boundary",
+      "comment": "0x01 - 1 = 0x00, 0x00 - 1 = 0xFF (wraps)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0100"},
+      "operations": [{"op": "SUB", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "00ff"},
+      "tags": ["sub", "boundary"]
+    },
+    {
+      "name": "sub_add_inverse",
+      "comment": "ADD then SUB should give original",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [
+        {"op": "ADD", "args": [{"option": "Hex", "string": "42"}]},
+        {"op": "SUB", "args": [{"option": "Hex", "string": "42"}]}
+      ],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "tags": ["sub", "roundtrip"]
+    },
+    {
+      "name": "sub_empty_input",
+      "comment": "SUB on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SUB", "args": [{"option": "Hex", "string": "01"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["sub", "edge_case"]
+    }
+  ]
+}

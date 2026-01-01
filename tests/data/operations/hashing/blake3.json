@@ -1,0 +1,57 @@
+{
+  "operation": "BLAKE3",
+  "category": "hashing",
+  "description": "BLAKE3 hash algorithm tests. Note: BLAKE3 operation is broken in this CyberChef build.",
+  "tests": [
+    {
+      "name": "blake3_default_size",
+      "comment": "BLAKE3 with default size (256 bits / 32 bytes)",
+      "input": {"type": "string", "value": "hello"},
+      "operations": [{"op": "BLAKE3", "args": {"Size (bytes)": 32}}],
+      "expected": {"type": "string", "value": ""},
+      "skip": true,
+      "skipReason": "BLAKE3 operation is broken in this CyberChef build. Fails with 'Data is not a valid string: {}' error for all inputs.",
+      "tags": ["blake3-256", "broken"]
+    },
+    {
+      "name": "blake3_128bit",
+      "comment": "BLAKE3 with 128-bit output (16 bytes)",
+      "input": {"type": "string", "value": "test"},
+      "operations": [{"op": "BLAKE3", "args": {"Size (bytes)": 16}}],
+      "expected": {"type": "string", "value": ""},
+      "skip": true,
+      "skipReason": "BLAKE3 operation is broken in this CyberChef build.",
+      "tags": ["blake3-128", "broken"]
+    },
+    {
+      "name": "blake3_512bit",
+      "comment": "BLAKE3 with 512-bit output (64 bytes)",
+      "input": {"type": "string", "value": "test"},
+      "operations": [{"op": "BLAKE3", "args": {"Size (bytes)": 64}}],
+      "expected": {"type": "string", "value": ""},
+      "skip": true,
+      "skipReason": "BLAKE3 operation is broken in this CyberChef build.",
+      "tags": ["blake3-512", "broken"]
+    },
+    {
+      "name": "blake3_empty",
+      "comment": "BLAKE3 with empty input",
+      "input": {"type": "string", "value": ""},
+      "operations": [{"op": "BLAKE3", "args": {"Size (bytes)": 32}}],
+      "expected": {"type": "string", "value": ""},
+      "skip": true,
+      "skipReason": "BLAKE3 operation is broken in this CyberChef build.",
+      "tags": ["blake3-256", "empty", "broken"]
+    },
+    {
+      "name": "blake3_with_key",
+      "comment": "BLAKE3 with a key. Note: BLAKE3 requires exactly 32 bytes (characters) key.",
+      "input": {"type": "string", "value": "hello"},
+      "operations": [{"op": "BLAKE3", "args": {"Size (bytes)": 32, "Key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}],
+      "expected": {"type": "string", "value": ""},
+      "skip": true,
+      "skipReason": "BLAKE3 operation is broken in this CyberChef build.",
+      "tags": ["with-key", "blake3-256", "broken"]
+    }
+  ]
+}

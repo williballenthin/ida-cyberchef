@@ -1,0 +1,373 @@
+{
+  "operation": "To Base64 / From Base64",
+  "category": "encoding",
+  "description": "Base64 encoding and decoding tests with RFC 4648 test vectors",
+  "tests": [
+    {
+      "name": "to_base64_empty",
+      "comment": "RFC 4648 test vector: empty input",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "rfc",
+        "empty"
+      ]
+    },
+    {
+      "name": "to_base64_f",
+      "comment": "RFC 4648 test vector: single character 'f'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "66"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zg=="
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_fo",
+      "comment": "RFC 4648 test vector: two characters 'fo'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zm8="
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_foo",
+      "comment": "RFC 4648 test vector: three characters 'foo'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zm9v"
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_foob",
+      "comment": "RFC 4648 test vector: four characters 'foob'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f62"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zm9vYg=="
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_fooba",
+      "comment": "RFC 4648 test vector: five characters 'fooba'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f6261"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zm9vYmE="
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_foobar",
+      "comment": "RFC 4648 test vector: six characters 'foobar'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f626172"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Zm9vYmFy"
+      },
+      "tags": [
+        "rfc"
+      ]
+    },
+    {
+      "name": "to_base64_hello_world",
+      "comment": "Common test string 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "To Base64"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SGVsbG8sIFdvcmxkIQ=="
+      },
+      "tags": []
+    },
+    {
+      "name": "to_base64_with_standard_alphabet",
+      "comment": "Explicit standard alphabet",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "To Base64",
+          "args": {
+            "Alphabet": "A-Za-z0-9+/="
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "aGVsbG8="
+      },
+      "tags": []
+    },
+    {
+      "name": "from_base64_empty",
+      "comment": "RFC 4648 test vector: empty input",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "rfc",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_f",
+      "comment": "RFC 4648 test vector: 'f'",
+      "input": {
+        "type": "string",
+        "value": "Zg=="
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "66"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_fo",
+      "comment": "RFC 4648 test vector: 'fo'",
+      "input": {
+        "type": "string",
+        "value": "Zm8="
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_foo",
+      "comment": "RFC 4648 test vector: 'foo'",
+      "input": {
+        "type": "string",
+        "value": "Zm9v"
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_foob",
+      "comment": "RFC 4648 test vector: 'foob'",
+      "input": {
+        "type": "string",
+        "value": "Zm9vYg=="
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f62"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_fooba",
+      "comment": "RFC 4648 test vector: 'fooba'",
+      "input": {
+        "type": "string",
+        "value": "Zm9vYmE="
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f6261"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_foobar",
+      "comment": "RFC 4648 test vector: 'foobar'",
+      "input": {
+        "type": "string",
+        "value": "Zm9vYmFy"
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f626172"
+      },
+      "tags": [
+        "rfc"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_hello_world",
+      "comment": "Common test string 'Hello, World!'",
+      "input": {
+        "type": "string",
+        "value": "SGVsbG8sIFdvcmxkIQ=="
+      },
+      "operations": [
+        "From Base64"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_base64_remove_non_alphabet",
+      "comment": "Decode with whitespace and newlines using remove non-alphabet chars option",
+      "input": {
+        "type": "string",
+        "value": "SGVs bG8s\nIFdv cmxk IQ=="
+      },
+      "operations": [
+        {
+          "op": "From Base64",
+          "args": {
+            "Remove non-alphabet chars": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

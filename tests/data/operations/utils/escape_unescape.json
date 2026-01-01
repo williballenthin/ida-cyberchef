@@ -1,0 +1,47 @@
+{
+  "operation": "Escape and unescape",
+  "category": "utils",
+  "description": "Escape and unescape special characters in strings",
+  "tests": [
+    {
+      "name": "escape_string_basic",
+      "comment": "Escape newlines and tabs",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f0a776f726c640974616226"},
+      "operations": ["Escape string"],
+      "expected": {"type": "string", "value": "hello\\nworld\\ttab&"},
+      "tags": ["escape", "special_chars"]
+    },
+    {
+      "name": "escape_string_empty",
+      "comment": "Escape empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Escape string"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["escape", "edge_case"]
+    },
+    {
+      "name": "unescape_string_basic",
+      "comment": "Unescape special characters",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f5c6e776f726c645c7474616226"},
+      "operations": ["Unescape string"],
+      "expected": {"type": "string", "value": "hello\nworld\ttab&"},
+      "tags": ["unescape", "special_chars"]
+    },
+    {
+      "name": "unescape_string_empty",
+      "comment": "Unescape empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Unescape string"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["unescape", "edge_case"]
+    },
+    {
+      "name": "escape_unescape_roundtrip",
+      "comment": "Escape then unescape should restore special characters",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f0a776f726c640974616226"},
+      "operations": ["Escape string", "Unescape string"],
+      "expected": {"type": "string", "value": "hello\nworld\ttab&"},
+      "tags": ["escape", "unescape", "roundtrip"]
+    }
+  ]
+}

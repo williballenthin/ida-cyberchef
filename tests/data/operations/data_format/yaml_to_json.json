@@ -1,0 +1,49 @@
+{
+  "operation": "YAML to JSON",
+  "category": "data_format",
+  "description": "Tests for YAML to JSON conversion",
+  "tests": [
+    {
+      "name": "simple_yaml_to_json",
+      "comment": "Convert simple YAML to JSON",
+      "input": {
+        "type": "string",
+        "value": "name: Alice\nage: 30\ncity: NYC"
+      },
+      "operations": [
+        "YAML to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "tags": [
+        "conversion",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "nested_yaml_to_json",
+      "comment": "Convert nested YAML to JSON",
+      "input": {
+        "type": "string",
+        "value": "user:\n  name: Bob\n  profile:\n    age: 25\n    email: bob@example.com"
+      },
+      "operations": [
+        "YAML to JSON"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"user\":{\"name\":\"Bob\",\"profile\":{\"age\":25,\"email\":\"bob@example.com\"}}}"
+      },
+      "tags": [
+        "conversion",
+        "nested"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

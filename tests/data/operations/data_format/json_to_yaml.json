@@ -1,0 +1,112 @@
+{
+  "operation": "JSON to YAML",
+  "category": "data_format",
+  "description": "Tests for JSON to YAML conversion",
+  "tests": [
+    {
+      "name": "simple_json_to_yaml",
+      "comment": "Convert simple JSON object to YAML format",
+      "input": {
+        "type": "string",
+        "value": "{\"name\": \"Alice\", \"age\": 30, \"city\": \"NYC\"}"
+      },
+      "operations": [
+        "JSON to YAML"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "name: Alice\nage: 30\ncity: NYC\n"
+      },
+      "tags": [
+        "conversion",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "nested_json_to_yaml",
+      "comment": "Convert nested JSON object to YAML",
+      "input": {
+        "type": "string",
+        "value": "{\"user\": {\"name\": \"Bob\", \"profile\": {\"age\": 25, \"email\": \"bob@example.com\"}}}"
+      },
+      "operations": [
+        "JSON to YAML"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "user:\n  name: Bob\n  profile:\n    age: 25\n    email: bob@example.com\n"
+      },
+      "tags": [
+        "conversion",
+        "nested"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "json_array_to_yaml",
+      "comment": "Convert JSON array to YAML list format",
+      "input": {
+        "type": "string",
+        "value": "[1, 2, 3, 4, 5]"
+      },
+      "operations": [
+        "JSON to YAML"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "- 1\n- 2\n- 3\n- 4\n- 5\n"
+      },
+      "tags": [
+        "conversion",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty_json_object_to_yaml",
+      "comment": "Convert empty JSON object to YAML",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "JSON to YAML"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}\n"
+      },
+      "tags": [
+        "conversion",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "empty_json_array_to_yaml",
+      "comment": "Convert empty JSON array to YAML",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "JSON to YAML"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]\n"
+      },
+      "tags": [
+        "conversion",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

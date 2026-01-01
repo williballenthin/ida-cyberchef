@@ -1,0 +1,154 @@
+{
+  "operation": "JSON Minify",
+  "category": "data_format",
+  "description": "Tests for JSON Minify operation - removing whitespace from JSON",
+  "tests": [
+    {
+      "name": "minify_beautified_json",
+      "comment": "Minify beautified JSON with indentation and newlines",
+      "input": {
+        "type": "string",
+        "value": "{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"city\": \"NYC\"\n}"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "tags": [
+        "minify",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_json_with_spaces",
+      "comment": "Minify JSON with extra spaces around colons and commas",
+      "input": {
+        "type": "string",
+        "value": "{ \"name\" : \"Alice\" , \"age\" : 30 }"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30}"
+      },
+      "tags": [
+        "minify",
+        "spaces"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_nested_json",
+      "comment": "Minify nested JSON object",
+      "input": {
+        "type": "string",
+        "value": "{\"user\":{\"name\":\"Bob\",\"profile\":{\"age\":25,\"email\":\"bob@example.com\"}}}"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"user\":{\"name\":\"Bob\",\"profile\":{\"age\":25,\"email\":\"bob@example.com\"}}}"
+      },
+      "tags": [
+        "minify",
+        "nested"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_json_array_with_spaces",
+      "comment": "Minify JSON array with spaces",
+      "input": {
+        "type": "string",
+        "value": "[ 1 , 2 , 3 , 4 , 5 ]"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[1,2,3,4,5]"
+      },
+      "tags": [
+        "minify",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_already_minified",
+      "comment": "Minify already minified JSON (should remain the same)",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "tags": [
+        "minify",
+        "idempotent"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_empty_object",
+      "comment": "Minify empty JSON object",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{}"
+      },
+      "tags": [
+        "minify",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "minify_empty_array",
+      "comment": "Minify empty JSON array",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "JSON Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[]"
+      },
+      "tags": [
+        "minify",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

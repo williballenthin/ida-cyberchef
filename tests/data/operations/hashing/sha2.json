@@ -1,0 +1,98 @@
+{
+  "operation": "SHA2",
+  "category": "hashing",
+  "description": "SHA2 family hash algorithm tests (SHA-224, SHA-256, SHA-384, SHA-512) with standard test vectors",
+  "tests": [
+    {
+      "name": "sha256_empty",
+      "comment": "SHA-256 of empty string - standard test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA2", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+      "tags": ["standard-vector", "empty", "sha256"]
+    },
+    {
+      "name": "sha256_abc",
+      "comment": "SHA-256 of 'abc' - standard test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": "616263"},
+      "operations": [{"op": "SHA2", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"},
+      "tags": ["standard-vector", "sha256"]
+    },
+    {
+      "name": "sha256_hello",
+      "comment": "SHA-256 of 'hello' - standard test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA2", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"},
+      "tags": ["standard-vector", "sha256"]
+    },
+    {
+      "name": "sha512_empty",
+      "comment": "SHA-512 of empty string - standard test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA2", "args": {"Size": "512"}}],
+      "expected": {"type": "string", "value": "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e"},
+      "tags": ["standard-vector", "empty", "sha512"]
+    },
+    {
+      "name": "sha512_abc",
+      "comment": "SHA-512 of 'abc' - standard test vector",
+      "input": {"type": "bytes", "encoding": "hex", "value": "616263"},
+      "operations": [{"op": "SHA2", "args": {"Size": "512"}}],
+      "expected": {"type": "string", "value": "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f"},
+      "tags": ["standard-vector", "sha512"]
+    },
+    {
+      "name": "sha224_empty",
+      "comment": "SHA-224 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA2", "args": {"Size": "224"}}],
+      "expected": {"type": "string", "value": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f"},
+      "tags": ["empty", "sha224"]
+    },
+    {
+      "name": "sha224_hello",
+      "comment": "SHA-224 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA2", "args": {"Size": "224"}}],
+      "expected": {"type": "string", "value": "ea09ae9cc6768c50fcee903ed054556e5bfc8347907f12598aa24193"},
+      "tags": ["sha224"]
+    },
+    {
+      "name": "sha384_empty",
+      "comment": "SHA-384 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "SHA2", "args": {"Size": "384"}}],
+      "expected": {"type": "string", "value": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b"},
+      "tags": ["empty", "sha384"]
+    },
+    {
+      "name": "sha384_hello",
+      "comment": "SHA-384 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "SHA2", "args": {"Size": "384"}}],
+      "expected": {"type": "string", "value": "59e1748777448c69de6b800d7a33bbfb9ff1b463e44354c3553bcdb9c666fa90125a3c79f90397bdf5f6a13de828684f"},
+      "tags": ["sha384"]
+    },
+    {
+      "name": "sha256_all_bytes",
+      "comment": "SHA-256 of all 256 byte values (0x00-0xFF)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"},
+      "operations": [{"op": "SHA2", "args": {"Size": "256"}}],
+      "expected": {"type": "string", "value": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880"},
+      "tags": ["all-bytes", "sha256"]
+    },
+    {
+      "name": "double_sha256",
+      "comment": "Double SHA-256 hashing - SHA256(SHA256('hello'))",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [
+        {"op": "SHA2", "args": {"Size": "256"}},
+        {"op": "SHA2", "args": {"Size": "256"}}
+      ],
+      "expected": {"type": "string", "value": "d7914fe546b684688bb95f4f888a92dfc680603a75f23eb823658031fff766d9"},
+      "tags": ["chaining", "sha256"]
+    }
+  ]
+}

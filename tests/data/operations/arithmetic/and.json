@@ -1,0 +1,55 @@
+{
+  "operation": "AND",
+  "category": "arithmetic",
+  "description": "AND bitwise operation tests for masking and filtering bits",
+  "tests": [
+    {
+      "name": "and_with_hex_key",
+      "comment": "0xFF AND 0x0F = 0x0F (mask lower nibble)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "ffffffff"},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "0f"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0f0f0f0f"},
+      "tags": ["and", "mask"]
+    },
+    {
+      "name": "and_mask_upper_bits",
+      "comment": "Mask lower nibble, keep upper nibble",
+      "input": {"type": "bytes", "encoding": "hex", "value": "ffaa5500"},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "f0"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "f0a05000"},
+      "tags": ["and", "mask"]
+    },
+    {
+      "name": "and_with_all_zeros",
+      "comment": "AND with 0x00 always gives 0x00",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "00"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "0000000000"},
+      "tags": ["and", "zero"]
+    },
+    {
+      "name": "and_with_all_ones",
+      "comment": "AND with 0xFF is identity",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "ff"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "tags": ["and", "identity"]
+    },
+    {
+      "name": "and_extract_ascii_flag",
+      "comment": "0x41 AND 0x7F = 0x41, 0xC1 AND 0x7F = 0x41",
+      "input": {"type": "bytes", "encoding": "hex", "value": "41c1"},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "7f"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "4141"},
+      "tags": ["and", "mask"]
+    },
+    {
+      "name": "and_empty_input",
+      "comment": "AND on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "AND", "args": [{"option": "Hex", "string": "ff"}]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["and", "edge_case"]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "operation": "Whirlpool",
+  "category": "hashing",
+  "description": "Whirlpool hash algorithm tests with different variants (Whirlpool, Whirlpool-T, Whirlpool-0)",
+  "tests": [
+    {
+      "name": "whirlpool_hello",
+      "comment": "Whirlpool of 'hello' with standard variant and 10 rounds",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Whirlpool",
+          "args": {
+            "Variant": "Whirlpool",
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0a25f55d7308eca6b9567a7ed3bd1b46327f0f1ffdc804dd8bb5af40e88d78b88df0d002a89e2fdbd5876c523f1b67bc44e9f87047598e7548298ea1c81cfd73"
+      },
+      "tags": [
+        "whirlpool"
+      ]
+    },
+    {
+      "name": "whirlpool_t_hello",
+      "comment": "Whirlpool-T variant of 'hello' with 10 rounds",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Whirlpool",
+          "args": {
+            "Variant": "Whirlpool-T",
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "7425611278c033a54d02ace0527442d6da28bf012604ef416ba437149b75c363b7bad56a61f357c4196e387f54158dbff2d7a353926329814361981472102ebc"
+      },
+      "tags": [
+        "whirlpool-t"
+      ]
+    },
+    {
+      "name": "whirlpool_0_hello",
+      "comment": "Whirlpool-0 variant of 'hello' with 10 rounds",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Whirlpool",
+          "args": {
+            "Variant": "Whirlpool-0",
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "721a2d3ce21152e0cae5eb3b91c0dc930e9ce5ed7f0e511285ab76641ec476d52244ccced4d78e896496d9d4dc26afc6a5e1b2852cd745b5906c81bb38cec73f"
+      },
+      "tags": [
+        "whirlpool-0"
+      ]
+    },
+    {
+      "name": "whirlpool_empty",
+      "comment": "Whirlpool of empty string",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Whirlpool",
+          "args": {
+            "Variant": "Whirlpool",
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "19fa61d75522a4669b44e39c1d2e1726c530232130d407f89afee0964997f7a73e83be698b288febcf88e3e03c4f0757ea8964e59b63d93708b138cc42a66eb3"
+      },
+      "tags": [
+        "whirlpool",
+        "empty"
+      ]
+    },
+    {
+      "name": "whirlpool_all_bytes",
+      "comment": "Whirlpool of all 256 byte values (0x00-0xFF)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "operations": [
+        {
+          "op": "Whirlpool",
+          "args": {
+            "Variant": "Whirlpool",
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "05a308887b2392bfb3c71a438aa03153ca102b62ca9f5cbb4ac2d7f161c9d7f8bc6eb895cb2be5f595c656c24c50f1e293f37c7b5b07f32baf251dfe11b4b2a3"
+      },
+      "tags": [
+        "whirlpool",
+        "all-bytes"
+      ]
+    }
+  ]
+}

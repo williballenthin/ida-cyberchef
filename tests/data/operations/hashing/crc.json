@@ -1,0 +1,79 @@
+{
+  "operation": "CRC Checksum",
+  "category": "hashing",
+  "description": "CRC (Cyclic Redundancy Check) checksum algorithm tests with various CRC variants",
+  "tests": [
+    {
+      "name": "crc32_hello_world",
+      "comment": "CRC-32 of 'hello world' - verified against Python zlib.crc32",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-32"}}],
+      "expected": {"type": "string", "value": "0d4a1185"},
+      "tags": ["crc-32"]
+    },
+    {
+      "name": "crc32_hello",
+      "comment": "CRC-32 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-32"}}],
+      "expected": {"type": "string", "value": "3610a686"},
+      "tags": ["crc-32"]
+    },
+    {
+      "name": "crc32_empty",
+      "comment": "CRC-32 of empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-32"}}],
+      "expected": {"type": "string", "value": "00000000"},
+      "tags": ["crc-32", "empty"]
+    },
+    {
+      "name": "crc32_test",
+      "comment": "CRC-32 of 'test'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-32"}}],
+      "expected": {"type": "string", "value": "d87f7e0c"},
+      "tags": ["crc-32"]
+    },
+    {
+      "name": "crc8_hello",
+      "comment": "CRC-8 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-8"}}],
+      "expected": {"type": "string", "value": "92"},
+      "tags": ["crc-8"]
+    },
+    {
+      "name": "crc16_hello",
+      "comment": "CRC-16 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-16"}}],
+      "expected": {"type": "string", "value": "34d2"},
+      "tags": ["crc-16"]
+    },
+    {
+      "name": "crc16_ccitt_test",
+      "comment": "CRC-16/CCITT of 'test'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-16/CCITT"}}],
+      "expected": {"type": "string", "value": "fb56"},
+      "tags": ["crc-16-ccitt"]
+    },
+    {
+      "name": "crc16_xmodem_test",
+      "comment": "CRC-16/XMODEM of 'test'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-16/XMODEM"}}],
+      "expected": {"type": "string", "value": "9b06"},
+      "tags": ["crc-16-xmodem"]
+    },
+    {
+      "name": "crc32_bzip2_test",
+      "comment": "CRC-32/BZIP2 of 'test'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "CRC Checksum", "args": {"Algorithm": "CRC-32/BZIP2"}}],
+      "expected": {"type": "string", "value": "338bcfac"},
+      "tags": ["crc-32-bzip2"]
+    }
+  ]
+}

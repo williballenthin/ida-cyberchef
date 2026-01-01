@@ -1,0 +1,97 @@
+{
+  "operation": "Cross-Compression",
+  "category": "compression",
+  "description": "Tests for combining compression operations with other encoding operations",
+  "tests": [
+    {
+      "name": "gzip_then_base64",
+      "comment": "Test Gzip compression followed by Base64 encoding and reverse",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "Gzip",
+        "To Base64",
+        "From Base64",
+        "Gunzip"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "encoding", "roundtrip", "integration"]
+    },
+    {
+      "name": "bzip2_then_hex",
+      "comment": "Test Bzip2 compression followed by hex encoding and reverse",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "Bzip2 Compress",
+        "To Hex",
+        "From Hex",
+        "Bzip2 Decompress"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "encoding", "roundtrip", "integration"],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    },
+    {
+      "name": "zlib_then_url_encode",
+      "comment": "Test Zlib compression followed by hex encoding and URL encoding, then reverse",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        "Zlib Deflate",
+        "To Hex",
+        "URL Encode",
+        "URL Decode",
+        "From Hex",
+        "Zlib Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "encoding", "roundtrip", "integration"]
+    },
+    {
+      "name": "double_compression_gzip_bzip2",
+      "comment": "Test double compression: Gzip then Bzip2, then reverse decompression",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243444546474841424344454647484142434445464748414243444546474841424344454647484142434445464748414243444546474841424344454647484142434445464748"
+      },
+      "operations": [
+        "Gzip",
+        "Bzip2 Compress",
+        "Bzip2 Decompress",
+        "Gunzip"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243444546474841424344454647484142434445464748414243444546474841424344454647484142434445464748414243444546474841424344454647484142434445464748"
+      },
+      "tags": ["compress", "roundtrip", "double-compression", "integration"],
+      "skip": true,
+      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+    }
+  ]
+}

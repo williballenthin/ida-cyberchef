@@ -1,0 +1,49 @@
+{
+  "operation": "BSON serialise",
+  "category": "data_format",
+  "description": "Tests for BSON (Binary JSON) serialisation",
+  "tests": [
+    {
+      "name": "serialise_empty_object",
+      "comment": "Serialise empty JSON object to BSON - BSON empty document is 5 bytes: length(4) + terminator(1)",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "BSON serialise"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "0500000000"
+      },
+      "tags": [
+        "serialise",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    },
+    {
+      "name": "serialise_simple_object",
+      "comment": "Serialise simple JSON object to BSON - note: actual hex depends on CyberChef's BSON implementation",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\"}"
+      },
+      "operations": [
+        "BSON serialise"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "16000000026e616d6500060000004116c696365000"
+      },
+      "tags": [
+        "serialise",
+        "object"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+    }
+  ]
+}

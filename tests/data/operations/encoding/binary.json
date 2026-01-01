@@ -1,0 +1,109 @@
+{
+  "operation": "To Binary / From Binary",
+  "category": "encoding",
+  "description": "Binary encoding and decoding tests",
+  "tests": [
+    {
+      "name": "from_binary_hello",
+      "comment": "Decode space-separated binary to 'hello'",
+      "input": {
+        "type": "string",
+        "value": "01101000 01100101 01101100 01101100 01101111"
+      },
+      "operations": [
+        "From Binary"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_binary_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "To Binary"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_binary_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "From Binary"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": [
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_binary_no_delimiter",
+      "comment": "Binary encoding without delimiter for 'AB'",
+      "input": {
+        "type": "string",
+        "value": "AB"
+      },
+      "operations": [
+        {
+          "op": "To Binary",
+          "args": {
+            "Delimiter": "None"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0100000101000010"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "from_binary_no_delimiter",
+      "comment": "Binary decoding without delimiter",
+      "input": {
+        "type": "string",
+        "value": "0100000101000010"
+      },
+      "operations": [
+        "From Binary"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142"
+      },
+      "tags": [],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "operation": "Raw Deflate",
+  "category": "compression",
+  "description": "Tests for Raw Deflate and Raw Inflate operations (deflate without zlib wrapper)",
+  "tests": [
+    {
+      "name": "raw_inflate_hello_world",
+      "comment": "Decompress raw deflate data (zlib output without header/checksum) to 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "f348cdc9c9d75108cf2fca49510400"
+      },
+      "operations": ["Raw Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["decompress", "python-interop"]
+    },
+    {
+      "name": "raw_deflate_roundtrip_hello_world",
+      "comment": "Test Raw Deflate/Inflate roundtrip with 'Hello, World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": ["Raw Deflate", "Raw Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip"]
+    },
+    {
+      "name": "raw_deflate_roundtrip_all_bytes",
+      "comment": "Test Raw Deflate roundtrip with all 256 possible byte values",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "operations": ["Raw Deflate", "Raw Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      },
+      "tags": ["compress", "roundtrip", "binary"]
+    },
+    {
+      "name": "raw_deflate_roundtrip_utf8_simple",
+      "comment": "Test Raw Deflate roundtrip with UTF-8 text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "operations": ["Raw Deflate", "Raw Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c642120e4bda0e5a5bde4b896e7958c20f09f8c8d"
+      },
+      "tags": ["compress", "roundtrip", "utf8"]
+    },
+    {
+      "name": "raw_deflate_roundtrip_empty",
+      "comment": "Test Raw Deflate roundtrip with empty input",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Raw Deflate", "Raw Inflate"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["compress", "roundtrip", "empty", "edge-case"]
+    },
+    {
+      "name": "raw_deflate_compression_type_dynamic",
+      "comment": "Test Raw Deflate with dynamic Huffman coding and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Raw Deflate",
+          "args": {
+            "Compression type": "Dynamic Huffman Coding"
+          }
+        },
+        "Raw Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    },
+    {
+      "name": "raw_deflate_compression_type_fixed",
+      "comment": "Test Raw Deflate with fixed Huffman coding and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Raw Deflate",
+          "args": {
+            "Compression type": "Fixed Huffman Coding"
+          }
+        },
+        "Raw Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    },
+    {
+      "name": "raw_deflate_compression_type_none",
+      "comment": "Test Raw Deflate with no compression (store only) and verify with Inflate",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Raw Deflate",
+          "args": {
+            "Compression type": "None (Store)"
+          }
+        },
+        "Raw Inflate"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "tags": ["compress", "roundtrip", "compression-options"]
+    }
+  ]
+}

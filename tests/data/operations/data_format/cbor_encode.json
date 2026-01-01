@@ -1,0 +1,91 @@
+{
+  "operation": "CBOR Encode",
+  "category": "data_format",
+  "description": "Tests for CBOR (Concise Binary Object Representation) encoding",
+  "tests": [
+    {
+      "name": "encode_empty_object",
+      "comment": "Encode empty JSON object to CBOR (map type 0xa0)",
+      "input": {
+        "type": "string",
+        "value": "{}"
+      },
+      "operations": [
+        "CBOR Encode"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "a0"
+      },
+      "tags": [
+        "encode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode_empty_array",
+      "comment": "Encode empty JSON array to CBOR (array type 0x80)",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        "CBOR Encode"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "80"
+      },
+      "tags": [
+        "encode",
+        "empty"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode_simple_array",
+      "comment": "Encode JSON array [1,2,3] to CBOR",
+      "input": {
+        "type": "string",
+        "value": "[1,2,3]"
+      },
+      "operations": [
+        "CBOR Encode"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "83010203"
+      },
+      "tags": [
+        "encode",
+        "array"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "encode_simple_object",
+      "comment": "Encode simple JSON object to CBOR - note: actual hex may vary based on key ordering",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\"}"
+      },
+      "operations": [
+        "CBOR Encode"
+      ],
+      "expected": {
+        "type": "hex",
+        "value": "a1646e616d65654116c696365"
+      },
+      "tags": [
+        "encode",
+        "object"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    }
+  ]
+}

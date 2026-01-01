@@ -1,0 +1,23 @@
+{
+  "operation": "ROT47",
+  "category": "encryption",
+  "description": "Tests for ROT47 cipher operating on ASCII printable characters (33-126)",
+  "tests": [
+    {
+      "name": "empty input",
+      "comment": "ROT47 with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["ROT47"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

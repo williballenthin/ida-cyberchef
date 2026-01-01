@@ -1,0 +1,39 @@
+{
+  "operation": "BLAKE2s",
+  "category": "hashing",
+  "description": "BLAKE2s hash algorithm tests. Note: CyberChef's Size parameter only works correctly for 256-bit output; other sizes are broken.",
+  "tests": [
+    {
+      "name": "blake2s_256_empty",
+      "comment": "BLAKE2s-256 of empty string",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "BLAKE2s", "args": {"Size": 256}}],
+      "expected": {"type": "string", "value": "69217a3079908094e11121d042354a7c1f55b6482ca1a51e1b250dfd1ed0eef9"},
+      "tags": ["empty", "blake2s-256"]
+    },
+    {
+      "name": "blake2s_256_hello",
+      "comment": "BLAKE2s-256 of 'hello'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "BLAKE2s", "args": {"Size": 256}}],
+      "expected": {"type": "string", "value": "19213bacc58dee6dbde3ceb9a47cbb330b3d86f8cca8997eb00be456f140ca25"},
+      "tags": ["blake2s-256"]
+    },
+    {
+      "name": "blake2s_256_test_data",
+      "comment": "BLAKE2s-256 of 'test data'",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7465737420646174"},
+      "operations": [{"op": "BLAKE2s", "args": {"Size": 256}}],
+      "expected": {"type": "string", "value": "c6d2e9fee08f3d8135e126af9e5edf48059974f1893002d933401277e76c27cb"},
+      "tags": ["blake2s-256"]
+    },
+    {
+      "name": "blake2s_256_with_key",
+      "comment": "BLAKE2s-256 with key 'secret_key'. Note: Key parameter expects UTF-8 string, not hex.",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "BLAKE2s", "args": {"Size": 256, "Key": "secret_key"}}],
+      "expected": {"type": "string", "value": "71b3098a4e7703c04883cef0993a390ff8067f9068c9a7e9582e735042f26131"},
+      "tags": ["with-key", "blake2s-256"]
+    }
+  ]
+}
