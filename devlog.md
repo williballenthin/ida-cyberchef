@@ -174,3 +174,61 @@ This allows mixed chains like `["To Base64", "Gzip", "To Hex"]` to work seamless
   - test_cyberchef.py: 21 tests
   - test_operations_comprehensive.py: 119 tests
   - test_compression.py: 63 tests
+
+---
+
+## 2026-01-01: Pluggable JavaScript Runtime Abstraction
+
+### Goal
+Support multiple JS runtimes (QuickJS, STPyV8, PythonMonkey) via a common interface.
+
+### Why?
+- **STPyV8**: Best CyberChef compatibility (V8 engine), but large binary (~50MB)
+- **QuickJS**: Small (~300KB), always available, but needs compression workarounds
+- **PythonMonkey**: SpiderMonkey engine, good interop, moderate size
+
+### Architecture
+
+```
+ida_cyberchef/runtime/
+├── __init__.py           # get_runtime(), get_available_runtimes()
+├── base.py               # JSRuntime ABC
+├── quickjs_runtime.py    # QuickJS adapter
+├── stpyv8_runtime.py     # STPyV8 adapter
+└── pythonmonkey_runtime.py  # PythonMonkey adapter
+```
+
+### Interface
+
+```python
+class JSRuntime(ABC):
+    @property
+    def name(self) -> str: ...
+    @property
+    def needs_compression_fallback(self) -> bool: ...
+    def load(self, cyberchef_path: str) -> None: ...
+    def bake(self, input_dish: dict, recipe: list) -> dict: ...
+```
+
+### Runtime Selection
+Order of preference: STPyV8 > PythonMonkey > QuickJS
+```python
+from ida_cyberchef.runtime import get_runtime
+runtime = get_runtime()  # Auto-select best available
+runtime = get_runtime("quickjs")  # Force specific runtime
+```
+
+### Compression Fallback Logic
+```python
+if runtime.needs_compression_fallback:
+    # Route compression ops to Python stdlib
+else:
+    # Everything goes through JS runtime
+```
+
+### Test Results
+- **218 passed, 0 failed (100%)**
+  - test_cyberchef.py: 21 tests
+  - test_operations_comprehensive.py: 119 tests
+  - test_compression.py: 63 tests
+  - test_runtime.py: 15 tests

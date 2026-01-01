@@ -1,14 +1,28 @@
+"""CyberChef integration with pluggable JavaScript runtime support.
+
+This module provides Python bindings to CyberChef operations via a
+pluggable JavaScript runtime system. Supported runtimes:
+- QuickJS: Small, embeddable (default fallback)
+- STPyV8: Google V8 bindings (best compatibility)
+- PythonMonkey: Mozilla SpiderMonkey bindings
+
+The runtime is auto-detected based on what's installed, with fallback
+to QuickJS. Some operations (compression) use Python stdlib when the
+runtime has compatibility issues.
+"""
+
 import bz2
 import gzip
 import json
 import zlib
 from enum import IntEnum
 from io import BytesIO
+from pathlib import Path
 from typing import Any, TypedDict
 
-import quickjs
+from .runtime import JSRuntime, get_runtime
 
-_chef_instance = None
+_runtime_instance: JSRuntime | None = None
 
 
 class DishType(IntEnum):
@@ -45,9 +59,9 @@ class RecipeOperation(TypedDict, total=False):
 # =============================================================================
 # Python Compression Fallbacks
 # =============================================================================
-# QuickJS has stricter typed array bounds checking than V8, which causes
-# CyberChef's embedded zlib.js to fail. These Python implementations provide
-# equivalent functionality using Python's standard library.
+# Some runtimes (QuickJS) have stricter typed array bounds checking that breaks
+# CyberChef's embedded zlib.js. These Python implementations provide equivalent
+# functionality using Python's standard library.
 
 
 def _get_compression_level(args: dict) -> int:
@@ -69,33 +83,13 @@ def _get_compression_level(args: dict) -> int:
 
 
 def _python_zlib_deflate(data: bytes, args: dict) -> bytes:
-    """Python implementation of Zlib Deflate.
-
-    Compresses data using zlib format (with header and checksum).
-
-    Args:
-        data: Input bytes to compress
-        args: Operation arguments (Compression type)
-
-    Returns:
-        Zlib-compressed bytes
-    """
+    """Python implementation of Zlib Deflate."""
     level = _get_compression_level(args)
     return zlib.compress(data, level=level)
 
 
 def _python_zlib_inflate(data: bytes, args: dict) -> bytes:
-    """Python implementation of Zlib Inflate.
-
-    Decompresses zlib-formatted data.
-
-    Args:
-        data: Zlib-compressed bytes
-        args: Operation arguments (Start index, etc.)
-
-    Returns:
-        Decompressed bytes
-    """
+    """Python implementation of Zlib Inflate."""
     start_index = int(args.get("Start index", 0))
     if start_index > 0:
         data = data[start_index:]
@@ -103,58 +97,25 @@ def _python_zlib_inflate(data: bytes, args: dict) -> bytes:
 
 
 def _python_raw_deflate(data: bytes, args: dict) -> bytes:
-    """Python implementation of Raw Deflate.
-
-    Compresses data using raw deflate (no zlib header/checksum).
-
-    Args:
-        data: Input bytes to compress
-        args: Operation arguments (Compression type)
-
-    Returns:
-        Raw deflate compressed bytes
-    """
+    """Python implementation of Raw Deflate."""
     level = _get_compression_level(args)
-    # wbits=-15 means raw deflate without header
     compressor = zlib.compressobj(level=level, wbits=-15)
     return compressor.compress(data) + compressor.flush()
 
 
 def _python_raw_inflate(data: bytes, args: dict) -> bytes:
-    """Python implementation of Raw Inflate.
-
-    Decompresses raw deflate data (no zlib header).
-
-    Args:
-        data: Raw deflate compressed bytes
-        args: Operation arguments (Start index, etc.)
-
-    Returns:
-        Decompressed bytes
-    """
+    """Python implementation of Raw Inflate."""
     start_index = int(args.get("Start index", 0))
     if start_index > 0:
         data = data[start_index:]
-    # wbits=-15 means raw deflate without header
     return zlib.decompress(data, wbits=-15)
 
 
 def _python_gzip_compress(data: bytes, args: dict) -> bytes:
-    """Python implementation of Gzip.
-
-    Compresses data using gzip format.
-
-    Args:
-        data: Input bytes to compress
-        args: Operation arguments (Compression type, Filename, Comment, etc.)
-
-    Returns:
-        Gzip-compressed bytes
-    """
+    """Python implementation of Gzip."""
     level = _get_compression_level(args)
-    # Map level 0 to 1 for gzip (gzip doesn't support level 0)
     if level == 0:
-        level = 1
+        level = 1  # gzip doesn't support level 0
 
     buf = BytesIO()
     with gzip.GzipFile(fileobj=buf, mode="wb", compresslevel=level) as f:
@@ -163,57 +124,26 @@ def _python_gzip_compress(data: bytes, args: dict) -> bytes:
 
 
 def _python_gunzip(data: bytes, args: dict) -> bytes:
-    """Python implementation of Gunzip.
-
-    Decompresses gzip-formatted data.
-
-    Args:
-        data: Gzip-compressed bytes
-        args: Operation arguments (unused)
-
-    Returns:
-        Decompressed bytes
-    """
+    """Python implementation of Gunzip."""
     buf = BytesIO(data)
     with gzip.GzipFile(fileobj=buf, mode="rb") as f:
         return f.read()
 
 
 def _python_bzip2_compress(data: bytes, args: dict) -> bytes:
-    """Python implementation of Bzip2 Compress.
-
-    Compresses data using bzip2 format.
-
-    Args:
-        data: Input bytes to compress
-        args: Operation arguments (Block size)
-
-    Returns:
-        Bzip2-compressed bytes
-    """
-    # Block size is in 100s of kb (1-9), default 9
+    """Python implementation of Bzip2 Compress."""
     block_size = int(args.get("Block size (100s of kb)", 9))
-    block_size = max(1, min(9, block_size))  # Clamp to 1-9
+    block_size = max(1, min(9, block_size))
     return bz2.compress(data, compresslevel=block_size)
 
 
 def _python_bzip2_decompress(data: bytes, args: dict) -> bytes:
-    """Python implementation of Bzip2 Decompress.
-
-    Decompresses bzip2-formatted data.
-
-    Args:
-        data: Bzip2-compressed bytes
-        args: Operation arguments (unused in Python impl)
-
-    Returns:
-        Decompressed bytes
-    """
+    """Python implementation of Bzip2 Decompress."""
     return bz2.decompress(data)
 
 
-# Map of operations that should use Python implementations instead of QuickJS
-PYTHON_OPERATION_OVERRIDES: dict[str, callable] = {
+# Map of operations that can use Python implementations
+PYTHON_COMPRESSION_OVERRIDES: dict[str, callable] = {
     "Zlib Deflate": _python_zlib_deflate,
     "Zlib Inflate": _python_zlib_inflate,
     "Raw Deflate": _python_raw_deflate,
@@ -226,154 +156,68 @@ PYTHON_OPERATION_OVERRIDES: dict[str, callable] = {
 
 
 # =============================================================================
-# Core CyberChef Integration
+# Runtime Management
 # =============================================================================
 
 
-def get_chef():
-    """Get or create a cached CyberChef instance.
+def get_chef() -> JSRuntime:
+    """Get or create a cached CyberChef runtime instance.
 
-    Returns: CyberChef module exports object (QuickJS Context)
+    Returns:
+        JSRuntime instance with CyberChef loaded
     """
-    global _chef_instance
-    if _chef_instance is None:
-        _chef_instance = load_cyberchef()
-    return _chef_instance
+    global _runtime_instance
+    if _runtime_instance is None:
+        _runtime_instance = load_cyberchef()
+    return _runtime_instance
 
 
-def load_cyberchef(path: str | None = None):
-    """Load CyberChef bundle into QuickJS context and return exports.
+def load_cyberchef(path: str | None = None, preferred_runtime: str | None = None) -> JSRuntime:
+    """Load CyberChef bundle into JavaScript runtime.
 
     Args:
         path: Path to CyberChef.js bundle. If None, uses package data path.
+        preferred_runtime: Preferred runtime ('quickjs', 'stpyv8', 'pythonmonkey').
+                          If None, auto-selects best available.
 
-    Returns: QuickJS Context with CyberChef loaded
+    Returns:
+        JSRuntime instance with CyberChef loaded
     """
     if path is None:
-        from pathlib import Path
-
         path = str(Path(__file__).parent / "data" / "CyberChef.js")
 
-    ctx = quickjs.Context()
+    runtime = get_runtime(preferred_runtime)
+    runtime.load(path)
 
-    # Set generous limits for CyberChef operations
-    ctx.set_memory_limit(256 * 1024 * 1024)  # 256MB
-    ctx.set_time_limit(-1)  # No time limit initially
-
-    # Setup minimal global environment for CyberChef
-    ctx.eval("""
-    globalThis.global = globalThis;
-    globalThis.window = globalThis;
-    globalThis.self = globalThis;
-    globalThis.document = {};
-
-    // CyberChef app polyfill for window.app.options
-    // The 'From Charcode' and similar operations check window.app.options.attemptHighlight
-    // to control syntax highlighting behavior. In non-browser environments, we disable it.
-    globalThis.window.app = {
-        options: {
-            attemptHighlight: false
-        }
-    };
-
-    // Minimal process polyfill
-    globalThis.process = {
-        platform: 'linux',
-        env: {},
-        cwd: () => '/',
-        version: 'v18.0.0',
-        versions: {node: 'v18.0.0'},
-        nextTick: (fn) => fn()
-    };
-
-    // TextEncoder/TextDecoder polyfill
-    if (typeof TextEncoder === 'undefined') {
-        globalThis.TextEncoder = class TextEncoder {
-            encode(str) {
-                const utf8 = unescape(encodeURIComponent(str));
-                const result = new Uint8Array(utf8.length);
-                for (let i = 0; i < utf8.length; i++) {
-                    result[i] = utf8.charCodeAt(i);
-                }
-                return result;
-            }
-        };
-    }
-
-    if (typeof TextDecoder === 'undefined') {
-        globalThis.TextDecoder = class TextDecoder {
-            decode(bytes) {
-                if (bytes instanceof ArrayBuffer) {
-                    bytes = new Uint8Array(bytes);
-                }
-                const utf8 = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
-                try {
-                    return decodeURIComponent(escape(utf8));
-                } catch (e) {
-                    return utf8;
-                }
-            }
-        };
-    }
-
-    // Crypto API polyfill
-    if (typeof crypto === 'undefined') {
-        globalThis.crypto = {};
-    }
-    if (!globalThis.crypto.getRandomValues) {
-        globalThis.crypto.getRandomValues = function(array) {
-            for (let i = 0; i < array.length; i++) {
-                array[i] = Math.floor(Math.random() * 256);
-            }
-            return array;
-        };
-    }
-
-    // Timer polyfills (minimal implementation for CyberChef)
-    globalThis.setTimeout = function(fn, ms) {
-        fn();
-        return 0;
-    };
-    globalThis.setInterval = function(fn, ms) {
-        return 0;
-    };
-    globalThis.clearTimeout = function(id) {};
-    globalThis.clearInterval = function(id) {};
-
-    // Console polyfill
-    if (typeof console === 'undefined') {
-        globalThis.console = {
-            log: function() {},
-            warn: function() {},
-            error: function() {},
-            info: function() {},
-            debug: function() {}
-        };
-    }
-    """)
-
-    # Setup minimal CommonJS environment
-    ctx.eval("const module = { exports: {} };")
-
-    # Load and execute CyberChef
-    with open(path, "rb") as f:
-        cyberchef_code = f.read().decode("utf-8")
-    ctx.eval(cyberchef_code)
-
-    # Store reference to exports
-    ctx.eval("globalThis._cyberchef = module.exports;")
-
-    return ctx
+    return runtime
 
 
-def plate(v: Dish | Any, chef=None) -> Dish | Any:
+def set_runtime(runtime: JSRuntime | None) -> None:
+    """Set the global runtime instance.
+
+    Useful for testing or forcing a specific runtime.
+
+    Args:
+        runtime: JSRuntime instance to use, or None to clear
+    """
+    global _runtime_instance
+    _runtime_instance = runtime
+
+
+# =============================================================================
+# Dish Conversion
+# =============================================================================
+
+
+def plate(v: Dish | Any, runtime: JSRuntime | None = None) -> Dish | Any:
     """Convert between Python types and CyberChef Dish objects.
 
     Args:
         v: Either a Dish object or a native Python type
-        chef: Optional CyberChef context (QuickJS Context) for creating proper Dish instances from bytes
+        runtime: Optional runtime (unused, kept for API compatibility)
 
-    Returns: Native Python type if input is Dish, Dish dict/instance if input is Python type
+    Returns:
+        Native Python type if input is Dish, Dish dict if input is Python type
     """
     is_dish_object = isinstance(v, dict) and "value" in v and "type" in v
 
@@ -424,6 +268,11 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
             return {"value": str(v), "type": int(DishType.STRING)}
 
 
+# =============================================================================
+# Core Bake Function
+# =============================================================================
+
+
 def _execute_python_operation(op_name: str, data: bytes | str, args: dict) -> bytes:
     """Execute a Python-implemented operation.
 
@@ -435,90 +284,46 @@ def _execute_python_operation(op_name: str, data: bytes | str, args: dict) -> by
     Returns:
         Result as bytes
     """
-    # Ensure data is bytes
     if isinstance(data, str):
         data = data.encode("utf-8")
 
-    func = PYTHON_OPERATION_OVERRIDES[op_name]
+    func = PYTHON_COMPRESSION_OVERRIDES[op_name]
     return func(data, args)
 
 
-def _bake_with_quickjs(
-    input_data: bytes | str, recipe: list[str | RecipeOperation]
+def _bake_with_runtime(
+    runtime: JSRuntime,
+    input_data: bytes | str,
+    recipe: list[str | RecipeOperation],
 ) -> bytes | str:
-    """Execute recipe using QuickJS/CyberChef.
+    """Execute recipe using JavaScript runtime.
 
     Args:
+        runtime: JSRuntime instance
         input_data: Input data as bytes or string
         recipe: List of operations
 
     Returns:
         Result as bytes or string
     """
-    chef = get_chef()
-
     # Convert input to Dish format
     if isinstance(input_data, bytes):
-        input_dish = plate(input_data)
-    elif isinstance(input_data, str):
-        input_dish = plate(input_data)
+        input_dish = {"value": list(input_data), "type": int(DishType.ARRAY_BUFFER)}
     else:
         input_dish = {"value": input_data, "type": int(DishType.STRING)}
 
-    input_json = json.dumps(input_dish)
-    recipe_json = json.dumps(recipe)
+    # Execute via runtime
+    result_dish = runtime.bake(input_dish, recipe)
 
-    # Execute bake and get result as JSON
-    result_json = chef.eval(f"""
-    (function() {{
-        const inputDish = {input_json};
-        const recipe = {recipe_json};
-
-        // Create a proper Dish object from the input
-        let dish;
-        if (inputDish.type === {int(DishType.ARRAY_BUFFER)} || inputDish.type === {int(DishType.BYTE_ARRAY)}) {{
-            const uint8 = new Uint8Array(inputDish.value);
-            dish = new _cyberchef.Dish(uint8.buffer, _cyberchef.Dish.ARRAY_BUFFER);
-        }} else if (inputDish.type === {int(DishType.STRING)}) {{
-            dish = new _cyberchef.Dish(inputDish.value, _cyberchef.Dish.STRING);
-        }} else {{
-            dish = new _cyberchef.Dish(inputDish.value, inputDish.type);
-        }}
-
-        // Execute bake
-        const result = _cyberchef.bake(dish, recipe);
-
-        // Convert result to JSON-serializable format
-        const resultType = result.type;
-        let resultValue = result.value;
-
-        if (resultType === _cyberchef.Dish.ARRAY_BUFFER || resultType === _cyberchef.Dish.BYTE_ARRAY) {{
-            if (resultValue instanceof ArrayBuffer) {{
-                resultValue = Array.from(new Uint8Array(resultValue));
-            }} else if (resultValue instanceof Uint8Array) {{
-                resultValue = Array.from(resultValue);
-            }} else if (Array.isArray(resultValue)) {{
-                resultValue = resultValue;
-            }}
-        }}
-
-        return JSON.stringify({{
-            value: resultValue,
-            type: resultType
-        }});
-    }})()
-    """)
-
-    result = json.loads(result_json)
-    return plate(result)
+    return plate(result_dish)
 
 
 def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes | str:
     """Execute CyberChef operations.
 
-    This function intelligently routes operations:
-    - Compression operations use Python stdlib (faster, more reliable)
-    - All other operations use QuickJS/CyberChef
+    This function intelligently routes operations based on runtime capabilities:
+    - If runtime needs compression fallback, compression uses Python stdlib
+    - All other operations use the JavaScript runtime
 
     Args:
         input_data: Input data as bytes or string
@@ -532,6 +337,13 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
     if not recipe:
         return input_data
 
+    runtime = get_chef()
+
+    # If runtime doesn't need compression fallback, run everything through JS
+    if not runtime.needs_compression_fallback:
+        return _bake_with_runtime(runtime, input_data, recipe)
+
+    # Otherwise, intelligently route operations
     current_data = input_data
     pending_recipe: list[str | RecipeOperation] = []
 
@@ -545,20 +357,20 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
             op_args = step.get("args", {})
 
         # Check if this operation should use Python implementation
-        if op_name in PYTHON_OPERATION_OVERRIDES:
-            # First, execute any pending QuickJS operations
+        if op_name in PYTHON_COMPRESSION_OVERRIDES:
+            # First, execute any pending JS operations
             if pending_recipe:
-                current_data = _bake_with_quickjs(current_data, pending_recipe)
+                current_data = _bake_with_runtime(runtime, current_data, pending_recipe)
                 pending_recipe = []
 
             # Execute Python operation
             current_data = _execute_python_operation(op_name, current_data, op_args)
         else:
-            # Queue for QuickJS execution
+            # Queue for JS execution
             pending_recipe.append(step)
 
-    # Execute any remaining QuickJS operations
+    # Execute any remaining JS operations
     if pending_recipe:
-        current_data = _bake_with_quickjs(current_data, pending_recipe)
+        current_data = _bake_with_runtime(runtime, current_data, pending_recipe)
 
     return current_data
