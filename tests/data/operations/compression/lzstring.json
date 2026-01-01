@@ -115,9 +115,7 @@
         "binary",
         "string-output",
         "compression-options"
-      ],
-      "skip": true,
-      "skipReason": "Test expected value truncated or incorrect"
+      ]
     },
     {
       "name": "lzstring_roundtrip_utf8_simple",

@@ -151,6 +151,32 @@ def load_cyberchef(path: str | None = None):
     return chef
 
 
+def _jsobj_to_python(value: Any, chef=None) -> Any:
+    """Convert a JavaScript object to a Python native type.
+
+    Args:
+        value: A JavaScript object (STPyV8.JSObject) or native Python type
+        chef: Optional CyberChef module with V8 context for serialization
+
+    Returns: Python native type (str, dict, list, etc.)
+    """
+    if not isinstance(value, STPyV8.JSObject):
+        return value
+
+    if chef and hasattr(chef, "_stpyv8_context"):
+        ctx = chef._stpyv8_context
+        ctx.locals._jsobj_to_serialize = value
+        # Use JSON.stringify to convert JS object to JSON string
+        json_str = ctx.eval("""
+        (function() {
+            return JSON.stringify(_jsobj_to_serialize);
+        })
+        """)()
+        if json_str is not None:
+            return json.loads(json_str)
+    return value
+
+
 def plate(v: Dish | Any, chef=None) -> Dish | Any:
     """Convert between Python types and CyberChef Dish objects.
 
@@ -181,6 +207,13 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
 
             return value
         elif dish_type == DishType.STRING:
+            # Handle JSObject that should be converted to string
+            if isinstance(value, STPyV8.JSObject):
+                py_value = _jsobj_to_python(value, chef)
+                # If it converted to a dict/list, serialize as JSON string
+                if isinstance(py_value, (dict, list)):
+                    return json.dumps(py_value, separators=(",", ":"))
+                return str(py_value)
             return str(value)
         elif dish_type == DishType.NUMBER:
             return float(value)
@@ -205,7 +238,12 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
         elif dish_type == DishType.BIG_NUMBER:
             return int(value) if isinstance(value, (int, float)) else value
         elif dish_type == DishType.JSON:
-            return value
+            # Convert JSObject to Python native types
+            py_value = _jsobj_to_python(value, chef)
+            # For JSON dish type, serialize to JSON string for consistent output
+            if isinstance(py_value, (dict, list)):
+                return json.dumps(py_value, separators=(",", ":"))
+            return py_value
         elif dish_type in (DishType.FILE, DishType.LIST_FILE):
             return value
         else:

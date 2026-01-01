@@ -158,6 +158,7 @@ Correct the expected value in the test file.
 
 ### Phase 1: Fix Invalid Data Type Enum Error (HIGH PRIORITY)
 **Impact**: 142 tests (75% of skipped tests)
+**Status**: TODO
 
 1. [ ] Add debug logging to capture actual error messages
 2. [ ] Investigate which operations need STRING vs ARRAY_BUFFER input
@@ -167,37 +168,51 @@ Correct the expected value in the test file.
 
 ### Phase 2: Fix ArrayBuffer Error (MEDIUM PRIORITY)
 **Impact**: 21 tests (11% of skipped tests)
+**Status**: TODO
 
 1. [ ] Add ArrayBuffer handling to `plate()` function
 2. [ ] Test LZMA and Bzip2 operations individually
 3. [ ] Fix any edge cases in binary data handling
 4. [ ] Remove skip markers from fixed tests
 
-### Phase 3: Fix JS Object Returns (MEDIUM PRIORITY)
-**Impact**: 19 tests (10% of skipped tests)
+### Phase 3: Fix JS Object Returns (MEDIUM PRIORITY) ✅ COMPLETED
+**Impact**: 10 tests (MessagePack, CBOR Decode)
+**Status**: COMPLETED
 
-1. [ ] Update `plate()` to serialize JSObject returns
-2. [ ] Add JSON.stringify for JSON-type Dish outputs
-3. [ ] Test MessagePack and XML operations
-4. [ ] Remove skip markers from fixed tests
+Changes made:
+1. [x] Added `_jsobj_to_python()` helper function to serialize JSObjects using `JSON.stringify()`
+2. [x] Updated `plate()` to handle JSObject returns for STRING and JSON dish types
+3. [x] Fixed `to_messagepack.json` - corrected `"type": "hex"` to `"type": "bytes"` with encoding
+4. [x] Removed skip markers from `from_messagepack.json` (3 tests)
+5. [x] Removed skip markers from `cbor_decode.json` (3 tests)
+6. [x] Removed skip markers from `to_messagepack.json` (3 tests)
+
+Note: XML Beautify/Minify tests remain skipped as they may have additional string input issues (Phase 1).
 
 ### Phase 4: Address BLAKE3 (LOW PRIORITY)
 **Impact**: 5 tests (3% of skipped tests)
+**Status**: TODO
 
 1. [ ] Investigate if CyberChef bundle update fixes BLAKE3
 2. [ ] If not fixable, remove tests or document limitation
 
-### Phase 5: Fix Test Data (LOW PRIORITY)
+### Phase 5: Fix Test Data (LOW PRIORITY) ✅ COMPLETED
 **Impact**: 1 test
+**Status**: COMPLETED
 
-1. [ ] Correct expected value in lzstring.json
+Changes made:
+1. [x] Updated `decode_data_value()` in `tests/data/runner.py` to support `encoding: "latin-1"` for string types
+2. [x] Removed skip marker from `lzstring_roundtrip_all_bytes_base64` test
 
 ---
 
-## Files to Modify
+## Files Modified
 
 | File | Changes |
 |------|---------|
-| `ida_cyberchef/cyberchef.py` | Update `bake()` and `plate()` functions |
-| `tests/data/operations/*.json` | Remove skip markers after fixes |
-| `tests/data/operations/compression/lzstring.json` | Fix incorrect expected value |
+| `ida_cyberchef/cyberchef.py` | Added `_jsobj_to_python()` helper; updated `plate()` for JSObject handling |
+| `tests/data/runner.py` | Added latin-1 encoding support for string types in `decode_data_value()` |
+| `tests/data/operations/data_format/from_messagepack.json` | Removed skip markers (3 tests) |
+| `tests/data/operations/data_format/to_messagepack.json` | Fixed type from "hex" to "bytes", removed skip markers (3 tests) |
+| `tests/data/operations/data_format/cbor_decode.json` | Removed skip markers (3 tests) |
+| `tests/data/operations/compression/lzstring.json` | Removed skip marker (1 test) |

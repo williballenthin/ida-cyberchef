@@ -14,15 +14,14 @@
         "To MessagePack"
       ],
       "expected": {
-        "type": "hex",
+        "type": "bytes",
+        "encoding": "hex",
         "value": "80"
       },
       "tags": [
         "encode",
         "empty"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+      ]
     },
     {
       "name": "encode_empty_array",
@@ -35,15 +34,14 @@
         "To MessagePack"
       ],
       "expected": {
-        "type": "hex",
+        "type": "bytes",
+        "encoding": "hex",
         "value": "90"
       },
       "tags": [
         "encode",
         "empty"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+      ]
     },
     {
       "name": "encode_simple_array",
@@ -56,15 +54,14 @@
         "To MessagePack"
       ],
       "expected": {
-        "type": "hex",
+        "type": "bytes",
+        "encoding": "hex",
         "value": "93010203"
       },
       "tags": [
         "encode",
         "array"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef string input handling broken or operation returns JS objects"
+      ]
     }
   ]
 }

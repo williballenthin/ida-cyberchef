@@ -46,12 +46,21 @@ def decode_data_value(data_value: dict[str, Any]) -> bytes | str:
         b"hello"
         >>> decode_data_value({"type": "bytes", "encoding": "base64", "value": "aGVsbG8="})
         b"hello"
+        >>> decode_data_value({"type": "string", "encoding": "latin-1", "value": "68656c6c6f"})
+        "hello"  # hex decoded, then interpreted as latin-1 string
     """
     data_type = data_value["type"]
     value = data_value["value"]
 
     if data_type == "string":
-        return value
+        encoding = data_value.get("encoding")
+        if encoding == "latin-1":
+            # Value is hex-encoded, decode to bytes then interpret as latin-1 string
+            return bytes.fromhex(value).decode("latin-1")
+        elif encoding is None:
+            return value
+        else:
+            raise ValueError(f"Unknown string encoding: {encoding}")
     elif data_type == "bytes":
         encoding = data_value.get("encoding", "base64")
         if encoding == "base64":
@@ -59,7 +68,7 @@ def decode_data_value(data_value: dict[str, Any]) -> bytes | str:
         elif encoding == "hex":
             return bytes.fromhex(value)
         else:
-            raise ValueError(f"Unknown encoding: {encoding}")
+            raise ValueError(f"Unknown bytes encoding: {encoding}")
     else:
         raise ValueError(f"Unknown data type: {data_type}")
 

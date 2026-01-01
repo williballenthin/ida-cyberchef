@@ -21,9 +21,7 @@
       "tags": [
         "decode",
         "empty"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation returns JS objects instead of strings"
+      ]
     },
     {
       "name": "decode_empty_array",
@@ -43,9 +41,7 @@
       "tags": [
         "decode",
         "empty"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation returns JS objects instead of strings"
+      ]
     },
     {
       "name": "decode_simple_array",
@@ -65,9 +61,7 @@
       "tags": [
         "decode",
         "array"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation returns JS objects instead of strings"
+      ]
     }
   ]
 }
