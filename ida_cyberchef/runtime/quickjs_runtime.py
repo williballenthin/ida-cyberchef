@@ -60,6 +60,15 @@ class QuickJSRuntime(JSRuntime):
         globalThis.self = globalThis;
         globalThis.document = {};
 
+        // CyberChef app polyfill for window.app.options
+        // The 'From Charcode' and similar operations check window.app.options.attemptHighlight
+        // to control syntax highlighting behavior. In non-browser environments, we disable it.
+        globalThis.window.app = {
+            options: {
+                attemptHighlight: false
+            }
+        };
+
         // Minimal process polyfill
         globalThis.process = {
             platform: 'linux',

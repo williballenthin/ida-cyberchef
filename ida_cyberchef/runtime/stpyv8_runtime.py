@@ -63,6 +63,13 @@ class STPyV8Runtime(JSRuntime):
         globalThis.self = globalThis;
         globalThis.document = {};
 
+        // CyberChef app polyfill for window.app.options
+        globalThis.window.app = {
+            options: {
+                attemptHighlight: false
+            }
+        };
+
         // Minimal process polyfill
         globalThis.process = {
             platform: 'linux',
