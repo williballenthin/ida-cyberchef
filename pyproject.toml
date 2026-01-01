@@ -11,7 +11,7 @@ dependencies = [
     "stpyv8>=13.1.201.22",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pytest>=8.4.2",
     "pytest-qt>=4.0",
