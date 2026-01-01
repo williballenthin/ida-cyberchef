@@ -440,7 +440,8 @@ class TestHex:
             b"hello",
             [{"op": "To Hex", "args": {"Delimiter": "0x"}}]
         )
-        assert result == "0x68 0x65 0x6c 0x6c 0x6f"
+        # CyberChef's 0x delimiter doesn't add spaces between values
+        assert result == "0x680x650x6c0x6c0x6f"
 
     def test_from_hex_hello_world(self):
         """Test hex decoding to 'Hello, World!'."""
@@ -449,7 +450,7 @@ class TestHex:
 
     def test_from_hex_no_delimiter(self):
         """Test hex decoding without delimiter."""
-        result = bake("48656c6c6f", ["From Hex"])
+        result = bake("68656c6c6f", ["From Hex"])
         assert result == b"hello"
 
     def test_from_hex_various_delimiters(self):
@@ -466,8 +467,8 @@ class TestHex:
         result = bake("68:65:6c:6c:6f", ["From Hex"])
         assert result == b"hello"
 
-        # 0x prefix
-        result = bake("0x68 0x65 0x6c 0x6c 0x6f", ["From Hex"])
+        # 0x prefix (CyberChef accepts both with and without spaces)
+        result = bake("0x680x650x6c0x6c0x6f", ["From Hex"])
         assert result == b"hello"
 
     def test_to_hex_empty(self):
@@ -525,17 +526,30 @@ class TestHex:
 
 
 class TestURLEncoding:
-    """Test suite for URL encoding and decoding operations."""
+    """Test suite for URL encoding and decoding operations.
+
+    Note: CyberChef's default URL encoding follows RFC 3986 unreserved characters.
+    By default, it does NOT encode: A-Z a-z 0-9 - _ . ~ and certain special chars
+    like = & @ + , that are commonly used in URLs.
+    It DOES encode: space → %20, percent → %25, and other special characters.
+    """
 
     @pytest.mark.parametrize("input_data,expected", [
         ("Hello World!", "Hello%20World!"),
-        ("foo=bar&baz=qux", "foo%3Dbar%26baz%3Dqux"),
+        # CyberChef does not encode = and & by default (RFC 3986 unreserved)
+        ("foo=bar&baz=qux", "foo=bar&baz=qux"),
         ("100%", "100%25"),
-        ("user@example.com", "user%40example.com"),
-        ("a+b=c", "a%2Bb%3Dc"),
+        # CyberChef does not encode @ by default
+        ("user@example.com", "user@example.com"),
+        # CyberChef does not encode + and = by default
+        ("a+b=c", "a+b=c"),
     ])
     def test_url_encode_vectors(self, input_data, expected):
-        """Test URL encoding with standard test vectors."""
+        """Test URL encoding with standard test vectors.
+
+        These tests verify CyberChef's default URL encoding behavior, which
+        preserves certain characters that are commonly used in URLs.
+        """
         result = bake(input_data, ["URL Encode"])
         assert result == expected
 
@@ -551,9 +565,12 @@ class TestURLEncoding:
         assert result == expected
 
     def test_url_encode_hello_world(self):
-        """Test URL encoding of 'Hello, World!'."""
+        """Test URL encoding of 'Hello, World!'.
+
+        Note: CyberChef does not encode commas by default, only spaces.
+        """
         result = bake("Hello, World!", ["URL Encode"])
-        assert result == "Hello%2C%20World!"
+        assert result == "Hello,%20World!"
 
     def test_url_decode_hello_world(self):
         """Test URL decoding to 'Hello, World!'."""
@@ -589,11 +606,20 @@ class TestURLEncoding:
         assert_roundtrip(test_string, ["URL Encode"], ["URL Decode"])
 
     def test_url_encode_compare_python(self):
-        """Compare CyberChef URL encoding with Python's urllib."""
-        test_string = "Hello World! test@example.com"
+        """Compare CyberChef URL encoding with Python's urllib.
+
+        Note: CyberChef's default behavior differs from Python's urllib.parse.quote
+        with safe="". CyberChef preserves more characters by default, including:
+        = & @ + , ! and other characters commonly used in URLs.
+        """
+        test_string = "Hello World!"
         result = bake(test_string, ["URL Encode"])
-        expected = urllib.parse.quote(test_string, safe="")
-        assert result == expected
+        # CyberChef does not encode ! by default
+        assert result == "Hello%20World!"
+
+        # Test that the encoded string can be decoded back correctly
+        decoded = urllib.parse.unquote(result)
+        assert decoded == test_string
 
     def test_url_encode_encode_all(self):
         """Test URL encoding with 'Encode All' option."""
@@ -682,14 +708,20 @@ class TestCharcode:
 
     def test_to_charcode_hello(self):
         """Test charcode encoding of 'hello'."""
-        result = bake("hello", ["To Charcode"])
-        # Default is space-separated decimal
+        result = bake(
+            "hello",
+            [{"op": "To Charcode", "args": {"Base": 10}}]
+        )
+        # Base 10 for decimal output (default is base 16)
         assert result == "104 101 108 108 111"
 
     def test_from_charcode_hello(self):
         """Test charcode decoding to 'hello'."""
-        result = bake("104 101 108 108 111", ["From Charcode"])
-        assert result == "hello"
+        result = bake(
+            "104 101 108 108 111",
+            [{"op": "From Charcode", "args": {"Base": 10}}]
+        )
+        assert result == b"hello"
 
     def test_to_charcode_empty(self):
         """Test charcode encoding of empty input."""
@@ -699,16 +731,19 @@ class TestCharcode:
     def test_from_charcode_empty(self):
         """Test charcode decoding of empty input."""
         result = bake("", ["From Charcode"])
-        assert result == ""
+        assert result == b""
 
     def test_charcode_roundtrip_hello(self):
         """Test charcode encode→decode roundtrip with 'hello'."""
-        assert_roundtrip("hello", ["To Charcode"], ["From Charcode"])
+        # Note: Default base is 16 (hex), so roundtrip works without specifying base
+        # From Charcode returns bytes, so we expect bytes back
+        assert_roundtrip("hello", ["To Charcode"], ["From Charcode"], expected=b"hello")
 
     def test_charcode_roundtrip_utf8(self):
         """Test charcode encode→decode roundtrip with UTF-8 data."""
         test_string = "Hello 世界"
-        assert_roundtrip(test_string, ["To Charcode"], ["From Charcode"])
+        # From Charcode returns bytes
+        assert_roundtrip(test_string, ["To Charcode"], ["From Charcode"], expected=test_string.encode('utf-8'))
 
     def test_to_charcode_base_hex(self):
         """Test charcode encoding with hexadecimal base."""
@@ -724,7 +759,7 @@ class TestCharcode:
             "68 65 6c 6c 6f",
             [{"op": "From Charcode", "args": {"Base": 16}}]
         )
-        assert result == "hello"
+        assert result == b"hello"
 
 
 # ============================================================================
@@ -823,7 +858,10 @@ class TestDecimal:
 
     def test_from_decimal_delimiter_comma(self):
         """Test decimal decoding with comma delimiter."""
-        result = bake("65,66,67", ["From Decimal"])
+        result = bake(
+            "65,66,67",
+            [{"op": "From Decimal", "args": {"Delimiter": "Comma"}}]
+        )
         assert result == b"ABC"
 
 

@@ -102,10 +102,12 @@ HASH_TEST_VECTORS = {
 }
 
 # URL encoding test vectors
+# Note: CyberChef follows RFC 3986 and does not encode certain characters
+# like = & @ + , by default. It DOES encode: space → %20, percent → %25
 URL_ENCODE_TEST_VECTORS = [
     ("Hello World!", "Hello%20World!"),
-    ("foo=bar&baz=qux", "foo%3Dbar%26baz%3Dqux"),
-    ("100%", "100%25"),
+    ("foo=bar&baz=qux", "foo=bar&baz=qux"),  # = and & not encoded by default
+    ("100%", "100%25"),  # % is always encoded
 ]
 
 # Common CyberChef test data (from upstream test suite)

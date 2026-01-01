@@ -442,6 +442,10 @@ class TestAES:
             }]
         )
 
+        # AES Decrypt with Output: "Raw" returns a string, not bytes
+        # Convert to bytes if needed for comparison
+        if isinstance(decrypted, str):
+            decrypted = decrypted.encode('latin-1')
         assert decrypted == plaintext
 
 
@@ -828,7 +832,8 @@ class TestBlowfish:
     def test_blowfish_ecb_mode(self):
         """Test Blowfish encryption in ECB mode."""
         plaintext = "12345678"
-        key = {"option": "UTF8", "string": "key"}
+        # Blowfish requires key length between 4-56 bytes
+        key = {"option": "UTF8", "string": "keys"}
 
         encrypted = bake(
             plaintext,
@@ -1486,17 +1491,19 @@ class TestEncryptionEdgeCases:
         assert result == plaintext
 
     def test_vigenere_with_numeric_key(self):
-        """Test Vigenère with numeric characters in key."""
+        """Test that Vigenère rejects keys with numeric characters."""
         plaintext = "HELLO"
-        # Key with numbers - should use only alpha chars
+        # Vigenère requires alphabetic-only keys
         key = "K3Y"
 
-        result = bake(
-            plaintext,
-            [{"op": "Vigenère Encode", "args": {"Key": key}}]
-        )
+        # CyberChef raises an error for non-alphabetic keys
+        with pytest.raises(Exception) as exc_info:
+            bake(
+                plaintext,
+                [{"op": "Vigenère Encode", "args": {"Key": key}}]
+            )
 
-        assert isinstance(result, str)
+        assert "must consist only of letters" in str(exc_info.value)
 
     def test_aes_different_key_sizes(self):
         """Test that different AES key sizes produce different results."""
@@ -1539,9 +1546,14 @@ class TestEncryptionEdgeCases:
         assert result_128 != result_256
 
     def test_des_triple_des_different_results(self):
-        """Test that DES and Triple DES produce different results."""
+        """Test that DES and Triple DES with same key repeated produce same result.
+
+        This is a known property: 3DES with K1=K2=K3 is equivalent to single DES.
+        This was intentionally designed for backward compatibility.
+        """
         plaintext = "Compare DES"
         key_des = {"option": "Hex", "string": "0123456789ABCDEF"}
+        # 3DES with same key repeated 3 times (K1=K2=K3) is equivalent to single DES
         key_3des = {"option": "Hex", "string": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"}
         iv = {"option": "Hex", "string": "0000000000000000"}
 
@@ -1573,8 +1585,27 @@ class TestEncryptionEdgeCases:
             }]
         )
 
-        # DES and 3DES should produce different ciphertexts
-        assert result_des != result_3des
+        # When 3DES uses the same key three times, it's equivalent to single DES
+        # This is by design for backward compatibility
+        assert result_des == result_3des
+
+        # Test with different keys to verify they produce different results
+        key_3des_different = {"option": "Hex", "string": "0123456789ABCDEF1111111111111111FFFFFFFFFFFFFFFF"}
+        result_3des_different = bake(
+            plaintext,
+            [{
+                "op": "Triple DES Encrypt",
+                "args": {
+                    "Key": key_3des_different,
+                    "IV": iv,
+                    "Mode": "CBC",
+                    "Input": "Raw",
+                    "Output": "Hex"
+                }
+            }]
+        )
+        # With different keys, results should differ
+        assert result_des != result_3des_different
 
     def test_cipher_preserves_exact_length(self):
         """Test that certain ciphers preserve exact input length."""
