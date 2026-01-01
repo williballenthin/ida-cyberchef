@@ -145,62 +145,6 @@ def load_cyberchef(path: str | None = None):
     with open(path, "rb") as f:
         ctx.eval(f.read().decode("utf-8"))
 
-    # Fix for operations that return Promises but aren't detected as async
-    # Some operations like Bzip2 Compress return Promises manually instead of using async/await
-    # The CyberChef wrapper only detects async functions, not Promise-returning functions
-    # We need to patch these wrapped operations to handle Promises correctly
-    ctx.eval("""
-    (function() {
-        // List of operations known to return Promises but not marked as async
-        const asyncOps = ['bzip2Compress', 'bzip2Decompress', 'LZMACompress', 'LZMADecompress'];
-
-        asyncOps.forEach(opName => {
-            if (module.exports[opName]) {
-                const originalOp = module.exports[opName];
-                module.exports[opName] = function(...args) {
-                    globalThis.__patchCalled = globalThis.__patchCalled || [];
-                    globalThis.__patchCalled.push(opName);
-
-                    try {
-                        const result = originalOp.apply(this, args);
-                        // If result is a Promise, we need to wait for it in our sync environment
-                        if (result && typeof result.then === 'function') {
-                            let resolved = false;
-                            let finalResult = null;
-                            let error = null;
-
-                            result.then(r => {
-                                resolved = true;
-                                finalResult = r;
-                            }).catch(e => {
-                                resolved = true;
-                                error = e;
-                            });
-
-                            // The promise should resolve immediately in our environment
-                            // but pump a few times to be sure
-                            let attempts = 0;
-                            while (!resolved && attempts < 1000) {
-                                attempts++;
-                            }
-
-                            if (error) throw error;
-                            if (!resolved) throw new Error('Promise did not resolve in time');
-                            return finalResult;
-                        }
-                        return result;
-                    } catch (e) {
-                        globalThis.__patchError = e.message;
-                        throw e;
-                    }
-                };
-                // Copy properties from original
-                module.exports[opName].opName = originalOp.opName;
-            }
-        });
-    })();
-    """)
-
     # Extract exports and attach context for later use
     chef = ctx.eval("module.exports")
     chef._stpyv8_context = ctx
@@ -283,18 +227,7 @@ def plate(v: Dish | Any, chef=None) -> Dish | Any:
             else:
                 return {"value": list(v), "type": DishType.ARRAY_BUFFER}
         elif isinstance(v, str):
-            if chef is not None and hasattr(chef, "_stpyv8_context"):
-                str_json = json.dumps(v)
-                ctx = chef._stpyv8_context
-                dish = ctx.eval(f"""
-                (function() {{
-                    const str = {str_json};
-                    return new module.exports.Dish(str, module.exports.Dish.STRING);
-                }})
-                """)()
-                return dish
-            else:
-                return {"value": v, "type": DishType.STRING}
+            return {"value": v, "type": DishType.STRING}
         elif isinstance(v, (int, float)):
             return {"value": v, "type": DishType.NUMBER}
         elif isinstance(v, (dict, list)):
@@ -330,38 +263,7 @@ def bake(input_data: bytes | str, recipe: list[str | RecipeOperation]) -> bytes 
     result = ctx.eval(f"""
     (function() {{
         const recipe = {recipe_json};
-        const result = module.exports.bake(input_dish, recipe);
-
-        // Handle async operations that return Promises
-        // For async operations, bake may return a Promise that needs to be resolved
-        if (result && typeof result.then === 'function') {{
-            // This is a Promise - we need to wait for it
-            let resolved = false;
-            let finalResult = null;
-            let error = null;
-
-            result.then(r => {{
-                resolved = true;
-                finalResult = r;
-            }}).catch(e => {{
-                resolved = true;
-                error = e;
-            }});
-
-            // Pump the microtask queue until the promise resolves
-            let attempts = 0;
-            while (!resolved && attempts < 1000) {{
-                // Each eval pumps the microtask queue
-                void 0;
-                attempts++;
-            }}
-
-            if (error) throw error;
-            if (!resolved) throw new Error('Promise did not resolve');
-            return finalResult;
-        }}
-
-        return result;
+        return module.exports.bake(input_dish, recipe);
     }})
     """)()
 
