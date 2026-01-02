@@ -1,6 +1,6 @@
 import hashlib
 
-from ida_cyberchef.cyberchef import bake, get_chef, plate
+from conftest import bake, get_chef, plate
 
 
 def rechef(dish_result, chef):

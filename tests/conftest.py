@@ -11,7 +11,17 @@ from typing import Any, Callable
 
 import pytest
 
-from ida_cyberchef.cyberchef import bake, get_chef, plate
+# Import directly from the module to avoid __init__.py which imports PySide6
+import importlib.util
+_spec = importlib.util.spec_from_file_location(
+    'ida_cyberchef.cyberchef',
+    __file__.replace('tests/conftest.py', 'ida_cyberchef/cyberchef.py')
+)
+_cyberchef = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_cyberchef)
+bake = _cyberchef.bake
+get_chef = _cyberchef.get_chef
+plate = _cyberchef.plate
 
 
 # ============================================================================
