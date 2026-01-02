@@ -21,11 +21,45 @@ This project eliminates that workflow. It embeds CyberChef's JavaScript engine d
 
 ## How it works
 
-We use [STPyV8](https://github.com/area1/stpyv8) to run CyberChef's JavaScript code inside Python. The `ida_cyberchef.cyberchef` module loads CyberChef's bundle, sets up polyfills for browser/Node.js APIs it expects, and exposes a clean `bake()` function that takes binary data and a recipe.
+We run CyberChef's JavaScript code inside Python using a pluggable runtime system. The `ida_cyberchef.cyberchef` module loads CyberChef's bundle, sets up polyfills for browser/Node.js APIs it expects, and exposes a clean `bake()` function that takes binary data and a recipe.
 
 Then, we have a PySide6 Qt widget that exposes the recipe composer with the input/output hex dumps. The UI updates reactively - change the input or tweak an operation argument, and after a brief debounce, the entire pipeline re-executes and updates the output.
 
 As a minor extension beyond traditional CyberChef, each operation step can be expanded to preview intermediate results, which might be useful for debugging complex recipes.
+
+## JavaScript runtimes
+
+CyberChef is written in JavaScript, so we need a JS engine to execute it from Python. The project supports three runtimes with different tradeoffs:
+
+| Runtime | Package size | Notes |
+|---------|--------------|-------|
+| [QuickJS](https://pypi.org/project/quickjs/) | ~300KB | Default. No WebAssembly support, some operations unavailable. |
+| [STPyV8](https://github.com/area1/stpyv8) | ~50MB | V8 engine. Full compatibility, all operations work. |
+| [PythonMonkey](https://github.com/Distributive-Network/PythonMonkey) | ~15MB | SpiderMonkey engine. WebAssembly support, good interop. |
+
+QuickJS is installed by default. It handles most operations fine, but has two limitations:
+
+1. No WebAssembly support. Operations that use WASM modules will fail:
+   - Argon2 / Argon2 Compare
+   - Bcrypt / Bcrypt Compare / Bcrypt Parse
+   - YARA Rules
+
+2. Stricter typed array bounds checking breaks CyberChef's embedded zlib. Compression operations (Gzip, Zlib Deflate, Bzip2, etc.) transparently fall back to Python's stdlib.
+
+If you need the WASM-dependent operations, install one of the alternative runtimes:
+
+```bash
+pip install ida-cyberchef[stpyv8]
+# or
+pip install ida-cyberchef[pythonmonkey]
+```
+
+The runtime is auto-selected at startup based on what's installed, preferring STPyV8 > PythonMonkey > QuickJS. You can also force a specific runtime:
+
+```python
+from ida_cyberchef.cyberchef import load_cyberchef
+load_cyberchef(preferred_runtime="quickjs")
+```
 
 ## Background
 
@@ -60,10 +94,16 @@ To run the plugin in IDA, symlink the development directory into `$IDAUSR/plugin
 ln -s (pwd) ~/.idapro/plugins/ida-cyberchef
 ```
 
-You'll also want to install the dependencies into your IDA Pro Python virtual environment, something like:
+You'll also want to install the dependencies into your IDA Pro Python virtual environment:
 
 ```
-~/.idapro/venv/bin/python -m pip install STPyV8 pydantic
+~/.idapro/venv/bin/python -m pip install ida-cyberchef
+```
+
+Or if you want the V8 runtime for better compatibility:
+
+```
+~/.idapro/venv/bin/python -m pip install ida-cyberchef[stpyv8]
 ```
 
 Also, you can run the standalone QApplication (outside of IDA Pro) like this:
@@ -74,9 +114,9 @@ uv run cyberchef-qt
 
 ## Future Work
 
-I'm not quite sure if this will survive or not - I started out to prove this could work, and then was surprised when things fell into place. The architecture is a little ugly: running V8 from Python inside IDA to load a huge blob from GCHQ. But, it works, and we benefit from the operations already supported by CyberChef. So, if you want to propose enhancements and bug fixes, go for it!
+I'm not quite sure if this will survive or not - I started out to prove this could work, and then was surprised when things fell into place. The architecture is a little ugly: running a JS engine from Python inside IDA to load a huge blob from GCHQ. But, it works, and we benefit from the operations already supported by CyberChef. So, if you want to propose enhancements and bug fixes, go for it!
 
-There's some risk that the underlying Javascript engine (STPyV8, though I also worked with PythonMonkey) might become unmaintained or not build/work with future versions of Python or IDA Pro. That'll be a good time to re-evaluate the best parts of ida-cyberchef and perhaps rebuild them carefully.
+There's some risk that the underlying JavaScript engines might become unmaintained or not build/work with future versions of Python or IDA Pro. The pluggable runtime system mitigates this - if one engine breaks, you can switch to another. That said, if all three engines become unusable, that'll be a good time to re-evaluate the best parts of ida-cyberchef and perhaps rebuild them carefully.
 
 ## License
 

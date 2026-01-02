@@ -8,10 +8,17 @@ dependencies = [
     "pydantic>=2.0",
     "pyside6>=6.10.0",
     "rich>=13.0.0",
-    "stpyv8>=13.1.201.22",
+    "quickjs>=1.19.2",
 ]
 
 [project.optional-dependencies]
+# Alternative JavaScript runtimes. QuickJS is included by default.
+# STPyV8 has better compatibility but larger binary size (~50MB).
+# PythonMonkey uses SpiderMonkey and has good interop.
+stpyv8 = ["stpyv8>=13.1.201.22"]
+pythonmonkey = ["pythonmonkey>=1.0.0"]
+
+[dependency-groups]
 dev = [
     "pytest>=8.4.2",
     "pytest-qt>=4.0",
