@@ -6,6 +6,8 @@
     {
       "name": "bzip2_decompress_hello_world",
       "comment": "Decompress Python bz2.compress() output to 'Hello, World!'",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -22,13 +24,13 @@
       "tags": [
         "decompress",
         "python-interop"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_decompress_empty",
       "comment": "Decompress bzip2-compressed empty data",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -46,13 +48,13 @@
         "decompress",
         "empty",
         "edge-case"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_roundtrip_hello_world",
       "comment": "Test Bzip2 Compress/Decompress roundtrip with 'Hello, World!'",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -70,13 +72,13 @@
       "tags": [
         "compress",
         "roundtrip"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_roundtrip_all_bytes",
       "comment": "Test Bzip2 roundtrip with all 256 possible byte values",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -95,13 +97,13 @@
         "compress",
         "roundtrip",
         "binary"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_roundtrip_utf8_simple",
       "comment": "Test Bzip2 roundtrip with UTF-8 text",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -120,13 +122,13 @@
         "compress",
         "roundtrip",
         "utf8"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_roundtrip_empty",
       "comment": "Test Bzip2 roundtrip with empty input",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -146,13 +148,13 @@
         "roundtrip",
         "empty",
         "edge-case"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_compression_block_size_1",
       "comment": "Test Bzip2 with block size 1 (100KB) and verify decompression",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -176,13 +178,13 @@
         "compress",
         "roundtrip",
         "compression-options"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_compression_block_size_5",
       "comment": "Test Bzip2 with block size 5 (500KB) and verify decompression",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -206,13 +208,13 @@
         "compress",
         "roundtrip",
         "compression-options"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_compression_block_size_9",
       "comment": "Test Bzip2 with block size 9 (900KB, maximum) and verify decompression",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -236,13 +238,13 @@
         "compress",
         "roundtrip",
         "compression-options"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     },
     {
       "name": "bzip2_roundtrip_null_bytes",
       "comment": "Test Bzip2 roundtrip with data containing null bytes",
+      "skip": true,
+      "skipReason": "Bzip2 uses libbzip2-wasm (Emscripten WASM) which requires async initialization via Bzip2().then(). Unlike LZMA which supports synchronous mode, the Emscripten runtime cannot be easily converted to sync. Fixing requires rebuilding WASM with sync flags, pre-initialization caching, or replacing with pure JS library.",
       "input": {
         "type": "bytes",
         "encoding": "hex",
@@ -262,9 +264,7 @@
         "roundtrip",
         "null-bytes",
         "edge-case"
-      ],
-      "skip": true,
-      "skipReason": "CyberChef operation broken - ArrayBuffer error"
+      ]
     }
   ]
 }
