@@ -33,13 +33,20 @@ CyberChef is written in JavaScript, so we need a JS engine to execute it from Py
 
 | Runtime | Package size | Notes |
 |---------|--------------|-------|
-| [QuickJS](https://pypi.org/project/quickjs/) | ~300KB | Default. Some operations (compression) fall back to Python stdlib. |
-| [STPyV8](https://github.com/area1/stpyv8) | ~50MB | V8 engine. Best compatibility, all operations work natively. |
-| [PythonMonkey](https://github.com/Distributive-Network/PythonMonkey) | ~15MB | SpiderMonkey engine. Good interop, actively developed. |
+| [QuickJS](https://pypi.org/project/quickjs/) | ~300KB | Default. No WebAssembly support, some operations unavailable. |
+| [STPyV8](https://github.com/area1/stpyv8) | ~50MB | V8 engine. Full compatibility, all operations work. |
+| [PythonMonkey](https://github.com/Distributive-Network/PythonMonkey) | ~15MB | SpiderMonkey engine. WebAssembly support, good interop. |
 
-QuickJS is installed by default. It handles most operations fine, but has stricter typed array bounds checking that breaks CyberChef's embedded zlib implementation. For compression operations (Gzip, Zlib Deflate, etc.), we transparently route to Python's stdlib instead.
+QuickJS is installed by default. It handles most operations fine, but has two limitations:
 
-If you want full native compatibility, install one of the alternative runtimes:
+1. No WebAssembly support. Operations that use WASM modules will fail:
+   - Argon2 / Argon2 Compare
+   - Bcrypt / Bcrypt Compare / Bcrypt Parse
+   - YARA Rules
+
+2. Stricter typed array bounds checking breaks CyberChef's embedded zlib. Compression operations (Gzip, Zlib Deflate, Bzip2, etc.) transparently fall back to Python's stdlib.
+
+If you need the WASM-dependent operations, install one of the alternative runtimes:
 
 ```bash
 pip install ida-cyberchef[stpyv8]
