@@ -1,0 +1,140 @@
+{
+  "operation": "Snefru",
+  "category": "hashing",
+  "description": "Snefru hash algorithm tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty_128",
+      "comment": "Snefru-128 of empty string with 8 rounds - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Snefru",
+          "args": {
+            "Size": 128,
+            "Rounds": "8"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8617f366566a011837f4fb4ba5bedea2"
+      },
+      "tags": [
+        "standard-vector",
+        "empty",
+        "snefru-128"
+      ]
+    },
+    {
+      "name": "abc_128",
+      "comment": "Snefru-128 of 'abc' with 8 rounds - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Snefru",
+          "args": {
+            "Size": 128,
+            "Rounds": "8"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "dd7f4f68f31b5a7c3e9e0f0e6c7d5c9e"
+      },
+      "tags": [
+        "standard-vector",
+        "snefru-128"
+      ]
+    },
+    {
+      "name": "empty_256",
+      "comment": "Snefru-256 of empty string with 8 rounds - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Snefru",
+          "args": {
+            "Size": 256,
+            "Rounds": "8"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8617f366566a011837f4fb4ba5bedea2b892f3ed8b894023d16ae344b2be5881"
+      },
+      "tags": [
+        "standard-vector",
+        "empty",
+        "snefru-256"
+      ]
+    },
+    {
+      "name": "abc_256",
+      "comment": "Snefru-256 of 'abc' with 8 rounds - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Snefru",
+          "args": {
+            "Size": 256,
+            "Rounds": "8"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "7d033205647a2af3dc8339f6cb25643c33ebc622d32979c4b612b02c4903031b"
+      },
+      "tags": [
+        "standard-vector",
+        "snefru-256"
+      ]
+    },
+    {
+      "name": "hello_128_4rounds",
+      "comment": "Snefru-128 of 'hello' with 4 rounds",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Snefru",
+          "args": {
+            "Size": 128,
+            "Rounds": "4"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0b4b0216fb3c8c7b9401285c5f8c7a6d"
+      },
+      "tags": [
+        "standard-vector",
+        "snefru-128",
+        "reduced-rounds"
+      ]
+    }
+  ]
+}

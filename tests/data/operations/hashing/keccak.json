@@ -1,0 +1,134 @@
+{
+  "operation": "Keccak",
+  "category": "hashing",
+  "description": "Keccak hash algorithm tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty_256",
+      "comment": "Keccak-256 of empty string - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Keccak",
+          "args": {
+            "Size": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+      },
+      "tags": [
+        "standard-vector",
+        "empty",
+        "keccak-256"
+      ]
+    },
+    {
+      "name": "abc_256",
+      "comment": "Keccak-256 of 'abc' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Keccak",
+          "args": {
+            "Size": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45"
+      },
+      "tags": [
+        "standard-vector",
+        "keccak-256"
+      ]
+    },
+    {
+      "name": "empty_512",
+      "comment": "Keccak-512 of empty string - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Keccak",
+          "args": {
+            "Size": "512"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0eab42de4c3ceb9235fc91acffe746b29c29a8c366b7c60e4e67c466f36a4304c00fa9caf9d87976ba469bcbe06713b435f091ef2769fb160cdab33d3670680e"
+      },
+      "tags": [
+        "standard-vector",
+        "empty",
+        "keccak-512"
+      ]
+    },
+    {
+      "name": "abc_512",
+      "comment": "Keccak-512 of 'abc' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Keccak",
+          "args": {
+            "Size": "512"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "18587dc2ea106b9a1563e32b3312421ca164c7f1f07bc922a9c83d77cea3a1e5d0c69910739025372dc14ac9642629379540c17e2a65b19d77aa511a9d00bb96b"
+      },
+      "tags": [
+        "standard-vector",
+        "keccak-512"
+      ]
+    },
+    {
+      "name": "hello_224",
+      "comment": "Keccak-224 of 'hello' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Keccak",
+          "args": {
+            "Size": "224"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "45524ec454bcc7d4b8f74350c4a4e62809fcb49bc29df62e61b69fa4"
+      },
+      "tags": [
+        "standard-vector",
+        "keccak-224"
+      ]
+    }
+  ]
+}

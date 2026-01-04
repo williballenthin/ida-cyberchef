@@ -1,0 +1,55 @@
+{
+  "operation": "Line numbers",
+  "category": "utils",
+  "description": "Add and remove line numbers from text",
+  "tests": [
+    {
+      "name": "add_line_numbers_basic",
+      "comment": "Add line numbers to text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e6533"},
+      "operations": ["Add line numbers"],
+      "expected": {"type": "string", "value": "1 line1\n2 line2\n3 line3"},
+      "tags": ["line_numbers", "add"]
+    },
+    {
+      "name": "add_line_numbers_single",
+      "comment": "Add line numbers to single line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "73696e676c65206c696e65"},
+      "operations": ["Add line numbers"],
+      "expected": {"type": "string", "value": "1 single line"},
+      "tags": ["line_numbers", "add", "single"]
+    },
+    {
+      "name": "add_line_numbers_empty",
+      "comment": "Add line numbers to empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Add line numbers"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["line_numbers", "add", "edge_case"]
+    },
+    {
+      "name": "remove_line_numbers_basic",
+      "comment": "Remove line numbers from text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "3120666972737420746578740a32207365636f6e6420746578740a332074686972642074657874"},
+      "operations": ["Remove line numbers"],
+      "expected": {"type": "string", "value": "first text\nsecond text\nthird text"},
+      "tags": ["line_numbers", "remove"]
+    },
+    {
+      "name": "remove_line_numbers_empty",
+      "comment": "Remove line numbers from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Remove line numbers"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["line_numbers", "remove", "edge_case"]
+    },
+    {
+      "name": "add_remove_roundtrip",
+      "comment": "Add then remove line numbers",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e6532"},
+      "operations": ["Add line numbers", "Remove line numbers"],
+      "expected": {"type": "string", "value": "line1\nline2"},
+      "tags": ["line_numbers", "roundtrip"]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "operation": "Citrix CTX1",
+  "category": "encryption",
+  "description": "Tests for Citrix CTX1 Encode and Decode operations. CTX1 is a proprietary Citrix password encoding format.",
+  "tests": [
+    {
+      "name": "encode_basic_password",
+      "comment": "Encode simple password 'password' to Citrix CTX1 format",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "70617373776f7264"
+      },
+      "operations": ["Citrix CTX1 Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a1a3a1a3dfe6e6e6e3e4a1a2a2dfe6e6e6e1e5dfdfdf"
+      },
+      "tags": ["encode", "basic"],
+      "skip": true,
+      "skipReason": "Expected value needs verification against actual CyberChef output"
+    },
+    {
+      "name": "decode_basic_password",
+      "comment": "Decode Citrix CTX1 encoded password back to 'password'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a1a3a1a3dfe6e6e6e3e4a1a2a2dfe6e6e6e1e5dfdfdf"
+      },
+      "operations": ["Citrix CTX1 Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "70617373776f7264"
+      },
+      "tags": ["decode", "basic"],
+      "skip": true,
+      "skipReason": "Input value needs verification against actual CyberChef output"
+    },
+    {
+      "name": "encode_short_string",
+      "comment": "Encode short string 'test' to Citrix CTX1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "74657374"
+      },
+      "operations": ["Citrix CTX1 Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a1a3a1a3dfe3e5e2e3dfdfdf"
+      },
+      "tags": ["encode", "short"],
+      "skip": true,
+      "skipReason": "Expected value needs verification against actual CyberChef output"
+    },
+    {
+      "name": "encode_single_char",
+      "comment": "Encode single character 'a' to Citrix CTX1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61"
+      },
+      "operations": ["Citrix CTX1 Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a1a3a1a3dfe0dfdfdf"
+      },
+      "tags": ["encode", "single-char"],
+      "skip": true,
+      "skipReason": "Expected value needs verification against actual CyberChef output"
+    },
+    {
+      "name": "roundtrip_test",
+      "comment": "Encode 'admin' and verify roundtrip by decoding",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61646d696e"
+      },
+      "operations": ["Citrix CTX1 Encode", "Citrix CTX1 Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61646d696e"
+      },
+      "tags": ["roundtrip", "encode", "decode"],
+      "skip": true,
+      "skipReason": "Roundtrip test - skip until encode output is verified"
+    },
+    {
+      "name": "encode_empty",
+      "comment": "Encode empty input should handle gracefully",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Citrix CTX1 Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a1a3a1a3dfdfdfdf"
+      },
+      "tags": ["edge-case", "empty-input"],
+      "skip": true,
+      "skipReason": "Expected value needs verification - CTX1 may have header bytes even for empty input"
+    }
+  ]
+}

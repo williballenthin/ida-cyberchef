@@ -1,0 +1,126 @@
+{
+  "operation": "Format MAC addresses",
+  "category": "networking",
+  "description": "Display MAC addresses in multiple formats",
+  "tests": [
+    {
+      "name": "format_mac_colon_separated",
+      "comment": "Format MAC address from colon-separated lowercase",
+      "input": {
+        "type": "string",
+        "value": "00:11:22:33:44:55"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455\n001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455"
+      },
+      "tags": [
+        "mac",
+        "format"
+      ]
+    },
+    {
+      "name": "format_mac_dash_separated",
+      "comment": "Format MAC address from dash-separated uppercase",
+      "input": {
+        "type": "string",
+        "value": "AA-BB-CC-DD-EE-FF"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "AABBCCDDEEFF\nAA-BB-CC-DD-EE-FF\nAA:BB:CC:DD:EE:FF\nAABB.CCDD.EEFF\naabbccddeeff\naa-bb-cc-dd-ee-ff\naa:bb:cc:dd:ee:ff\naabb.ccdd.eeff"
+      },
+      "tags": [
+        "mac",
+        "format",
+        "uppercase"
+      ]
+    },
+    {
+      "name": "format_mac_no_delimiter",
+      "comment": "Format MAC address from no delimiter format",
+      "input": {
+        "type": "string",
+        "value": "0a1b2c3d4e5f"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0A1B2C3D4E5F\n0A-1B-2C-3D-4E-5F\n0A:1B:2C:3D:4E:5F\n0A1B.2C3D.4E5F\n0a1b2c3d4e5f\n0a-1b-2c-3d-4e-5f\n0a:1b:2c:3d:4e:5f\n0a1b.2c3d.4e5f"
+      },
+      "tags": [
+        "mac",
+        "format",
+        "no_delimiter"
+      ]
+    },
+    {
+      "name": "format_mac_cisco_format",
+      "comment": "Format MAC address from Cisco dot notation",
+      "input": {
+        "type": "string",
+        "value": "0011.2233.4455"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455\n001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455"
+      },
+      "tags": [
+        "mac",
+        "format",
+        "cisco"
+      ]
+    },
+    {
+      "name": "format_multiple_mac_addresses",
+      "comment": "Format multiple MAC addresses separated by newlines",
+      "input": {
+        "type": "string",
+        "value": "00:11:22:33:44:55\nAA:BB:CC:DD:EE:FF"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455\n001122334455\n00-11-22-33-44-55\n00:11:22:33:44:55\n0011.2233.4455\n\nAABBCCDDEEFF\nAA-BB-CC-DD-EE-FF\nAA:BB:CC:DD:EE:FF\nAABB.CCDD.EEFF\naabbccddeeff\naa-bb-cc-dd-ee-ff\naa:bb:cc:dd:ee:ff\naabb.ccdd.eeff"
+      },
+      "tags": [
+        "mac",
+        "format",
+        "multiple"
+      ]
+    },
+    {
+      "name": "format_mac_mixed_case",
+      "comment": "Format MAC address with mixed case input",
+      "input": {
+        "type": "string",
+        "value": "1a:2B:3c:4D:5e:6F"
+      },
+      "operations": [
+        "Format MAC addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1A2B3C4D5E6F\n1A-2B-3C-4D-5E-6F\n1A:2B:3C:4D:5E:6F\n1A2B.3C4D.5E6F\n1a2b3c4d5e6f\n1a-2b-3c-4d-5e-6f\n1a:2b:3c:4d:5e:6f\n1a2b.3c4d.5e6f"
+      },
+      "tags": [
+        "mac",
+        "format",
+        "mixed_case"
+      ]
+    }
+  ]
+}

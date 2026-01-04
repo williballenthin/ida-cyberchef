@@ -1,0 +1,98 @@
+{
+  "operation": "MurmurHash3",
+  "category": "hashing",
+  "description": "MurmurHash3 non-cryptographic hash function tests with known test vectors",
+  "tests": [
+    {
+      "name": "murmurhash3_empty",
+      "comment": "MurmurHash3 of empty string with seed 0",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "MurmurHash3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "empty",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "murmurhash3_hello",
+      "comment": "MurmurHash3 of 'hello' with seed 0",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        "MurmurHash3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "613153351"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "murmurhash3_hello_world",
+      "comment": "MurmurHash3 of 'hello world' with seed 0",
+      "input": {
+        "type": "string",
+        "value": "hello world"
+      },
+      "operations": [
+        "MurmurHash3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1556908605"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "murmurhash3_abc",
+      "comment": "MurmurHash3 of 'abc' with seed 0",
+      "input": {
+        "type": "string",
+        "value": "abc"
+      },
+      "operations": [
+        "MurmurHash3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1118836419"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "murmurhash3_test",
+      "comment": "MurmurHash3 of 'test' with seed 0",
+      "input": {
+        "type": "string",
+        "value": "test"
+      },
+      "operations": [
+        "MurmurHash3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3127628307"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    }
+  ]
+}

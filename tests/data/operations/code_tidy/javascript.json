@@ -1,0 +1,137 @@
+{
+  "operation": "JavaScript",
+  "category": "code_tidy",
+  "description": "Tests for JavaScript Beautify and JavaScript Minify operations - formatting and compressing JavaScript code",
+  "tests": [
+    {
+      "name": "beautify_simple_function",
+      "comment": "Beautify minified function with return statement",
+      "input": {
+        "type": "string",
+        "value": "function test(){return 42;}"
+      },
+      "operations": [
+        "JavaScript Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "function test() {\n    return 42;\n}"
+      },
+      "tags": [
+        "beautify",
+        "function",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_complex_function",
+      "comment": "Beautify function with multiple statements and variables",
+      "input": {
+        "type": "string",
+        "value": "function calculate(x,y){var sum=x+y;var product=x*y;return{sum:sum,product:product};}"
+      },
+      "operations": [
+        "JavaScript Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "function calculate(x, y) {\n    var sum = x + y;\n    var product = x * y;\n    return {\n        sum: sum,\n        product: product\n    };\n}"
+      },
+      "tags": [
+        "beautify",
+        "function",
+        "complex"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_arrow_function",
+      "comment": "Beautify ES6 arrow function",
+      "input": {
+        "type": "string",
+        "value": "const add=(a,b)=>a+b;const multiply=(x,y)=>{return x*y;};"
+      },
+      "operations": [
+        "JavaScript Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "const add = (a, b) => a + b;\nconst multiply = (x, y) => {\n    return x * y;\n};"
+      },
+      "tags": [
+        "beautify",
+        "arrow_function",
+        "es6"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_object_literal",
+      "comment": "Beautify JavaScript object literal",
+      "input": {
+        "type": "string",
+        "value": "var obj={name:'John',age:30,city:'NYC',hobbies:['reading','coding']};"
+      },
+      "operations": [
+        "JavaScript Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "var obj = {\n    name: 'John',\n    age: 30,\n    city: 'NYC',\n    hobbies: ['reading', 'coding']\n};"
+      },
+      "tags": [
+        "beautify",
+        "object"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_simple_function",
+      "comment": "Minify beautified function with whitespace",
+      "input": {
+        "type": "string",
+        "value": "function test() {\n    return 42;\n}"
+      },
+      "operations": [
+        "JavaScript Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "function test(){return 42}"
+      },
+      "tags": [
+        "minify",
+        "function",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_with_comments",
+      "comment": "Minify JavaScript with comments and extra whitespace",
+      "input": {
+        "type": "string",
+        "value": "// Calculate sum\nfunction add(a, b) {\n    // Return the result\n    return a + b;\n}"
+      },
+      "operations": [
+        "JavaScript Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "function add(a,b){return a+b}"
+      },
+      "tags": [
+        "minify",
+        "comments"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    }
+  ]
+}

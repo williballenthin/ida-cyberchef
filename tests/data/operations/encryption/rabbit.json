@@ -1,0 +1,205 @@
+{
+  "operation": "Rabbit",
+  "category": "encryption",
+  "description": "Tests for Rabbit stream cipher using RFC 4503 test vectors",
+  "tests": [
+    {
+      "name": "rfc4503_appendix_a1_no_iv",
+      "comment": "RFC 4503 Appendix A.1 - Test vector without IV (big-endian)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "00000000000000000000000000000000"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Endianness": "Big",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "02f74a1c26456bf5ecd6a536f05457b1"
+      },
+      "tags": ["rfc4503", "official-vector", "no-iv", "big-endian"]
+    },
+    {
+      "name": "rfc4503_appendix_a2_with_iv",
+      "comment": "RFC 4503 Appendix A.2 - Test vector with IV (big-endian)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "00000000000000000000000000000000"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Endianness": "Big",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "edd97bf3c9d7c8c87c3c304e6dbcea9d"
+      },
+      "tags": ["rfc4503", "official-vector", "with-iv", "big-endian"]
+    },
+    {
+      "name": "rfc4503_appendix_a3_non_zero_key",
+      "comment": "RFC 4503 Appendix A.3 - Test vector with non-zero key, no IV",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "912813292e3d36fe3bfc62f1dc51c3ac"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Endianness": "Big",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "9c51e28784c37fe9a127f63ec8f32d3d"
+      },
+      "tags": ["rfc4503", "official-vector", "non-zero-key", "big-endian"]
+    },
+    {
+      "name": "simple_message_encryption",
+      "comment": "Encrypting 'Hello World!' with Rabbit cipher (big-endian)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Endianness": "Big",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "aeae21e3c3c8fd72bf4f"
+      },
+      "tags": ["simple-message", "with-iv", "big-endian"]
+    },
+    {
+      "name": "little_endian_mode",
+      "comment": "Testing Rabbit cipher with little-endian mode (Crypto++ compatible)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20666f78"
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000001"
+            },
+            "Endianness": "Little",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "b9c715e3652b6a11d80d3e4c7f7bf27c62ac"
+      },
+      "tags": ["little-endian", "crypto++", "with-iv"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "Rabbit cipher with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Rabbit",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Endianness": "Big",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

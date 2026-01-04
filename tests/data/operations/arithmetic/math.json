@@ -1,0 +1,71 @@
+{
+  "operation": "Divide / Multiply",
+  "category": "arithmetic",
+  "description": "Divide and Multiply arithmetic operations with various numeric inputs",
+  "tests": [
+    {
+      "name": "divide_simple",
+      "comment": "10 / 5 = 2",
+      "input": {"type": "bytes", "encoding": "hex", "value": "31300a35"},
+      "operations": [{"op": "Divide", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "2"},
+      "tags": ["divide", "basic"]
+    },
+    {
+      "name": "divide_decimal_result",
+      "comment": "10 / 4 = 2.5",
+      "input": {"type": "bytes", "encoding": "hex", "value": "31300a34"},
+      "operations": [{"op": "Divide", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "2.5"},
+      "tags": ["divide", "decimal"]
+    },
+    {
+      "name": "divide_multiple_values",
+      "comment": "100 / 10 / 2 = 5",
+      "input": {"type": "bytes", "encoding": "hex", "value": "3130300a31300a32"},
+      "operations": [{"op": "Divide", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "5"},
+      "tags": ["divide", "multiple"]
+    },
+    {
+      "name": "divide_with_space_delimiter",
+      "comment": "20 / 4 = 5 using space delimiter",
+      "input": {"type": "bytes", "encoding": "hex", "value": "3230203420"},
+      "operations": [{"op": "Divide", "args": ["Space"]}],
+      "expected": {"type": "string", "value": "5"},
+      "tags": ["divide", "delimiter"]
+    },
+    {
+      "name": "multiply_simple",
+      "comment": "5 * 3 = 15",
+      "input": {"type": "bytes", "encoding": "hex", "value": "350a33"},
+      "operations": [{"op": "Multiply", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "15"},
+      "tags": ["multiply", "basic"]
+    },
+    {
+      "name": "multiply_decimal",
+      "comment": "2.5 * 4 = 10",
+      "input": {"type": "bytes", "encoding": "hex", "value": "322e350a34"},
+      "operations": [{"op": "Multiply", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "10"},
+      "tags": ["multiply", "decimal"]
+    },
+    {
+      "name": "multiply_multiple_values",
+      "comment": "2 * 3 * 4 = 24",
+      "input": {"type": "bytes", "encoding": "hex", "value": "320a330a34"},
+      "operations": [{"op": "Multiply", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "24"},
+      "tags": ["multiply", "multiple"]
+    },
+    {
+      "name": "multiply_with_zero",
+      "comment": "5 * 0 = 0",
+      "input": {"type": "bytes", "encoding": "hex", "value": "350a30"},
+      "operations": [{"op": "Multiply", "args": ["Line feed"]}],
+      "expected": {"type": "string", "value": "0"},
+      "tags": ["multiply", "zero"]
+    }
+  ]
+}

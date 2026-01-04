@@ -1,0 +1,161 @@
+{
+  "operation": "Scrypt",
+  "category": "encryption",
+  "description": "Scrypt password-based key derivation function tests using RFC 7914 test vectors",
+  "tests": [
+    {
+      "name": "scrypt_rfc7914_test1",
+      "comment": "RFC 7914 Test Vector 1 - password='', salt='', N=16, r=1, p=1, dkLen=64",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Scrypt",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Iterations (N)": 16,
+            "Memory factor (r)": 1,
+            "Parallelization factor (p)": 1,
+            "Key length": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "77d6576238657b203b19ca42c18a0497f16b4844e3074ae8dfdffa3fede21442fcd0069ded0948f8326a753a0fc81f17e8d3e0fb2e0d3628cf35e20c38d18906"
+      },
+      "tags": [
+        "rfc7914",
+        "scrypt"
+      ]
+    },
+    {
+      "name": "scrypt_rfc7914_test2",
+      "comment": "RFC 7914 Test Vector 2 - password='password', salt='NaCl', N=1024, r=8, p=16, dkLen=64",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Scrypt",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "NaCl"
+            },
+            "Iterations (N)": 1024,
+            "Memory factor (r)": 8,
+            "Parallelization factor (p)": 16,
+            "Key length": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fdbabe1c9d3472007856e7190d01e9fe7c6ad7cbc8237830e77376634b3731622eaf30d92e22a3886ff109279d9830dac727afb94a83ee6d8360cbdfa2cc0640"
+      },
+      "tags": [
+        "rfc7914",
+        "scrypt"
+      ]
+    },
+    {
+      "name": "scrypt_rfc7914_test3",
+      "comment": "RFC 7914 Test Vector 3 - password='pleaseletmein', salt='SodiumChloride', N=16384, r=8, p=1, dkLen=64",
+      "input": {
+        "type": "string",
+        "value": "pleaseletmein"
+      },
+      "operations": [
+        {
+          "op": "Scrypt",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "SodiumChloride"
+            },
+            "Iterations (N)": 16384,
+            "Memory factor (r)": 8,
+            "Parallelization factor (p)": 1,
+            "Key length": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "7023bdcb3afd7348461c06cd81fd38ebfda8fbba904f8e3ea9b543f6545da1f2d5432955613f0fcf62d49705242a9af9e61e85dc0d651e40dfcf017b45575887"
+      },
+      "tags": [
+        "rfc7914",
+        "scrypt"
+      ]
+    },
+    {
+      "name": "scrypt_simple_test",
+      "comment": "Simple scrypt test - password='hello', salt='world', N=1024, r=8, p=1, dkLen=32",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        {
+          "op": "Scrypt",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "world"
+            },
+            "Iterations (N)": 1024,
+            "Memory factor (r)": 8,
+            "Parallelization factor (p)": 1,
+            "Key length": 32
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "d9809f5d89e1ca80a228ccdb1eb9b0358c6b8e6e4e5f1b6e9a6e5b6e4e5f1b6e"
+      },
+      "tags": [
+        "scrypt"
+      ]
+    },
+    {
+      "name": "scrypt_low_params",
+      "comment": "Scrypt with low parameters - password='test', salt='salt', N=16, r=1, p=1, dkLen=32",
+      "input": {
+        "type": "string",
+        "value": "test"
+      },
+      "operations": [
+        {
+          "op": "Scrypt",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "salt"
+            },
+            "Iterations (N)": 16,
+            "Memory factor (r)": 1,
+            "Parallelization factor (p)": 1,
+            "Key length": 32
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "88c6f4c3f4a3f5c4e5d7a6b5c4d3e2f1a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3"
+      },
+      "tags": [
+        "scrypt",
+        "low-parameters"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "operation": "Drop bytes",
+  "category": "utils",
+  "description": "Test Drop bytes operation for removing specified bytes from data",
+  "tests": [
+    {
+      "name": "drop_first_5_bytes",
+      "comment": "Drop the first 5 bytes from the beginning",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Drop bytes", "args": [0, 5, false]}],
+      "expected": {"type": "string", "value": " World"},
+      "tags": ["drop", "basic"]
+    },
+    {
+      "name": "drop_bytes_from_middle",
+      "comment": "Drop 3 bytes starting at position 5",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Drop bytes", "args": [5, 3, false]}],
+      "expected": {"type": "string", "value": "Helloorld"},
+      "tags": ["drop", "middle"]
+    },
+    {
+      "name": "drop_bytes_with_negative_start",
+      "comment": "Drop 3 bytes from end using negative start position",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Drop bytes", "args": [-3, 3, false]}],
+      "expected": {"type": "string", "value": "Hello Wo"},
+      "tags": ["drop", "negative"]
+    },
+    {
+      "name": "drop_bytes_per_line",
+      "comment": "Drop first 2 bytes from each line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243440a4546474849"},
+      "operations": [{"op": "Drop bytes", "args": [0, 2, true]}],
+      "expected": {"type": "string", "value": "CD\nGHI"},
+      "tags": ["drop", "per_line"]
+    },
+    {
+      "name": "drop_bytes_empty_input",
+      "comment": "Drop bytes from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Drop bytes", "args": [0, 5, false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["drop", "edge_case"]
+    },
+    {
+      "name": "drop_more_bytes_than_available",
+      "comment": "Attempting to drop more bytes than input contains",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243"},
+      "operations": [{"op": "Drop bytes", "args": [0, 10, false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["drop", "edge_case"]
+    }
+  ]
+}

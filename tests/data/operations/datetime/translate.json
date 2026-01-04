@@ -1,0 +1,119 @@
+{
+  "operation": "Translate DateTime Format",
+  "category": "datetime",
+  "description": "Convert datetime strings from one format to another",
+  "tests": [
+    {
+      "name": "translate_standard_to_iso",
+      "comment": "Convert standard date format to ISO 8601",
+      "input": {
+        "type": "string",
+        "value": "01/01/1970 00:00:00"
+      },
+      "operations": [
+        {
+          "op": "Translate DateTime Format",
+          "args": [
+            "DD/MM/YYYY HH:mm:ss",
+            "UTC",
+            "YYYY-MM-DD HH:mm:ss",
+            "UTC"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1970-01-01"
+      },
+      "tags": [
+        "datetime",
+        "translate",
+        "epoch"
+      ]
+    },
+    {
+      "name": "translate_american_to_standard",
+      "comment": "Convert American format to standard format",
+      "input": {
+        "type": "string",
+        "value": "01/01/2000 00:00:00"
+      },
+      "operations": [
+        {
+          "op": "Translate DateTime Format",
+          "args": [
+            "MM/DD/YYYY HH:mm:ss",
+            "UTC",
+            "DD/MM/YYYY HH:mm:ss",
+            "UTC"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "01/01/2000"
+      },
+      "tags": [
+        "datetime",
+        "translate",
+        "y2k"
+      ]
+    },
+    {
+      "name": "translate_unix_to_iso",
+      "comment": "Convert Unix timestamp to ISO format",
+      "input": {
+        "type": "string",
+        "value": "946684800"
+      },
+      "operations": [
+        {
+          "op": "Translate DateTime Format",
+          "args": [
+            "X",
+            "UTC",
+            "YYYY-MM-DD HH:mm:ss",
+            "UTC"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2000-01-01"
+      },
+      "tags": [
+        "datetime",
+        "translate",
+        "unix_timestamp",
+        "y2k"
+      ]
+    },
+    {
+      "name": "translate_iso_to_american",
+      "comment": "Convert ISO format to American format",
+      "input": {
+        "type": "string",
+        "value": "2023-12-25 18:30:00"
+      },
+      "operations": [
+        {
+          "op": "Translate DateTime Format",
+          "args": [
+            "YYYY-MM-DD HH:mm:ss",
+            "UTC",
+            "MM/DD/YYYY HH:mm:ss",
+            "UTC"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "12/25/2023"
+      },
+      "tags": [
+        "datetime",
+        "translate"
+      ]
+    }
+  ]
+}

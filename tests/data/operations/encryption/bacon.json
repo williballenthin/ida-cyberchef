@@ -1,0 +1,124 @@
+{
+  "operation": "Bacon Cipher",
+  "category": "encryption",
+  "description": "Tests for Bacon Cipher encoding and decoding using steganographic substitution",
+  "tests": [
+    {
+      "name": "encode basic text",
+      "comment": "Encode simple text 'HELLO' using standard alphabet with 0/1 translation",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": ["Bacon Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00111000010110001100011000010111"
+      },
+      "tags": ["encode", "basic"]
+    },
+    {
+      "name": "decode basic text",
+      "comment": "Decode Bacon cipher back to original text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00111000010110001100011000010111"
+      },
+      "operations": ["Bacon Cipher Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "tags": ["decode", "basic"]
+    },
+    {
+      "name": "encode with A/B translation",
+      "comment": "Encode text using A/B translation instead of 0/1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": [
+        {
+          "op": "Bacon Cipher Encode",
+          "args": {
+            "Translation": "A/B"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414141414141414141414241414241"
+      },
+      "tags": ["encode", "translation"]
+    },
+    {
+      "name": "decode with A/B translation",
+      "comment": "Decode Bacon cipher with A/B translation",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414141414141414141414241414241"
+      },
+      "operations": [
+        {
+          "op": "Bacon Cipher Decode",
+          "args": {
+            "Translation": "A/B"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "tags": ["decode", "translation"]
+    },
+    {
+      "name": "encode complete alphabet",
+      "comment": "Encode using complete alphabet (distinguishes I/J and U/V)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142"
+      },
+      "operations": [
+        {
+          "op": "Bacon Cipher Encode",
+          "args": {
+            "Alphabet": "Complete"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000000000001"
+      },
+      "tags": ["encode", "complete-alphabet"]
+    },
+    {
+      "name": "encode empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Bacon Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["encode", "edge-case", "empty-input"]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "operation": "Split",
+  "category": "utils",
+  "description": "Test Split operation with different delimiters",
+  "tests": [
+    {
+      "name": "split_by_comma",
+      "comment": "Split string by comma with newline as join delimiter",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c622c632c64"},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": "a\nb\nc\nd"},
+      "tags": ["split", "comma"]
+    },
+    {
+      "name": "split_by_space",
+      "comment": "Split string by space",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c6420666f6f"},
+      "operations": [{"op": "Split", "args": [" ", "\n"]}],
+      "expected": {"type": "string", "value": "hello\nworld\nfoo"},
+      "tags": ["split", "space"]
+    },
+    {
+      "name": "split_by_newline",
+      "comment": "Split multi-line text by newline",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e6533"},
+      "operations": [{"op": "Split", "args": ["\\n", " | "]}],
+      "expected": {"type": "string", "value": "line1 | line2 | line3"},
+      "tags": ["split", "newline"]
+    },
+    {
+      "name": "split_empty",
+      "comment": "Split empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["split", "edge_case"]
+    },
+    {
+      "name": "split_no_delimiter_found",
+      "comment": "Split when delimiter not found in input",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6e6f64656c696d69746572"},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": "nodelimiter"},
+      "tags": ["split", "no_match"]
+    },
+    {
+      "name": "split_consecutive_delimiters",
+      "comment": "Split with consecutive delimiters",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c2c622c632c2c64"},
+      "operations": [{"op": "Split", "args": [",", "\n"]}],
+      "expected": {"type": "string", "value": "a\n\nb\nc\n\nd"},
+      "tags": ["split", "consecutive"]
+    }
+  ]
+}

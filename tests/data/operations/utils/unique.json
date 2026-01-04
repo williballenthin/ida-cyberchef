@@ -1,0 +1,55 @@
+{
+  "operation": "Unique",
+  "category": "utils",
+  "description": "Test Unique operation to remove duplicate strings",
+  "tests": [
+    {
+      "name": "unique_lines",
+      "comment": "Remove duplicate lines",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6170706c650a6368657272790a62616e616e610a6170706c65"},
+      "operations": [{"op": "Unique", "args": ["Line feed", false]}],
+      "expected": {"type": "string", "value": "apple\nbanana\ncherry"},
+      "tags": ["unique", "lines"]
+    },
+    {
+      "name": "unique_with_count",
+      "comment": "Remove duplicates and display count",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6170706c650a6368657272790a62616e616e610a6170706c65"},
+      "operations": [{"op": "Unique", "args": ["Line feed", true]}],
+      "expected": {"type": "string", "value": "apple: 3\nbanana: 2\ncherry: 1"},
+      "tags": ["unique", "count"]
+    },
+    {
+      "name": "unique_comma_delimiter",
+      "comment": "Remove duplicates with comma delimiter",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c622c612c632c622c61"},
+      "operations": [{"op": "Unique", "args": ["Comma", false]}],
+      "expected": {"type": "string", "value": "a,b,c"},
+      "tags": ["unique", "comma"]
+    },
+    {
+      "name": "unique_no_duplicates",
+      "comment": "Unique with no duplicates",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6368657272790a64617465"},
+      "operations": [{"op": "Unique", "args": ["Line feed", false]}],
+      "expected": {"type": "string", "value": "apple\nbanana\ncherry\ndate"},
+      "tags": ["unique", "no_duplicates"]
+    },
+    {
+      "name": "unique_empty",
+      "comment": "Unique on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Unique", "args": ["Line feed", false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["unique", "edge_case"]
+    },
+    {
+      "name": "unique_space_delimiter",
+      "comment": "Remove duplicates with space delimiter",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c642068656c6c6f20666f6f20776f726c64"},
+      "operations": [{"op": "Unique", "args": ["Space", false]}],
+      "expected": {"type": "string", "value": "hello world foo"},
+      "tags": ["unique", "space"]
+    }
+  ]
+}

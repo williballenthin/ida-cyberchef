@@ -1,0 +1,71 @@
+{
+  "operation": "Head and Tail",
+  "category": "utils",
+  "description": "Test Head and Tail operations with different delimiters",
+  "tests": [
+    {
+      "name": "head_first_two_lines",
+      "comment": "Get first 2 lines",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e65330a6c696e653434"},
+      "operations": [{"op": "Head", "args": ["Line feed", 2]}],
+      "expected": {"type": "string", "value": "line1\nline2"},
+      "tags": ["head", "lines"]
+    },
+    {
+      "name": "head_all_but_last_line",
+      "comment": "Get all but last line (negative number)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e6533"},
+      "operations": [{"op": "Head", "args": ["Line feed", -1]}],
+      "expected": {"type": "string", "value": "line1\nline2"},
+      "tags": ["head", "lines", "negative"]
+    },
+    {
+      "name": "head_comma_delimiter",
+      "comment": "Get first 3 fields separated by comma",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c622c632c642c65"},
+      "operations": [{"op": "Head", "args": ["Comma", 3]}],
+      "expected": {"type": "string", "value": "a,b,c"},
+      "tags": ["head", "comma"]
+    },
+    {
+      "name": "head_empty",
+      "comment": "Head on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Head", "args": ["Line feed", 5]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["head", "edge_case"]
+    },
+    {
+      "name": "tail_last_two_lines",
+      "comment": "Get last 2 lines",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e65330a6c696e653434"},
+      "operations": [{"op": "Tail", "args": ["Line feed", 2]}],
+      "expected": {"type": "string", "value": "line3\nline44"},
+      "tags": ["tail", "lines"]
+    },
+    {
+      "name": "tail_all_after_line",
+      "comment": "Get all lines after line 1 (negative number)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e6533"},
+      "operations": [{"op": "Tail", "args": ["Line feed", -1]}],
+      "expected": {"type": "string", "value": "line2\nline3"},
+      "tags": ["tail", "lines", "negative"]
+    },
+    {
+      "name": "tail_space_delimiter",
+      "comment": "Get last 2 words separated by space",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c6420666f6f20626172"},
+      "operations": [{"op": "Tail", "args": ["Space", 2]}],
+      "expected": {"type": "string", "value": "foo bar"},
+      "tags": ["tail", "space"]
+    },
+    {
+      "name": "tail_empty",
+      "comment": "Tail on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Tail", "args": ["Line feed", 5]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["tail", "edge_case"]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "operation": "Caesar Box Cipher",
+  "category": "encryption",
+  "description": "Tests for Caesar Box cipher using transposition in rectangular grid",
+  "tests": [
+    {
+      "name": "basic height 1",
+      "comment": "Caesar Box with height 1 (identity transformation)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": ["Caesar Box Cipher"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "tags": ["basic", "height-1", "identity"]
+    },
+    {
+      "name": "basic height 2",
+      "comment": "Caesar Box with height 2 creates 2 rows",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f574f524c44"
+      },
+      "operations": [
+        {
+          "op": "Caesar Box Cipher",
+          "args": {
+            "Box Height": 2
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "484c4f4f4454454c574c"
+      },
+      "tags": ["basic", "height-2"]
+    },
+    {
+      "name": "basic height 3",
+      "comment": "Caesar Box with height 3 creates 3 rows",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142434445464748494a4b4c"
+      },
+      "operations": [
+        {
+          "op": "Caesar Box Cipher",
+          "args": {
+            "Box Height": 3
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4144474a424547484143464c"
+      },
+      "tags": ["basic", "height-3"]
+    },
+    {
+      "name": "height 4",
+      "comment": "Caesar Box with height 4 for longer text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142434445464748494a4b4c4d4e4f50"
+      },
+      "operations": [
+        {
+          "op": "Caesar Box Cipher",
+          "args": {
+            "Box Height": 4
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41454949424647484143444d4e4f5000"
+      },
+      "tags": ["height-4"]
+    },
+    {
+      "name": "empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Caesar Box Cipher"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    },
+    {
+      "name": "single character",
+      "comment": "Single character with height 2",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41"
+      },
+      "operations": [
+        {
+          "op": "Caesar Box Cipher",
+          "args": {
+            "Box Height": 2
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41"
+      },
+      "tags": ["edge-case", "single-char"]
+    }
+  ]
+}

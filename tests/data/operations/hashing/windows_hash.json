@@ -1,0 +1,159 @@
+{
+  "operation": "Windows Password Hashes",
+  "category": "hashing",
+  "description": "LM Hash and NT Hash tests using known Windows password hashing test vectors",
+  "tests": [
+    {
+      "name": "lm_hash_empty",
+      "comment": "LM Hash of empty string",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "LM Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "aad3b435b51404ee"
+      },
+      "tags": [
+        "empty",
+        "lm-hash"
+      ]
+    },
+    {
+      "name": "lm_hash_password",
+      "comment": "LM Hash of 'password' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        "LM Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "e52cac67419a9a224a3b108f3fa6cb6d"
+      },
+      "tags": [
+        "standard-vector",
+        "lm-hash"
+      ]
+    },
+    {
+      "name": "lm_hash_admin",
+      "comment": "LM Hash of 'admin' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "admin"
+      },
+      "operations": [
+        "LM Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "45a5e3fa7aff75bb435b51404ee"
+      },
+      "tags": [
+        "standard-vector",
+        "lm-hash"
+      ]
+    },
+    {
+      "name": "lm_hash_test",
+      "comment": "LM Hash of 'test' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "test"
+      },
+      "operations": [
+        "LM Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "01fc5a6be7bc6929aad3b435b51404ee"
+      },
+      "tags": [
+        "standard-vector",
+        "lm-hash"
+      ]
+    },
+    {
+      "name": "nt_hash_empty",
+      "comment": "NT Hash of empty string",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "NT Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "31d6cfe0d16ae931b73c59d7e0c089c0"
+      },
+      "tags": [
+        "empty",
+        "nt-hash"
+      ]
+    },
+    {
+      "name": "nt_hash_password",
+      "comment": "NT Hash of 'password' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        "NT Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8846f7eaee8fb117ad06bdd830b7586c"
+      },
+      "tags": [
+        "standard-vector",
+        "nt-hash"
+      ]
+    },
+    {
+      "name": "nt_hash_admin",
+      "comment": "NT Hash of 'admin' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "admin"
+      },
+      "operations": [
+        "NT Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "209c6174da490caeb422f3fa5a7ae634"
+      },
+      "tags": [
+        "standard-vector",
+        "nt-hash"
+      ]
+    },
+    {
+      "name": "nt_hash_test",
+      "comment": "NT Hash of 'test' - standard test vector",
+      "input": {
+        "type": "string",
+        "value": "test"
+      },
+      "operations": [
+        "NT Hash"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0cb6948805f797bf2a82807973b89537"
+      },
+      "tags": [
+        "standard-vector",
+        "nt-hash"
+      ]
+    }
+  ]
+}

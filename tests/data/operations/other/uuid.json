@@ -1,0 +1,85 @@
+{
+  "operation": "Analyse UUID",
+  "category": "other",
+  "description": "UUID analysis tests to determine version and variant information",
+  "tests": [
+    {
+      "name": "analyse_uuid_v4",
+      "comment": "Analyse a valid UUID v4 (random)",
+      "input": {
+        "type": "string",
+        "value": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "operations": ["Analyse UUID"],
+      "expected": {
+        "type": "string",
+        "value": "Version: 4 (Random)\nVariant: RFC4122\n\nRandom values:\n Bytes: e29ba716446655440000"
+      },
+      "tags": ["uuid", "v4"]
+    },
+    {
+      "name": "analyse_uuid_v1",
+      "comment": "Analyse a UUID v1 (time-based)",
+      "input": {
+        "type": "string",
+        "value": "c232ab00-9414-11ec-b3c8-9f6bdeced846"
+      },
+      "operations": ["Analyse UUID"],
+      "expected": {
+        "type": "string",
+        "value": "Version: 1 (Time-based)\nVariant: RFC4122\n\nTimestamp: 0x1ec9414c232ab00 (138564089946975488)\n  Gregorian: Wednesday, 23 February 2022, 11:23:14.697 UTC\n  UNIX: 1645614194.697\n  Clock sequence: 0xcb3c8 mod 16384 = 13240\n  Node: 9f:6b:de:ce:d8:46\n    Multicast: true\n    Locally administered: true"
+      },
+      "tags": ["uuid", "v1"],
+      "skip": true,
+      "skipReason": "UUID v1 timestamp parsing needs verification"
+    },
+    {
+      "name": "analyse_uuid_nil",
+      "comment": "Analyse the nil UUID (all zeros)",
+      "input": {
+        "type": "string",
+        "value": "00000000-0000-0000-0000-000000000000"
+      },
+      "operations": ["Analyse UUID"],
+      "expected": {
+        "type": "string",
+        "value": "Version: 0\nVariant: Reserved (NCS backwards compatibility)"
+      },
+      "tags": ["uuid", "nil"],
+      "skip": true,
+      "skipReason": "Nil UUID output format needs verification"
+    },
+    {
+      "name": "analyse_uuid_v3",
+      "comment": "Analyse a UUID v3 (MD5 hash)",
+      "input": {
+        "type": "string",
+        "value": "a3bb189e-8bf9-3888-9912-ace4e6543002"
+      },
+      "operations": ["Analyse UUID"],
+      "expected": {
+        "type": "string",
+        "value": "Version: 3 (MD5 hash)\nVariant: RFC4122"
+      },
+      "tags": ["uuid", "v3"],
+      "skip": true,
+      "skipReason": "UUID v3 output format needs verification"
+    },
+    {
+      "name": "analyse_uuid_v5",
+      "comment": "Analyse a UUID v5 (SHA-1 hash)",
+      "input": {
+        "type": "string",
+        "value": "74738ff5-5367-5958-9aee-98fffdcd1876"
+      },
+      "operations": ["Analyse UUID"],
+      "expected": {
+        "type": "string",
+        "value": "Version: 5 (SHA-1 hash)\nVariant: RFC4122"
+      },
+      "tags": ["uuid", "v5"],
+      "skip": true,
+      "skipReason": "UUID v5 output format needs verification"
+    }
+  ]
+}

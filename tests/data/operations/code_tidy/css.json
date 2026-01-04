@@ -1,0 +1,136 @@
+{
+  "operation": "CSS",
+  "category": "code_tidy",
+  "description": "Tests for CSS Beautify and CSS Minify operations - formatting and compressing CSS code",
+  "tests": [
+    {
+      "name": "beautify_simple_css",
+      "comment": "Beautify minified CSS with single rule",
+      "input": {
+        "type": "string",
+        "value": ".test{color:red;background:blue;}"
+      },
+      "operations": [
+        "CSS Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ".test {\n    color: red;\n    background: blue;\n}"
+      },
+      "tags": [
+        "beautify",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_multiple_rules",
+      "comment": "Beautify CSS with multiple selectors and rules",
+      "input": {
+        "type": "string",
+        "value": "body{margin:0;padding:0;}h1{font-size:24px;color:#333;}"
+      },
+      "operations": [
+        "CSS Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "body {\n    margin: 0;\n    padding: 0;\n}\n\nh1 {\n    font-size: 24px;\n    color: #333;\n}"
+      },
+      "tags": [
+        "beautify",
+        "multiple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_nested_css",
+      "comment": "Beautify CSS with nested media query",
+      "input": {
+        "type": "string",
+        "value": "@media screen and (max-width:768px){.container{width:100%;padding:10px;}}"
+      },
+      "operations": [
+        "CSS Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "@media screen and (max-width: 768px) {\n    .container {\n        width: 100%;\n        padding: 10px;\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "nested",
+        "media_query"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_simple_css",
+      "comment": "Minify beautified CSS with whitespace and newlines",
+      "input": {
+        "type": "string",
+        "value": ".test {\n    color: red;\n    background: blue;\n}"
+      },
+      "operations": [
+        "CSS Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ".test{color:red;background:blue}"
+      },
+      "tags": [
+        "minify",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_with_comments",
+      "comment": "Minify CSS that contains comments",
+      "input": {
+        "type": "string",
+        "value": "/* Main styles */\n.header {\n    color: #fff;\n    /* Background color */\n    background: #000;\n}"
+      },
+      "operations": [
+        "CSS Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ".header{color:#fff;background:#000}"
+      },
+      "tags": [
+        "minify",
+        "comments"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_minify_roundtrip",
+      "comment": "Verify minify after beautify returns to compact form",
+      "input": {
+        "type": "string",
+        "value": ".box{width:100px;height:100px;}"
+      },
+      "operations": [
+        "CSS Beautify",
+        "CSS Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ".box{width:100px;height:100px}"
+      },
+      "tags": [
+        "roundtrip",
+        "beautify",
+        "minify"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    }
+  ]
+}

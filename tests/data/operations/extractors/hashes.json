@@ -1,0 +1,165 @@
+{
+  "operation": "Extract hashes",
+  "category": "extractors",
+  "description": "Tests for extracting hash values (MD5, SHA1, SHA256) from text based on character length",
+  "tests": [
+    {
+      "name": "extract_md5_hash",
+      "comment": "Extract MD5 hash (32 characters)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4d44352068617368203564343134303261626334623261373662393731396439313130313763353932"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "Hash character length": 32
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "5d41402abc4b2a76b9719d911017c592"
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "md5"
+      ]
+    },
+    {
+      "name": "extract_sha1_hash",
+      "comment": "Extract SHA1 hash (40 characters)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "534841312061616634633631646463633565386132646162656465306633623438326364396165613934333464"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "Hash character length": 40
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "sha1"
+      ]
+    },
+    {
+      "name": "extract_sha256_hash",
+      "comment": "Extract SHA256 hash (64 characters)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5348413235362032636632346462613566623061333065323665383362326163356239653239653162313631653563316661373432356537333034333336323933386239383234"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "Hash character length": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "sha256"
+      ]
+    },
+    {
+      "name": "extract_multiple_sha1_hashes",
+      "comment": "Extract multiple SHA1 hashes from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "46696c6531206161663463363164646363356538613264616265646530663362343832636439616561393433346420616e642066696c65322061393461386665356363623139626136316334633038373364333931653938373938326662626433"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "Hash character length": 40
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d\na94a8fe5ccb19ba61c4c0873d391e987982fbbd3"
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "multiple",
+        "sha1"
+      ]
+    },
+    {
+      "name": "extract_hashes_no_match",
+      "comment": "No hashes found in text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4a7573742073696d706c6520746578742077697468206e6f206861736820657465732e"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "Hash character length": 40
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "no_match"
+      ]
+    },
+    {
+      "name": "extract_all_hashes_mixed",
+      "comment": "Extract all hash types from mixed text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4d443520356434313430326162633462326137366239373139643931313031376335393220534841312061616634633631646463633565386132646162656465306633623438326364396165613934333464"
+      },
+      "operations": [
+        {
+          "op": "Extract hashes",
+          "args": {
+            "All hashes": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "5d41402abc4b2a76b9719d911017c592\naaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+      },
+      "tags": [
+        "extractor",
+        "hash",
+        "all_hashes",
+        "mixed"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "operation": "RC4",
+  "category": "encryption",
+  "description": "Tests for RC4 stream cipher and RC4 Drop variants",
+  "tests": [
+    {
+      "name": "rc4_encrypt_basic_hex_key",
+      "comment": "RC4 encryption with hex key and hex output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "RC4",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "75b7878099e0c596"
+      },
+      "tags": ["encryption", "rc4", "hex-key"]
+    },
+    {
+      "name": "rc4_decrypt_basic_hex_key",
+      "comment": "RC4 decryption (encrypt again with same key) - stream cipher is symmetric",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "75b7878099e0c596"
+      },
+      "operations": [
+        {
+          "op": "RC4",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0123456789abcdef"
+      },
+      "tags": ["decryption", "rc4", "hex-key"]
+    },
+    {
+      "name": "rc4_utf8_passphrase",
+      "comment": "RC4 encryption with UTF8 passphrase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "RC4",
+          "args": {
+            "Passphrase": {
+              "option": "UTF8",
+              "string": "password"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "bbf316e8d940af0ad05d08"
+      },
+      "tags": ["encryption", "rc4", "utf8-passphrase"]
+    },
+    {
+      "name": "rc4_roundtrip",
+      "comment": "RC4 encrypt then decrypt to verify stream cipher symmetry",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeefcafebabe"
+      },
+      "operations": [
+        {
+          "op": "RC4",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "0e329232ea6d0d73"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex"
+          }
+        },
+        {
+          "op": "RC4",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "0e329232ea6d0d73"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "deadbeefcafebabe"
+      },
+      "tags": ["roundtrip", "rc4"]
+    },
+    {
+      "name": "rc4_drop_768_bytes",
+      "comment": "RC4 Drop discards first 768 bytes (192 dwords) of keystream",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "RC4 Drop",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex",
+            "Number of dwords to drop": 192
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0c6b93f8c9d36adb"
+      },
+      "tags": ["encryption", "rc4-drop", "192-dwords"]
+    },
+    {
+      "name": "rc4_drop_256_bytes",
+      "comment": "RC4 Drop with 256 bytes (64 dwords) dropped",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "RC4 Drop",
+          "args": {
+            "Passphrase": {
+              "option": "UTF8",
+              "string": "password"
+            },
+            "Input format": "Latin1",
+            "Output format": "Hex",
+            "Number of dwords to drop": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8d1c2c7f2f787fe3e913"
+      },
+      "tags": ["encryption", "rc4-drop", "64-dwords"]
+    }
+  ]
+}

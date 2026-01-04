@@ -1,0 +1,132 @@
+{
+  "operation": "Extract URLs",
+  "category": "extractors",
+  "description": "Tests for extracting URLs from text using regex patterns",
+  "tests": [
+    {
+      "name": "extract_single_http_url",
+      "comment": "Extract a single HTTP URL from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "56697369742068747470733a2f2f6578616d706c652e636f6d20666f72206d6f726520696e666f"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://example.com"
+      },
+      "tags": [
+        "extractor",
+        "url"
+      ]
+    },
+    {
+      "name": "extract_multiple_urls",
+      "comment": "Extract multiple URLs with different protocols",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "436865636b2068747470733a2f2f6578616d706c652e636f6d20616e6420667470733a2f2f66696c65732e6578616d706c652e6f72672f646f776e6c6f6164"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://example.com\nftps://files.example.org/download"
+      },
+      "tags": [
+        "extractor",
+        "url",
+        "multiple"
+      ]
+    },
+    {
+      "name": "extract_url_with_path_and_query",
+      "comment": "Extract URL with path and query parameters",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "476f20746f2068747470733a2f2f6578616d706c652e636f6d2f706174682f746f2f706167653f6b65793d76616c756526666f6f3d626172"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://example.com/path/to/page?key=value&foo=bar"
+      },
+      "tags": [
+        "extractor",
+        "url",
+        "query_params"
+      ]
+    },
+    {
+      "name": "extract_urls_different_protocols",
+      "comment": "Extract URLs with various protocols",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68747470733a2f2f7365637572652e636f6d20667470733a2f2f66696c65732e636f6d207373683a2f2f737368636f6e6e6563742e636f6d"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://secure.com\nftps://files.com\nssh://sshconnect.com"
+      },
+      "tags": [
+        "extractor",
+        "url",
+        "protocols"
+      ]
+    },
+    {
+      "name": "extract_urls_no_match",
+      "comment": "No URLs found in text without protocols",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4a7573742073696d706c6520746578742077697468206578616d706c652e636f6d20627574206e6f2070726f746f636f6c"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "extractor",
+        "url",
+        "no_match"
+      ]
+    },
+    {
+      "name": "extract_urls_with_fragments",
+      "comment": "Extract URLs with fragments and special characters",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "52656164206d6f72652061742068747470733a2f2f646f63732e6578616d706c652e636f6d2f706167652368656164696e67"
+      },
+      "operations": [
+        "Extract URLs"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "https://docs.example.com/page#heading"
+      },
+      "tags": [
+        "extractor",
+        "url",
+        "fragment"
+      ]
+    }
+  ]
+}

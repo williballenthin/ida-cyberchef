@@ -1,0 +1,55 @@
+{
+  "operation": "Reverse",
+  "category": "utils",
+  "description": "Test Reverse operation with different modes (Byte, Character, Line)",
+  "tests": [
+    {
+      "name": "reverse_by_byte_basic",
+      "comment": "Reverse text byte by byte",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "Reverse", "args": ["Byte"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": "6f6c6c6568"},
+      "tags": ["reverse", "byte"]
+    },
+    {
+      "name": "reverse_by_character_basic",
+      "comment": "Reverse text character by character",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f"},
+      "operations": [{"op": "Reverse", "args": ["Character"]}],
+      "expected": {"type": "string", "value": "olleh"},
+      "tags": ["reverse", "character"]
+    },
+    {
+      "name": "reverse_by_line_multiline",
+      "comment": "Reverse line order in multi-line text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e65320a6c696e653333"},
+      "operations": [{"op": "Reverse", "args": ["Line"]}],
+      "expected": {"type": "string", "value": "line33\nline2\nline1"},
+      "tags": ["reverse", "line", "multiline"]
+    },
+    {
+      "name": "reverse_by_line_single",
+      "comment": "Reverse single line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "73696e676c65"},
+      "operations": [{"op": "Reverse", "args": ["Line"]}],
+      "expected": {"type": "string", "value": "single"},
+      "tags": ["reverse", "line"]
+    },
+    {
+      "name": "reverse_empty",
+      "comment": "Reverse empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Reverse", "args": ["Byte"]}],
+      "expected": {"type": "bytes", "encoding": "hex", "value": ""},
+      "tags": ["reverse", "edge_case"]
+    },
+    {
+      "name": "reverse_with_special_chars",
+      "comment": "Reverse text with special characters",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f21402324"},
+      "operations": [{"op": "Reverse", "args": ["Character"]}],
+      "expected": {"type": "string", "value": "$#@!olleH"},
+      "tags": ["reverse", "special_chars"]
+    }
+  ]
+}

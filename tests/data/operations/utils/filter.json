@@ -1,0 +1,55 @@
+{
+  "operation": "Filter",
+  "category": "utils",
+  "description": "Test Filter operation with regex patterns",
+  "tests": [
+    {
+      "name": "filter_lines_with_pattern",
+      "comment": "Filter lines containing a pattern",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6170706c6520706965"},
+      "operations": [{"op": "Filter", "args": ["Line feed", "apple", false]}],
+      "expected": {"type": "string", "value": "apple\napple pie"},
+      "tags": ["filter", "pattern"]
+    },
+    {
+      "name": "filter_invert_condition",
+      "comment": "Filter lines NOT containing pattern (invert)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6170706c6520706965"},
+      "operations": [{"op": "Filter", "args": ["Line feed", "apple", true]}],
+      "expected": {"type": "string", "value": "banana"},
+      "tags": ["filter", "invert"]
+    },
+    {
+      "name": "filter_regex_digits",
+      "comment": "Filter using regex pattern for digits",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e650a746573743132330a6e6f6e756d62657273"},
+      "operations": [{"op": "Filter", "args": ["Line feed", "\\d+", false]}],
+      "expected": {"type": "string", "value": "line1\ntest123"},
+      "tags": ["filter", "regex", "digits"]
+    },
+    {
+      "name": "filter_comma_delimiter",
+      "comment": "Filter comma-separated values",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c652c62616e616e612c6368657272792c6461746566727569742c677261706573"},
+      "operations": [{"op": "Filter", "args": ["Comma", ".*fruit$", false]}],
+      "expected": {"type": "string", "value": "datefruit"},
+      "tags": ["filter", "comma", "regex"]
+    },
+    {
+      "name": "filter_no_matches",
+      "comment": "Filter with no matches",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6368657272790a64617465"},
+      "operations": [{"op": "Filter", "args": ["Line feed", "xyz", false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["filter", "no_match"]
+    },
+    {
+      "name": "filter_empty",
+      "comment": "Filter empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Filter", "args": ["Line feed", "test", false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["filter", "edge_case"]
+    }
+  ]
+}

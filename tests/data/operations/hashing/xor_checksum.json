@@ -1,0 +1,102 @@
+{
+  "operation": "XOR Checksum",
+  "category": "hashing",
+  "description": "XOR Checksum tests with various block sizes",
+  "tests": [
+    {
+      "name": "xor_checksum_empty",
+      "comment": "XOR Checksum of empty input with blocksize 4",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "XOR Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00000000"
+      },
+      "tags": [
+        "empty"
+      ]
+    },
+    {
+      "name": "xor_checksum_single_byte",
+      "comment": "XOR Checksum of single byte 0xFF with blocksize 4",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ff"
+      },
+      "operations": [
+        "XOR Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "000000ff"
+      },
+      "tags": [
+        "single-byte"
+      ]
+    },
+    {
+      "name": "xor_checksum_four_bytes",
+      "comment": "XOR Checksum of four bytes with blocksize 4 - each block XORed",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "01020304"
+      },
+      "operations": [
+        "XOR Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "01020304"
+      },
+      "tags": [
+        "standard"
+      ]
+    },
+    {
+      "name": "xor_checksum_eight_bytes",
+      "comment": "XOR Checksum of eight bytes with blocksize 4 - XOR two blocks",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0102030405060708"
+      },
+      "operations": [
+        "XOR Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0405060c"
+      },
+      "tags": [
+        "standard"
+      ]
+    },
+    {
+      "name": "xor_checksum_hello",
+      "comment": "XOR Checksum of 'hello' with blocksize 4",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "XOR Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0a02036f"
+      },
+      "tags": [
+        "standard"
+      ]
+    }
+  ]
+}

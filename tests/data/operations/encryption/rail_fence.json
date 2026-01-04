@@ -1,0 +1,149 @@
+{
+  "operation": "Rail Fence Cipher",
+  "category": "encryption",
+  "description": "Tests for Rail Fence cipher encoding and decoding using zigzag transposition",
+  "tests": [
+    {
+      "name": "encode basic key 2",
+      "comment": "Encode text using rail fence with 2 rails (default)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f574f524c44"
+      },
+      "operations": ["Rail Fence Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c4c574c454f4f4844"
+      },
+      "tags": ["encode", "basic", "key-2"]
+    },
+    {
+      "name": "decode basic key 2",
+      "comment": "Decode rail fence cipher with 2 rails",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c4c574c454f4f4844"
+      },
+      "operations": ["Rail Fence Cipher Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f574f524c44"
+      },
+      "tags": ["decode", "basic", "key-2"]
+    },
+    {
+      "name": "encode key 3",
+      "comment": "Encode text using rail fence with 3 rails",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f574f524c44"
+      },
+      "operations": [
+        {
+          "op": "Rail Fence Cipher Encode",
+          "args": {
+            "Key": 3
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "484f444c4f4c454c5752"
+      },
+      "tags": ["encode", "key-3"]
+    },
+    {
+      "name": "decode key 3",
+      "comment": "Decode rail fence cipher with 3 rails",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "484f444c4f4c454c5752"
+      },
+      "operations": [
+        {
+          "op": "Rail Fence Cipher Decode",
+          "args": {
+            "Key": 3
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f574f524c44"
+      },
+      "tags": ["decode", "key-3"]
+    },
+    {
+      "name": "encode with offset",
+      "comment": "Encode rail fence with key 3 and offset 1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142434445464748"
+      },
+      "operations": [
+        {
+          "op": "Rail Fence Cipher Encode",
+          "args": {
+            "Key": 3,
+            "Offset": 1
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4246414543474448"
+      },
+      "tags": ["encode", "offset"]
+    },
+    {
+      "name": "decode with offset",
+      "comment": "Decode rail fence with key 3 and offset 1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4246414543474448"
+      },
+      "operations": [
+        {
+          "op": "Rail Fence Cipher Decode",
+          "args": {
+            "Key": 3,
+            "Offset": 1
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142434445464748"
+      },
+      "tags": ["decode", "offset"]
+    },
+    {
+      "name": "encode empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Rail Fence Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["encode", "edge-case", "empty-input"]
+    }
+  ]
+}

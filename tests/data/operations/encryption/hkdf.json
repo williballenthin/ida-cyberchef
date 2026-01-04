@@ -1,0 +1,185 @@
+{
+  "operation": "Derive HKDF key",
+  "category": "encryption",
+  "description": "HKDF (HMAC-based Extract-and-Expand Key Derivation Function) tests using RFC 5869 test vectors",
+  "tests": [
+    {
+      "name": "hkdf_sha256_rfc5869_test1",
+      "comment": "RFC 5869 Test Case 1 - SHA256, basic test case with SHA-256",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+      },
+      "operations": [
+        {
+          "op": "Derive HKDF key",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c"
+            },
+            "Info": {
+              "option": "Hex",
+              "string": "f0f1f2f3f4f5f6f7f8f9"
+            },
+            "Hashing function": "SHA256",
+            "Extract mode": "with salt",
+            "L (number of output octets)": 42
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3cb25f25faacd57a90434f64d0362f2a2d2d0a90cf1a5a4c5db02d56ecc4c5bf34007208d5b887185865"
+      },
+      "tags": [
+        "rfc5869",
+        "hkdf-sha256"
+      ]
+    },
+    {
+      "name": "hkdf_sha256_rfc5869_test2",
+      "comment": "RFC 5869 Test Case 2 - SHA256, test with longer inputs and outputs",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f"
+      },
+      "operations": [
+        {
+          "op": "Derive HKDF key",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": "606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeaf"
+            },
+            "Info": {
+              "option": "Hex",
+              "string": "b0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+            },
+            "Hashing function": "SHA256",
+            "Extract mode": "with salt",
+            "L (number of output octets)": 82
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "b11e398dc80327a1c8e7f78c596a49344f012eda2d4efad8a050cc4c19afa97c59045a99cac7827271cb41c65e590e09da3275600c2f09b8367793a9aca3db71cc30c58179ec3e87c14c01d5c1f3434f1d87"
+      },
+      "tags": [
+        "rfc5869",
+        "hkdf-sha256",
+        "long-input"
+      ]
+    },
+    {
+      "name": "hkdf_sha256_rfc5869_test3",
+      "comment": "RFC 5869 Test Case 3 - SHA256, test with zero-length salt and context",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+      },
+      "operations": [
+        {
+          "op": "Derive HKDF key",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Info": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Hashing function": "SHA256",
+            "Extract mode": "no salt",
+            "L (number of output octets)": 42
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8da4e775a563c18f715f802a063c5a31b8a11f5c5ee1879ec3454e5f3c738d2d9d201395faa4b61a96c8"
+      },
+      "tags": [
+        "rfc5869",
+        "hkdf-sha256",
+        "empty-salt"
+      ]
+    },
+    {
+      "name": "hkdf_sha1_rfc5869_test4",
+      "comment": "RFC 5869 Test Case 4 - SHA1, basic test case with SHA-1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0b0b0b0b0b0b0b0b0b0b0b"
+      },
+      "operations": [
+        {
+          "op": "Derive HKDF key",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c"
+            },
+            "Info": {
+              "option": "Hex",
+              "string": "f0f1f2f3f4f5f6f7f8f9"
+            },
+            "Hashing function": "SHA1",
+            "Extract mode": "with salt",
+            "L (number of output octets)": 42
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "085a01ea1b10f36933068b56efa5ad81a4f14b822f5b091568a9cdd4f155fda2c22e422478d305f3f896"
+      },
+      "tags": [
+        "rfc5869",
+        "hkdf-sha1"
+      ]
+    },
+    {
+      "name": "hkdf_sha1_rfc5869_test5",
+      "comment": "RFC 5869 Test Case 5 - SHA1, test with longer inputs and outputs",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f"
+      },
+      "operations": [
+        {
+          "op": "Derive HKDF key",
+          "args": {
+            "Salt": {
+              "option": "Hex",
+              "string": "606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeaf"
+            },
+            "Info": {
+              "option": "Hex",
+              "string": "b0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+            },
+            "Hashing function": "SHA1",
+            "Extract mode": "with salt",
+            "L (number of output octets)": 82
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0bd770a74d1160f7c9f12cd5912a06ebff6adcae899d92191fe4305673ba2ffe8fa3f1a4e5ad79f3f334b3b202b2173c486ea37ce3d397ed034c7f9dfeb15c5e927336d0441f4c4300e2cff0d0900b52d3b4"
+      },
+      "tags": [
+        "rfc5869",
+        "hkdf-sha1",
+        "long-input"
+      ]
+    }
+  ]
+}

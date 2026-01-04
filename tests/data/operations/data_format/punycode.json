@@ -1,0 +1,109 @@
+{
+  "operation": "To Punycode / From Punycode",
+  "category": "data_format",
+  "description": "Punycode (IDN) encoding and decoding tests for internationalized domain names",
+  "tests": [
+    {
+      "name": "to_punycode_munchen",
+      "comment": "Encode 'münchen' to Punycode - should become 'mnchen-3ya'",
+      "input": {
+        "type": "string",
+        "value": "münchen"
+      },
+      "operations": [
+        "To Punycode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "mnchen-3ya"
+      },
+      "tags": ["encode", "german"]
+    },
+    {
+      "name": "from_punycode_munchen",
+      "comment": "Decode Punycode 'mnchen-3ya' back to 'münchen'",
+      "input": {
+        "type": "string",
+        "value": "mnchen-3ya"
+      },
+      "operations": [
+        "From Punycode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "münchen"
+      },
+      "tags": ["decode", "german"]
+    },
+    {
+      "name": "to_punycode_idn_domain",
+      "comment": "Encode IDN domain 'münchen.de' with IDN flag enabled",
+      "input": {
+        "type": "string",
+        "value": "münchen.de"
+      },
+      "operations": [
+        {
+          "op": "To Punycode",
+          "args": [true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "xn--mnchen-3ya.de"
+      },
+      "tags": ["encode", "idn", "domain"]
+    },
+    {
+      "name": "from_punycode_idn_domain",
+      "comment": "Decode IDN domain 'xn--mnchen-3ya.de' back to 'münchen.de'",
+      "input": {
+        "type": "string",
+        "value": "xn--mnchen-3ya.de"
+      },
+      "operations": [
+        {
+          "op": "From Punycode",
+          "args": [true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "münchen.de"
+      },
+      "tags": ["decode", "idn", "domain"]
+    },
+    {
+      "name": "to_punycode_chinese",
+      "comment": "Encode Chinese characters '中国' to Punycode",
+      "input": {
+        "type": "string",
+        "value": "中国"
+      },
+      "operations": [
+        "To Punycode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fiqs8s"
+      },
+      "tags": ["encode", "chinese"]
+    },
+    {
+      "name": "from_punycode_chinese",
+      "comment": "Decode Punycode 'fiqs8s' back to '中国'",
+      "input": {
+        "type": "string",
+        "value": "fiqs8s"
+      },
+      "operations": [
+        "From Punycode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "中国"
+      },
+      "tags": ["decode", "chinese"]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "operation": "Take bytes",
+  "category": "utils",
+  "description": "Test Take bytes operation for extracting specified bytes from data",
+  "tests": [
+    {
+      "name": "take_first_5_bytes",
+      "comment": "Take the first 5 bytes from the beginning",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Take bytes", "args": [0, 5, false]}],
+      "expected": {"type": "string", "value": "Hello"},
+      "tags": ["take", "basic"]
+    },
+    {
+      "name": "take_bytes_from_middle",
+      "comment": "Take 5 bytes starting at position 6",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Take bytes", "args": [6, 5, false]}],
+      "expected": {"type": "string", "value": "World"},
+      "tags": ["take", "middle"]
+    },
+    {
+      "name": "take_bytes_with_negative_start",
+      "comment": "Take 5 bytes from end using negative start position",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": [{"op": "Take bytes", "args": [-5, 5, false]}],
+      "expected": {"type": "string", "value": "World"},
+      "tags": ["take", "negative"]
+    },
+    {
+      "name": "take_bytes_per_line",
+      "comment": "Take first 2 bytes from each line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243440a4546474849"},
+      "operations": [{"op": "Take bytes", "args": [0, 2, true]}],
+      "expected": {"type": "string", "value": "AB\nEF"},
+      "tags": ["take", "per_line"]
+    },
+    {
+      "name": "take_bytes_empty_input",
+      "comment": "Take bytes from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Take bytes", "args": [0, 5, false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["take", "edge_case"]
+    },
+    {
+      "name": "take_more_bytes_than_available",
+      "comment": "Attempting to take more bytes than input contains",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243"},
+      "operations": [{"op": "Take bytes", "args": [0, 10, false]}],
+      "expected": {"type": "string", "value": "ABC"},
+      "tags": ["take", "edge_case"]
+    }
+  ]
+}

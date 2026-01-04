@@ -1,0 +1,132 @@
+{
+  "operation": "Extract email addresses",
+  "category": "extractors",
+  "description": "Tests for extracting email addresses from text using regex patterns",
+  "tests": [
+    {
+      "name": "extract_single_email",
+      "comment": "Extract a single email address from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "436f6e746163742075736572406578616d706c652e636f6d20746f646179"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "user@example.com"
+      },
+      "tags": [
+        "extractor",
+        "email"
+      ]
+    },
+    {
+      "name": "extract_multiple_emails",
+      "comment": "Extract multiple email addresses from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "456d61696c2061646d696e40636f6d70616e792e636f6d206f722073616c6573407465616d2e6f7267"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "admin@company.com\nsales@team.org"
+      },
+      "tags": [
+        "extractor",
+        "email",
+        "multiple"
+      ]
+    },
+    {
+      "name": "extract_email_with_dots",
+      "comment": "Extract email with dots in local part",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "52656163682066697273742e6c6173742e6e616d65406578616d706c652e636f2e756b20666f72206d6f726520696e666f"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "first.last.name@example.co.uk"
+      },
+      "tags": [
+        "extractor",
+        "email",
+        "dots"
+      ]
+    },
+    {
+      "name": "extract_email_with_subdomain",
+      "comment": "Extract email with subdomain",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "537570706f727420617420737570706f7274406d61696c2e6578616d706c652e636f6d"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "support@mail.example.com"
+      },
+      "tags": [
+        "extractor",
+        "email",
+        "subdomain"
+      ]
+    },
+    {
+      "name": "extract_emails_no_match",
+      "comment": "No email addresses found in text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4a7573742073696d706c6520746578742077697468206e6f20656d61696c20616464726573736573"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "extractor",
+        "email",
+        "no_match"
+      ]
+    },
+    {
+      "name": "extract_email_with_plus",
+      "comment": "Extract email with plus sign in local part",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "53656e6420746f20757365722b746167406578616d706c652e636f6d"
+      },
+      "operations": [
+        "Extract email addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "user+tag@example.com"
+      },
+      "tags": [
+        "extractor",
+        "email",
+        "plus_sign"
+      ]
+    }
+  ]
+}

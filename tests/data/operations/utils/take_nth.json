@@ -1,0 +1,55 @@
+{
+  "operation": "Take nth bytes",
+  "category": "utils",
+  "description": "Test Take nth bytes operation for extracting every nth byte from data",
+  "tests": [
+    {
+      "name": "take_every_second_byte",
+      "comment": "Take every 2nd byte starting from position 0",
+      "input": {"type": "bytes", "encoding": "hex", "value": "4142434445464748"},
+      "operations": [{"op": "Take nth bytes", "args": [2, 0, false]}],
+      "expected": {"type": "string", "value": "ADEG"},
+      "tags": ["take_nth", "basic"]
+    },
+    {
+      "name": "take_every_third_byte",
+      "comment": "Take every 3rd byte starting from position 0",
+      "input": {"type": "bytes", "encoding": "hex", "value": "4142434445464748494a"},
+      "operations": [{"op": "Take nth bytes", "args": [3, 0, false]}],
+      "expected": {"type": "string", "value": "ADG"},
+      "tags": ["take_nth", "basic"]
+    },
+    {
+      "name": "take_every_fourth_byte_offset_2",
+      "comment": "Take every 4th byte starting from position 2",
+      "input": {"type": "bytes", "encoding": "hex", "value": "4142434445464748494a4b4c"},
+      "operations": [{"op": "Take nth bytes", "args": [4, 2, false]}],
+      "expected": {"type": "string", "value": "CGK"},
+      "tags": ["take_nth", "offset"]
+    },
+    {
+      "name": "take_every_second_byte_per_line",
+      "comment": "Take every 2nd byte from each line independently",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243440a45464748"},
+      "operations": [{"op": "Take nth bytes", "args": [2, 0, true]}],
+      "expected": {"type": "string", "value": "AC\nEG"},
+      "tags": ["take_nth", "per_line"]
+    },
+    {
+      "name": "take_nth_empty_input",
+      "comment": "Take nth bytes from empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Take nth bytes", "args": [2, 0, false]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["take_nth", "edge_case"]
+    },
+    {
+      "name": "take_every_byte_larger_than_input",
+      "comment": "Take every 10th byte when input is smaller",
+      "input": {"type": "bytes", "encoding": "hex", "value": "414243"},
+      "operations": [{"op": "Take nth bytes", "args": [10, 0, false]}],
+      "expected": {"type": "string", "value": "A"},
+      "tags": ["take_nth", "edge_case"]
+    }
+  ]
+}

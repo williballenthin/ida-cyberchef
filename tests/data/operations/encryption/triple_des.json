@@ -1,0 +1,215 @@
+{
+  "operation": "Triple DES",
+  "category": "encryption",
+  "description": "Tests for Triple DES (3DES) encryption and decryption with various modes",
+  "tests": [
+    {
+      "name": "triple_des_encrypt_cbc_24byte_key",
+      "comment": "3DES-CBC encryption with 24-byte (192-bit) key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef23456789abcdef0145456789abcdef01"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "9d60cd8dfeb4131b"
+      },
+      "tags": ["encryption", "cbc", "triple-des", "24-byte-key"]
+    },
+    {
+      "name": "triple_des_decrypt_cbc_24byte_key",
+      "comment": "3DES-CBC decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "9d60cd8dfeb4131b"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef23456789abcdef0145456789abcdef01"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0123456789abcdef"
+      },
+      "tags": ["decryption", "cbc", "triple-des", "24-byte-key"]
+    },
+    {
+      "name": "triple_des_encrypt_ecb_mode",
+      "comment": "3DES-ECB encryption with 24-byte key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a8264bf06ad9d22fa8264bf06ad9d22f"
+      },
+      "tags": ["encryption", "ecb", "triple-des"]
+    },
+    {
+      "name": "triple_des_decrypt_ecb_mode",
+      "comment": "3DES-ECB decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a8264bf06ad9d22fa8264bf06ad9d22f"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "tags": ["decryption", "ecb", "triple-des"]
+    },
+    {
+      "name": "triple_des_encrypt_cfb_mode",
+      "comment": "3DES-CFB (Cipher Feedback) encryption",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0e329232ea6d0d730e329232ea6d0d730e329232ea6d0d73"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000001"
+            },
+            "Mode": "CFB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fc30ee2f01e92ab56bc2"
+      },
+      "tags": ["encryption", "cfb", "triple-des"]
+    },
+    {
+      "name": "triple_des_roundtrip_cbc",
+      "comment": "3DES encrypt then decrypt to verify roundtrip with UTF8 key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeefcafebabedeadbeefcafebabe"
+      },
+      "operations": [
+        {
+          "op": "Triple DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "MySecretPassword12345678"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        },
+        {
+          "op": "Triple DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "MySecretPassword12345678"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "deadbeefcafebabedeadbeefcafebabe"
+      },
+      "tags": ["roundtrip", "cbc", "triple-des", "utf8-key"]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "operation": "Bifid Cipher",
+  "category": "encryption",
+  "description": "Tests for Bifid cipher encoding and decoding using Polybius square transposition",
+  "tests": [
+    {
+      "name": "encode basic no keyword",
+      "comment": "Encode text without keyword using standard Polybius square",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": ["Bifid Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4854534c57"
+      },
+      "tags": ["encode", "basic", "no-keyword"]
+    },
+    {
+      "name": "decode basic no keyword",
+      "comment": "Decode Bifid cipher without keyword",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4854534c57"
+      },
+      "operations": ["Bifid Cipher Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "tags": ["decode", "basic", "no-keyword"]
+    },
+    {
+      "name": "encode with keyword",
+      "comment": "Encode text with keyword 'ZEBRA' for custom Polybius square",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41424344"
+      },
+      "operations": [
+        {
+          "op": "Bifid Cipher Encode",
+          "args": {
+            "Keyword": "ZEBRA"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5a454346"
+      },
+      "tags": ["encode", "keyword"]
+    },
+    {
+      "name": "decode with keyword",
+      "comment": "Decode Bifid cipher with keyword 'ZEBRA'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5a454346"
+      },
+      "operations": [
+        {
+          "op": "Bifid Cipher Decode",
+          "args": {
+            "Keyword": "ZEBRA"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41424344"
+      },
+      "tags": ["decode", "keyword"]
+    },
+    {
+      "name": "encode empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Bifid Cipher Encode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["encode", "edge-case", "empty-input"]
+    },
+    {
+      "name": "decode empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Bifid Cipher Decode"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["decode", "edge-case", "empty-input"]
+    }
+  ]
+}

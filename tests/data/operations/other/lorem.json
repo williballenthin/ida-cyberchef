@@ -1,0 +1,127 @@
+{
+  "operation": "Generate Lorem Ipsum",
+  "category": "other",
+  "description": "Lorem Ipsum placeholder text generation tests",
+  "tests": [
+    {
+      "name": "lorem_one_paragraph",
+      "comment": "Generate 1 paragraph of Lorem Ipsum",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Generate Lorem Ipsum",
+          "args": {
+            "Length": 1,
+            "Length in": "Paragraphs"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      },
+      "tags": ["lorem", "paragraph"],
+      "skip": true,
+      "skipReason": "Lorem ipsum output format needs verification"
+    },
+    {
+      "name": "lorem_five_words",
+      "comment": "Generate 5 words of Lorem Ipsum",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Generate Lorem Ipsum",
+          "args": {
+            "Length": 5,
+            "Length in": "Words"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Lorem ipsum dolor sit amet"
+      },
+      "tags": ["lorem", "words"],
+      "skip": true,
+      "skipReason": "Lorem ipsum word output needs verification"
+    },
+    {
+      "name": "lorem_two_sentences",
+      "comment": "Generate 2 sentences of Lorem Ipsum",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Generate Lorem Ipsum",
+          "args": {
+            "Length": 2,
+            "Length in": "Sentences"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      "tags": ["lorem", "sentences"],
+      "skip": true,
+      "skipReason": "Lorem ipsum sentence output needs verification"
+    },
+    {
+      "name": "lorem_50_bytes",
+      "comment": "Generate 50 bytes of Lorem Ipsum",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Generate Lorem Ipsum",
+          "args": {
+            "Length": 50,
+            "Length in": "Bytes"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Lorem ipsum dolor sit amet, consectetur adipiscing"
+      },
+      "tags": ["lorem", "bytes"],
+      "skip": true,
+      "skipReason": "Lorem ipsum byte-length output needs verification"
+    },
+    {
+      "name": "lorem_three_paragraphs",
+      "comment": "Generate 3 paragraphs of Lorem Ipsum",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Generate Lorem Ipsum",
+          "args": {
+            "Length": 3,
+            "Length in": "Paragraphs"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["lorem", "paragraph"],
+      "skip": true,
+      "skipReason": "Lorem ipsum multi-paragraph output needs verification"
+    }
+  ]
+}

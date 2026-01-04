@@ -1,0 +1,151 @@
+{
+  "operation": "Unicode Text Format",
+  "category": "language",
+  "description": "Tests for Unicode Text Format operation - adds Unicode combining characters for text formatting",
+  "tests": [
+    {
+      "name": "underline_basic",
+      "comment": "Add underline formatting using U+0332 combining character",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54657374"
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": true,
+            "Strikethrough": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54ccb265ccb273ccb274ccb2"
+      },
+      "tags": ["underline", "basic"]
+    },
+    {
+      "name": "strikethrough_basic",
+      "comment": "Add strikethrough formatting using U+0336 combining character",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": false,
+            "Strikethrough": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48ccb665ccb66cccb66cccb66fccb6"
+      },
+      "tags": ["strikethrough", "basic"]
+    },
+    {
+      "name": "both_formats",
+      "comment": "Apply both underline and strikethrough formatting",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4869"
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": true,
+            "Strikethrough": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48ccb2ccb669ccb2ccb6"
+      },
+      "tags": ["underline", "strikethrough", "combined"]
+    },
+    {
+      "name": "underline_uppercase",
+      "comment": "Underline uppercase text ABC",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": true,
+            "Strikethrough": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41ccb242ccb243ccb2"
+      },
+      "tags": ["underline", "uppercase"]
+    },
+    {
+      "name": "no_formatting",
+      "comment": "No formatting applied when both options are false",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54657374"
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": false,
+            "Strikethrough": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54657374"
+      },
+      "tags": ["no-format", "passthrough"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "Empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Unicode Text Format",
+          "args": {
+            "Underline": true,
+            "Strikethrough": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

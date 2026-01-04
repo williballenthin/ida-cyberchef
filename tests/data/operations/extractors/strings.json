@@ -1,0 +1,125 @@
+{
+  "operation": "Strings",
+  "category": "extractors",
+  "description": "Extract ASCII and Unicode strings from binary data",
+  "tests": [
+    {
+      "name": "strings_ascii_basic",
+      "comment": "Extract ASCII strings from binary data with minimum length 4",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000048656c6c6f20576f726c6421000000546573740000"
+      },
+      "operations": ["Strings"],
+      "expected": {
+        "type": "string",
+        "value": "Hello World!\nTest"
+      },
+      "tags": ["strings", "ascii"]
+    },
+    {
+      "name": "strings_min_length_custom",
+      "comment": "Extract strings with custom minimum length of 6",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0000004869210000000048656c6c6f20576f726c64210000"
+      },
+      "operations": [
+        {
+          "op": "Strings",
+          "args": {
+            "Minimum length": 6
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello World!"
+      },
+      "tags": ["strings", "min_length"]
+    },
+    {
+      "name": "strings_single_byte",
+      "comment": "Extract single byte ASCII strings",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ff00546573742044617461ff00416e6f74686572ff00"
+      },
+      "operations": [
+        {
+          "op": "Strings",
+          "args": {
+            "Encoding": "Single byte"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Test Data\nAnother"
+      },
+      "tags": ["strings", "single_byte"]
+    },
+    {
+      "name": "strings_16bit_littleendian",
+      "comment": "Extract 16-bit little-endian Unicode strings",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0000005400650073007400000000"
+      },
+      "operations": [
+        {
+          "op": "Strings",
+          "args": {
+            "Encoding": "16-bit littleendian"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Test"
+      },
+      "tags": ["strings", "unicode", "little_endian"]
+    },
+    {
+      "name": "strings_all_encodings",
+      "comment": "Extract strings with all encodings",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00004153434949000000005400650073007400"
+      },
+      "operations": [
+        {
+          "op": "Strings",
+          "args": {
+            "Encoding": "All"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ASCII\nTest"
+      },
+      "tags": ["strings", "all_encodings"]
+    },
+    {
+      "name": "strings_empty_input",
+      "comment": "Extract strings from empty input",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Strings"],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": ["strings", "empty"]
+    }
+  ]
+}

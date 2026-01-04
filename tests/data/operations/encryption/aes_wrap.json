@@ -1,0 +1,193 @@
+{
+  "operation": "AES Key Wrap/Unwrap",
+  "category": "encryption",
+  "description": "Tests for AES Key Wrap and Key Unwrap using RFC 3394 test vectors",
+  "tests": [
+    {
+      "name": "aes_128_key_wrap",
+      "comment": "AES-128 Key Wrap using RFC 3394 test vector with 128-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00112233445566778899aabbccddeeff"
+      },
+      "operations": [
+        {
+          "op": "AES Key Wrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1fa68b0a8112b447aef34bd8fb5a7b829d3e862371d2cfe5"
+      },
+      "tags": ["aes-128", "key-wrap", "rfc3394"]
+    },
+    {
+      "name": "aes_128_key_unwrap",
+      "comment": "AES-128 Key Unwrap using RFC 3394 test vector with 128-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "1fa68b0a8112b447aef34bd8fb5a7b829d3e862371d2cfe5"
+      },
+      "operations": [
+        {
+          "op": "AES Key Unwrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00112233445566778899aabbccddeeff"
+      },
+      "tags": ["aes-128", "key-unwrap", "rfc3394"]
+    },
+    {
+      "name": "aes_192_key_wrap",
+      "comment": "AES-192 Key Wrap using RFC 3394 test vector with 192-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00112233445566778899aabbccddeeff"
+      },
+      "operations": [
+        {
+          "op": "AES Key Wrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f1011121314151617"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "96778b25ae6ca435f92b5b97c050aed2468ab8a17ad84e5d"
+      },
+      "tags": ["aes-192", "key-wrap", "rfc3394"]
+    },
+    {
+      "name": "aes_192_key_unwrap",
+      "comment": "AES-192 Key Unwrap using RFC 3394 test vector with 192-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "96778b25ae6ca435f92b5b97c050aed2468ab8a17ad84e5d"
+      },
+      "operations": [
+        {
+          "op": "AES Key Unwrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f1011121314151617"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00112233445566778899aabbccddeeff"
+      },
+      "tags": ["aes-192", "key-unwrap", "rfc3394"]
+    },
+    {
+      "name": "aes_256_key_wrap",
+      "comment": "AES-256 Key Wrap using RFC 3394 test vector with 256-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00112233445566778899aabbccddeeff0001020304050607"
+      },
+      "operations": [
+        {
+          "op": "AES Key Wrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "64e8c3f9ce0f5ba263e9777905818a2a93c8191e7d6e8ae7"
+      },
+      "tags": ["aes-256", "key-wrap", "rfc3394"]
+    },
+    {
+      "name": "aes_256_key_unwrap",
+      "comment": "AES-256 Key Unwrap using RFC 3394 test vector with 256-bit KEK",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "64e8c3f9ce0f5ba263e9777905818a2a93c8191e7d6e8ae7"
+      },
+      "operations": [
+        {
+          "op": "AES Key Unwrap",
+          "args": {
+            "Key (KEK)": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "a6a6a6a6a6a6a6a6"
+            },
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00112233445566778899aabbccddeeff0001020304050607"
+      },
+      "tags": ["aes-256", "key-unwrap", "rfc3394"]
+    }
+  ]
+}

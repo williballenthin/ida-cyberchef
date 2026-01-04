@@ -1,0 +1,327 @@
+{
+  "operation": "Case transformations",
+  "category": "code_tidy",
+  "description": "Tests for camel case, kebab case, and snake case transformations",
+  "tests": [
+    {
+      "name": "to_camel_case_basic",
+      "comment": "Convert space-separated words to camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f20776f726c64"
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "helloWorld"
+      },
+      "tags": [
+        "camel",
+        "basic"
+      ]
+    },
+    {
+      "name": "to_camel_case_from_title",
+      "comment": "Convert title case to camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "helloWorld"
+      },
+      "tags": [
+        "camel",
+        "title_case"
+      ]
+    },
+    {
+      "name": "to_camel_case_from_snake",
+      "comment": "Convert snake_case to camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f5f776f726c645f74657374"
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "helloWorldTest"
+      },
+      "tags": [
+        "camel",
+        "snake_case"
+      ]
+    },
+    {
+      "name": "to_camel_case_from_kebab",
+      "comment": "Convert kebab-case to camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f2d776f726c642d74657374"
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "helloWorldTest"
+      },
+      "tags": [
+        "camel",
+        "kebab_case"
+      ]
+    },
+    {
+      "name": "to_camel_case_empty",
+      "comment": "Handle empty input for camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "camel",
+        "edge_case"
+      ]
+    },
+    {
+      "name": "to_camel_case_with_numbers",
+      "comment": "Convert text with numbers to camelCase",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "74657374313233414243"
+      },
+      "operations": [
+        "To Camel case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test123ABC"
+      },
+      "tags": [
+        "camel",
+        "numbers"
+      ]
+    },
+    {
+      "name": "to_kebab_case_basic",
+      "comment": "Convert space-separated words to kebab-case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f20776f726c64"
+      },
+      "operations": [
+        "To Kebab case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello-world"
+      },
+      "tags": [
+        "kebab",
+        "basic"
+      ]
+    },
+    {
+      "name": "to_kebab_case_from_title",
+      "comment": "Convert title case to kebab-case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        "To Kebab case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello-world"
+      },
+      "tags": [
+        "kebab",
+        "title_case"
+      ]
+    },
+    {
+      "name": "to_kebab_case_from_camel",
+      "comment": "Convert camelCase to kebab-case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f576f726c6454657374"
+      },
+      "operations": [
+        "To Kebab case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello-world-test"
+      },
+      "tags": [
+        "kebab",
+        "camel_case"
+      ]
+    },
+    {
+      "name": "to_kebab_case_from_snake",
+      "comment": "Convert snake_case to kebab-case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f5f776f726c645f74657374"
+      },
+      "operations": [
+        "To Kebab case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello-world-test"
+      },
+      "tags": [
+        "kebab",
+        "snake_case"
+      ]
+    },
+    {
+      "name": "to_kebab_case_empty",
+      "comment": "Handle empty input for kebab-case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Kebab case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "kebab",
+        "edge_case"
+      ]
+    },
+    {
+      "name": "to_snake_case_basic",
+      "comment": "Convert space-separated words to snake_case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f20776f726c64"
+      },
+      "operations": [
+        "To Snake case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello_world"
+      },
+      "tags": [
+        "snake",
+        "basic"
+      ]
+    },
+    {
+      "name": "to_snake_case_from_title",
+      "comment": "Convert title case to snake_case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        "To Snake case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello_world"
+      },
+      "tags": [
+        "snake",
+        "title_case"
+      ]
+    },
+    {
+      "name": "to_snake_case_from_camel",
+      "comment": "Convert camelCase to snake_case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f576f726c6454657374"
+      },
+      "operations": [
+        "To Snake case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello_world_test"
+      },
+      "tags": [
+        "snake",
+        "camel_case"
+      ]
+    },
+    {
+      "name": "to_snake_case_from_kebab",
+      "comment": "Convert kebab-case to snake_case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f2d776f726c642d74657374"
+      },
+      "operations": [
+        "To Snake case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello_world_test"
+      },
+      "tags": [
+        "snake",
+        "kebab_case"
+      ]
+    },
+    {
+      "name": "to_snake_case_empty",
+      "comment": "Handle empty input for snake_case",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Snake case"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "snake",
+        "edge_case"
+      ]
+    }
+  ]
+}

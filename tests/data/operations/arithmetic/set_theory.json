@@ -1,0 +1,111 @@
+{
+  "operation": "Set Theory Operations",
+  "category": "arithmetic",
+  "description": "Set theory operations including union, intersection, difference, symmetric difference, power set, and cartesian product",
+  "tests": [
+    {
+      "name": "power_set_simple",
+      "comment": "Power set of {a,b} = {{},{a},{b},{a,b}}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c62"},
+      "operations": [{"op": "Power Set", "args": [","]}],
+      "expected": {"type": "string", "value": "\n\na\n\nb\n\na\nb\n"},
+      "tags": ["power_set", "basic"]
+    },
+    {
+      "name": "power_set_three_elements",
+      "comment": "Power set of {1,2,3} has 8 subsets",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c33"},
+      "operations": [{"op": "Power Set", "args": [","]}],
+      "expected": {"type": "string", "value": "\n\n1\n\n2\n\n1\n2\n\n3\n\n1\n3\n\n2\n3\n\n1\n2\n3\n"},
+      "tags": ["power_set", "three_elements"]
+    },
+    {
+      "name": "power_set_single",
+      "comment": "Power set of {x} = {{},{x}}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "78"},
+      "operations": [{"op": "Power Set", "args": [","]}],
+      "expected": {"type": "string", "value": "\n\nx\n"},
+      "tags": ["power_set", "single"]
+    },
+    {
+      "name": "set_union_basic",
+      "comment": "Union of {1,2,3} and {3,4,5} = {1,2,3,4,5}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c330a0a332c342c35"},
+      "operations": [{"op": "Set Union", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "1\n2\n3\n4\n5\n"},
+      "tags": ["set_union", "basic"]
+    },
+    {
+      "name": "set_union_disjoint",
+      "comment": "Union of {a,b} and {c,d} = {a,b,c,d}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c620a0a632c64"},
+      "operations": [{"op": "Set Union", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "a\nb\nc\nd\n"},
+      "tags": ["set_union", "disjoint"]
+    },
+    {
+      "name": "set_intersection_basic",
+      "comment": "Intersection of {1,2,3} and {2,3,4} = {2,3}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c330a0a322c332c34"},
+      "operations": [{"op": "Set Intersection", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "2\n3\n"},
+      "tags": ["set_intersection", "basic"]
+    },
+    {
+      "name": "set_intersection_disjoint",
+      "comment": "Intersection of {1,2} and {3,4} = {} (empty)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c320a0a332c34"},
+      "operations": [{"op": "Set Intersection", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["set_intersection", "disjoint"]
+    },
+    {
+      "name": "set_difference_basic",
+      "comment": "Difference {1,2,3,4} - {3,4,5} = {1,2}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c332c340a0a332c342c35"},
+      "operations": [{"op": "Set Difference", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "1\n2\n"},
+      "tags": ["set_difference", "basic"]
+    },
+    {
+      "name": "set_difference_subset",
+      "comment": "Difference {1,2,3} - {2} = {1,3}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c330a0a32"},
+      "operations": [{"op": "Set Difference", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "1\n3\n"},
+      "tags": ["set_difference", "subset"]
+    },
+    {
+      "name": "symmetric_difference_basic",
+      "comment": "Symmetric diff of {1,2,3} and {2,3,4} = {1,4}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c322c330a0a322c332c34"},
+      "operations": [{"op": "Symmetric Difference", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "1\n4\n"},
+      "tags": ["symmetric_difference", "basic"]
+    },
+    {
+      "name": "symmetric_difference_disjoint",
+      "comment": "Symmetric diff of {a,b} and {c,d} = {a,b,c,d}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "612c620a0a632c64"},
+      "operations": [{"op": "Symmetric Difference", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "a\nb\nc\nd\n"},
+      "tags": ["symmetric_difference", "disjoint"]
+    },
+    {
+      "name": "cartesian_product_basic",
+      "comment": "Cartesian product of {1,2} and {a,b} = {(1,a),(1,b),(2,a),(2,b)}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "312c320a0a612c62"},
+      "operations": [{"op": "Cartesian Product", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "1a\n1b\n2a\n2b\n"},
+      "tags": ["cartesian_product", "basic"]
+    },
+    {
+      "name": "cartesian_product_single",
+      "comment": "Cartesian product of {x} and {1,2} = {(x,1),(x,2)}",
+      "input": {"type": "bytes", "encoding": "hex", "value": "780a0a312c32"},
+      "operations": [{"op": "Cartesian Product", "args": ["\\n\\n", ","]}],
+      "expected": {"type": "string", "value": "x1\nx2\n"},
+      "tags": ["cartesian_product", "single"]
+    }
+  ]
+}

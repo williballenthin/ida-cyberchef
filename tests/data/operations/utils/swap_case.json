@@ -1,0 +1,55 @@
+{
+  "operation": "Swap case",
+  "category": "utils",
+  "description": "Swap case of letters in text",
+  "tests": [
+    {
+      "name": "swap_case_basic",
+      "comment": "Swap case of mixed case text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "hELLO wORLD"},
+      "tags": ["case", "swap"]
+    },
+    {
+      "name": "swap_case_all_upper",
+      "comment": "Swap case of all uppercase text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48454c4c4f20574f524c44"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "hello world"},
+      "tags": ["case", "swap", "uppercase"]
+    },
+    {
+      "name": "swap_case_all_lower",
+      "comment": "Swap case of all lowercase text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "HELLO WORLD"},
+      "tags": ["case", "swap", "lowercase"]
+    },
+    {
+      "name": "swap_case_numbers_symbols",
+      "comment": "Swap case with numbers and symbols",
+      "input": {"type": "bytes", "encoding": "hex", "value": "54657374313233402123"},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": "tEST123@!#"},
+      "tags": ["case", "swap", "numbers"]
+    },
+    {
+      "name": "swap_case_empty",
+      "comment": "Swap case of empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Swap case"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "swap", "edge_case"]
+    },
+    {
+      "name": "swap_case_double_swap",
+      "comment": "Swapping case twice returns original",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": ["Swap case", "Swap case"],
+      "expected": {"type": "string", "value": "Hello World"},
+      "tags": ["case", "swap", "roundtrip"]
+    }
+  ]
+}

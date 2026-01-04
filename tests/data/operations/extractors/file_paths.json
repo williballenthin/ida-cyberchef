@@ -1,0 +1,113 @@
+{
+  "operation": "Extract file paths",
+  "category": "extractors",
+  "description": "Extract Windows and Unix file paths from text",
+  "tests": [
+    {
+      "name": "extract_windows_path_basic",
+      "comment": "Extract basic Windows path",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c6f672066696c6520617420433a5c55736572735c4a6f686e5c446f63756d656e74735c6c6f672e747874"
+      },
+      "operations": ["Extract file paths"],
+      "expected": {
+        "type": "string",
+        "value": "C:\\Users\\John\\Documents\\log.txt"
+      },
+      "tags": ["windows", "path"]
+    },
+    {
+      "name": "extract_unix_path_basic",
+      "comment": "Extract basic Unix path",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "436f6e666967206174202f6574632f6170616368652f68747470642e636f6e66"
+      },
+      "operations": ["Extract file paths"],
+      "expected": {
+        "type": "string",
+        "value": "/etc/apache/httpd.conf"
+      },
+      "tags": ["unix", "path"]
+    },
+    {
+      "name": "extract_mixed_paths",
+      "comment": "Extract both Windows and Unix paths from same text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "57696e646f77733a20443a5c5c50726f6a656374735c5c6170702e6578652c20556e69783a202f686f6d652f757365722f6170702e7368"
+      },
+      "operations": ["Extract file paths"],
+      "expected": {
+        "type": "string",
+        "value": "D:\\Projects\\app.exe\n/home/user/app.sh"
+      },
+      "tags": ["windows", "unix", "path"]
+    },
+    {
+      "name": "extract_windows_only",
+      "comment": "Extract only Windows paths with UNIX disabled",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "57696e3a20433a5c5c5465737420556e69783a202f7573722f62696e2f7465737420"
+      },
+      "operations": [
+        {
+          "op": "Extract file paths",
+          "args": {
+            "Windows": true,
+            "UNIX": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "C:\\Test"
+      },
+      "tags": ["windows", "path"]
+    },
+    {
+      "name": "extract_unix_only",
+      "comment": "Extract only Unix paths with Windows disabled",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "57696e3a20433a5c5c5465737420556e69783a202f7573722f62696e2f7465737420"
+      },
+      "operations": [
+        {
+          "op": "Extract file paths",
+          "args": {
+            "Windows": false,
+            "UNIX": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "/usr/bin/test"
+      },
+      "tags": ["unix", "path"]
+    },
+    {
+      "name": "extract_paths_with_spaces",
+      "comment": "Extract Windows path with spaces",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "46696c653a20433a5c5c50726f6772616d2046696c65735c5c4d79204170705c5c6170702e657865"
+      },
+      "operations": ["Extract file paths"],
+      "expected": {
+        "type": "string",
+        "value": "C:\\Program Files\\My App\\app.exe"
+      },
+      "tags": ["windows", "path", "spaces"]
+    }
+  ]
+}

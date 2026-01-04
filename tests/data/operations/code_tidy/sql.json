@@ -1,0 +1,136 @@
+{
+  "operation": "SQL",
+  "category": "code_tidy",
+  "description": "Tests for SQL Beautify and SQL Minify operations - formatting and compressing SQL code",
+  "tests": [
+    {
+      "name": "beautify_simple_select",
+      "comment": "Beautify simple SELECT statement",
+      "input": {
+        "type": "string",
+        "value": "SELECT id,name,email FROM users WHERE active=1"
+      },
+      "operations": [
+        "SQL Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SELECT\n  id,\n  name,\n  email\nFROM\n  users\nWHERE\n  active = 1"
+      },
+      "tags": [
+        "beautify",
+        "select",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_select_with_join",
+      "comment": "Beautify SELECT with JOIN clause",
+      "input": {
+        "type": "string",
+        "value": "SELECT u.id,u.name,o.total FROM users u INNER JOIN orders o ON u.id=o.user_id WHERE o.total>100"
+      },
+      "operations": [
+        "SQL Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SELECT\n  u.id,\n  u.name,\n  o.total\nFROM\n  users u\n  INNER JOIN orders o ON u.id = o.user_id\nWHERE\n  o.total > 100"
+      },
+      "tags": [
+        "beautify",
+        "select",
+        "join"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_insert_statement",
+      "comment": "Beautify INSERT statement",
+      "input": {
+        "type": "string",
+        "value": "INSERT INTO users(name,email,age)VALUES('John','john@example.com',30)"
+      },
+      "operations": [
+        "SQL Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "INSERT INTO\n  users(name, email, age)\nVALUES\n  ('John', 'john@example.com', 30)"
+      },
+      "tags": [
+        "beautify",
+        "insert"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_update_statement",
+      "comment": "Beautify UPDATE statement",
+      "input": {
+        "type": "string",
+        "value": "UPDATE users SET name='Jane',age=25 WHERE id=1"
+      },
+      "operations": [
+        "SQL Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "UPDATE\n  users\nSET\n  name = 'Jane',\n  age = 25\nWHERE\n  id = 1"
+      },
+      "tags": [
+        "beautify",
+        "update"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_simple_select",
+      "comment": "Minify beautified SELECT statement",
+      "input": {
+        "type": "string",
+        "value": "SELECT\n  id,\n  name,\n  email\nFROM\n  users\nWHERE\n  active = 1"
+      },
+      "operations": [
+        "SQL Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SELECT id,name,email FROM users WHERE active=1"
+      },
+      "tags": [
+        "minify",
+        "select",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "minify_with_comments",
+      "comment": "Minify SQL with comments and extra whitespace",
+      "input": {
+        "type": "string",
+        "value": "-- Get active users\nSELECT\n  id,\n  name\nFROM\n  users\n-- Only active ones\nWHERE\n  active = 1"
+      },
+      "operations": [
+        "SQL Minify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SELECT id,name FROM users WHERE active=1"
+      },
+      "tags": [
+        "minify",
+        "comments"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    }
+  ]
+}

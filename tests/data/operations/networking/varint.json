@@ -1,0 +1,196 @@
+{
+  "operation": "VarInt Operations",
+  "category": "networking",
+  "description": "Encode and decode Protocol Buffer VarInt integers",
+  "tests": [
+    {
+      "name": "varint_encode_zero",
+      "comment": "Encode zero as VarInt (single byte 0x00)",
+      "input": {
+        "type": "string",
+        "value": "0"
+      },
+      "operations": [
+        "VarInt Encode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00"
+      },
+      "tags": [
+        "varint",
+        "encode",
+        "zero"
+      ]
+    },
+    {
+      "name": "varint_decode_zero",
+      "comment": "Decode VarInt zero",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00"
+      },
+      "operations": [
+        "VarInt Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "varint",
+        "decode",
+        "zero"
+      ]
+    },
+    {
+      "name": "varint_encode_small_number",
+      "comment": "Encode small number 127 (fits in 1 byte)",
+      "input": {
+        "type": "string",
+        "value": "127"
+      },
+      "operations": [
+        "VarInt Encode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7f"
+      },
+      "tags": [
+        "varint",
+        "encode",
+        "small"
+      ]
+    },
+    {
+      "name": "varint_decode_small_number",
+      "comment": "Decode VarInt 127",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7f"
+      },
+      "operations": [
+        "VarInt Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "127"
+      },
+      "tags": [
+        "varint",
+        "decode",
+        "small"
+      ]
+    },
+    {
+      "name": "varint_encode_two_bytes",
+      "comment": "Encode 300 (requires 2 bytes: 0xac 0x02)",
+      "input": {
+        "type": "string",
+        "value": "300"
+      },
+      "operations": [
+        "VarInt Encode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ac02"
+      },
+      "tags": [
+        "varint",
+        "encode",
+        "two_bytes"
+      ]
+    },
+    {
+      "name": "varint_decode_two_bytes",
+      "comment": "Decode VarInt 300 from two bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ac02"
+      },
+      "operations": [
+        "VarInt Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "300"
+      },
+      "tags": [
+        "varint",
+        "decode",
+        "two_bytes"
+      ]
+    },
+    {
+      "name": "varint_roundtrip_large",
+      "comment": "Encode then decode large number 16384",
+      "input": {
+        "type": "string",
+        "value": "16384"
+      },
+      "operations": [
+        "VarInt Encode",
+        "VarInt Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "16384"
+      },
+      "tags": [
+        "varint",
+        "roundtrip",
+        "large"
+      ]
+    },
+    {
+      "name": "varint_encode_max_single_byte",
+      "comment": "Encode 127 (maximum value in single byte)",
+      "input": {
+        "type": "string",
+        "value": "127"
+      },
+      "operations": [
+        "VarInt Encode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7f"
+      },
+      "tags": [
+        "varint",
+        "encode",
+        "edge_case"
+      ]
+    },
+    {
+      "name": "varint_encode_min_two_bytes",
+      "comment": "Encode 128 (minimum value requiring two bytes)",
+      "input": {
+        "type": "string",
+        "value": "128"
+      },
+      "operations": [
+        "VarInt Encode"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "8001"
+      },
+      "tags": [
+        "varint",
+        "encode",
+        "edge_case"
+      ]
+    }
+  ]
+}

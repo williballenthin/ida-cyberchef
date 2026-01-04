@@ -1,0 +1,108 @@
+{
+  "operation": "MD4",
+  "category": "hashing",
+  "description": "MD4 hash algorithm tests with RFC 1320 standard test vectors",
+  "tests": [
+    {
+      "name": "empty",
+      "comment": "MD4 of empty string - RFC 1320 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "MD4"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "31d6cfe0d16ae931b73c59d7e0c089c0"
+      },
+      "tags": [
+        "rfc-1320",
+        "standard-vector",
+        "empty"
+      ]
+    },
+    {
+      "name": "single_a",
+      "comment": "MD4 of single character 'a' - RFC 1320 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61"
+      },
+      "operations": [
+        "MD4"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "bde52cb31de33e46245e05fbdbd6fb24"
+      },
+      "tags": [
+        "rfc-1320",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "abc",
+      "comment": "MD4 of 'abc' - RFC 1320 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        "MD4"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a448017aaf21d8525fc10ae87aa6729d"
+      },
+      "tags": [
+        "rfc-1320",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "message_digest",
+      "comment": "MD4 of 'message digest' - RFC 1320 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6d65737361676520646967657374"
+      },
+      "operations": [
+        "MD4"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "d9130a8164549fe818874806e1c7014b"
+      },
+      "tags": [
+        "rfc-1320",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "alphanumeric",
+      "comment": "MD4 of 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' - RFC 1320 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4142434445464748494a4b4c4d4e4f505152535455565758595a6162636465666768696a6b6c6d6e6f707172737475767778797a30313233343536373839"
+      },
+      "operations": [
+        "MD4"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "043f8582f241db351ce627e153e7f0e4"
+      },
+      "tags": [
+        "rfc-1320",
+        "standard-vector"
+      ]
+    }
+  ]
+}

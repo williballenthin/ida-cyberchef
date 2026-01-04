@@ -1,0 +1,119 @@
+{
+  "operation": "Remove Diacritics",
+  "category": "language",
+  "description": "Tests for Remove Diacritics operation - replaces accented characters with latin equivalents",
+  "tests": [
+    {
+      "name": "french_cafe",
+      "comment": "Remove diacritic from café → cafe",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "636166c3a9"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "63616665"
+      },
+      "tags": ["french", "acute-accent"]
+    },
+    {
+      "name": "french_naive",
+      "comment": "Remove diacritic from naïve → naive",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6e61c3af7665"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6e61697665"
+      },
+      "tags": ["french", "diaeresis"]
+    },
+    {
+      "name": "french_resume",
+      "comment": "Remove diacritics from résumé → resume",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "72c3a973756dc3a9"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "726573756d65"
+      },
+      "tags": ["french", "acute-accent", "multiple"]
+    },
+    {
+      "name": "german_umlaut",
+      "comment": "Remove umlaut from Zürich → Zurich",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5ac3bc72696368"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5a7572696368"
+      },
+      "tags": ["german", "umlaut"]
+    },
+    {
+      "name": "spanish_tilde",
+      "comment": "Remove tilde from mañana → manana",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6d61c3b1616e61"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6d616e616e61"
+      },
+      "tags": ["spanish", "tilde"]
+    },
+    {
+      "name": "multiple_diacritics",
+      "comment": "Remove multiple diacritics from crème brûlée → creme brulee",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6372c3a86d65206272c3bb6cc3a965"
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6372656d65206272756c6565"
+      },
+      "tags": ["french", "multiple", "grave-accent", "circumflex"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "Empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Remove Diacritics"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

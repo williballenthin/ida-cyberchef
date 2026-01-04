@@ -1,0 +1,139 @@
+{
+  "operation": "YARA Rules",
+  "category": "forensics",
+  "description": "Tests for YARA pattern matching rules used in malware analysis and file classification",
+  "tests": [
+    {
+      "name": "yara_simple_string_match",
+      "comment": "Basic YARA rule matching a simple string",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686973206973206d616c7761726520636f6465"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule test_rule {\n    strings:\n        $str = \"malware\"\n    condition:\n        $str\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test_rule"
+      },
+      "tags": ["yara", "string-match"]
+    },
+    {
+      "name": "yara_simple_string_no_match",
+      "comment": "YARA rule with no match",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "546869732069732062656e69676e20636f6465"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule test_rule {\n    strings:\n        $str = \"malware\"\n    condition:\n        $str\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "No matches."
+      },
+      "tags": ["yara", "no-match"]
+    },
+    {
+      "name": "yara_hex_pattern_match",
+      "comment": "YARA rule matching hex pattern",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeef12345678"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule hex_pattern {\n    strings:\n        $hex = { DE AD BE EF }\n    condition:\n        $hex\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hex_pattern"
+      },
+      "tags": ["yara", "hex-pattern"]
+    },
+    {
+      "name": "yara_multiple_strings_all_match",
+      "comment": "YARA rule with multiple strings (all must match)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686973206973206d616c7761726520616e642076697275732074657374"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule multi_string {\n    strings:\n        $s1 = \"malware\"\n        $s2 = \"virus\"\n    condition:\n        all of them\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "multi_string"
+      },
+      "tags": ["yara", "multiple-strings"]
+    },
+    {
+      "name": "yara_multiple_strings_one_missing",
+      "comment": "YARA rule with multiple strings where one is missing",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686973206973206d616c7761726520746573742064617461"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule multi_string {\n    strings:\n        $s1 = \"malware\"\n        $s2 = \"virus\"\n    condition:\n        all of them\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "No matches."
+      },
+      "tags": ["yara", "multiple-strings", "no-match"]
+    },
+    {
+      "name": "yara_any_of_match",
+      "comment": "YARA rule with 'any of' condition",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5468697320636f6e7461696e732074726f6a616e"
+      },
+      "operations": [
+        {
+          "op": "YARA Rules",
+          "args": {
+            "Rules": "rule any_match {\n    strings:\n        $s1 = \"malware\"\n        $s2 = \"virus\"\n        $s3 = \"trojan\"\n    condition:\n        any of them\n}"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "any_match"
+      },
+      "tags": ["yara", "any-of"]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "operation": "Parse User Agent",
+  "category": "networking",
+  "description": "Parse and identify user agent strings",
+  "tests": [
+    {
+      "name": "parse_chrome_windows",
+      "comment": "Parse Chrome on Windows 10 user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Chrome 91.0.4472.124\nFamily: Chrome\nVersion: 91.0.4472.124\nMajor: 91\nMinor: 0\nPatch: 4472\n\nDevice\nType: \nVendor: \nModel: \n\nEngine\nName: Blink\nVersion: \n\nOperating System\nName: Windows 10\nVersion: "
+      },
+      "tags": [
+        "user_agent",
+        "chrome",
+        "windows"
+      ]
+    },
+    {
+      "name": "parse_firefox_linux",
+      "comment": "Parse Firefox on Linux user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (X11; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Firefox 89.0\nFamily: Firefox\nVersion: 89.0\nMajor: 89\nMinor: 0\nPatch: \n\nDevice\nType: \nVendor: \nModel: \n\nEngine\nName: Gecko 89.0\nVersion: 89.0\n\nOperating System\nName: Linux\nVersion: "
+      },
+      "tags": [
+        "user_agent",
+        "firefox",
+        "linux"
+      ]
+    },
+    {
+      "name": "parse_safari_macos",
+      "comment": "Parse Safari on macOS user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Safari 14.1.1\nFamily: Safari\nVersion: 14.1.1\nMajor: 14\nMinor: 1\nPatch: 1\n\nDevice\nType: \nVendor: Apple\nModel: Macintosh\n\nEngine\nName: WebKit 605.1.15\nVersion: 605.1.15\n\nOperating System\nName: Mac OS X 10.15.7\nVersion: 10.15.7"
+      },
+      "tags": [
+        "user_agent",
+        "safari",
+        "macos"
+      ]
+    },
+    {
+      "name": "parse_mobile_chrome_android",
+      "comment": "Parse Chrome on Android mobile user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Chrome Mobile 90.0.4430.91\nFamily: Chrome\nVersion: 90.0.4430.91\nMajor: 90\nMinor: 0\nPatch: 4430\n\nDevice\nType: mobile\nVendor: Google\nModel: Pixel 5\n\nEngine\nName: Blink\nVersion: \n\nOperating System\nName: Android 11\nVersion: 11"
+      },
+      "tags": [
+        "user_agent",
+        "chrome",
+        "android",
+        "mobile"
+      ]
+    },
+    {
+      "name": "parse_iphone_safari",
+      "comment": "Parse Safari on iPhone user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Mobile Safari 14.1.1\nFamily: Safari\nVersion: 14.1.1\nMajor: 14\nMinor: 1\nPatch: 1\n\nDevice\nType: mobile\nVendor: Apple\nModel: iPhone\n\nEngine\nName: WebKit 605.1.15\nVersion: 605.1.15\n\nOperating System\nName: iOS 14.6\nVersion: 14.6"
+      },
+      "tags": [
+        "user_agent",
+        "safari",
+        "ios",
+        "mobile"
+      ]
+    },
+    {
+      "name": "parse_edge_windows",
+      "comment": "Parse Edge on Windows user agent",
+      "input": {
+        "type": "string",
+        "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59"
+      },
+      "operations": [
+        "Parse User Agent"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Browser\nName: Edge 91.0.864.59\nFamily: Edge\nVersion: 91.0.864.59\nMajor: 91\nMinor: 0\nPatch: 864\n\nDevice\nType: \nVendor: \nModel: \n\nEngine\nName: Blink\nVersion: \n\nOperating System\nName: Windows 10\nVersion: "
+      },
+      "tags": [
+        "user_agent",
+        "edge",
+        "windows"
+      ]
+    }
+  ]
+}

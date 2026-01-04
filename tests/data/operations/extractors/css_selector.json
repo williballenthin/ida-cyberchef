@@ -1,0 +1,140 @@
+{
+  "operation": "CSS selector",
+  "category": "extractors",
+  "description": "Extract data from HTML documents using CSS selectors",
+  "tests": [
+    {
+      "name": "css_selector_simple_tag",
+      "comment": "Select element by tag name",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c68746d6c3e3c626f64793e3c68313e48656c6c6f20576f726c643c2f68313e3c2f626f64793e3c2f68746d6c3e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": "h1"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello World"
+      },
+      "tags": ["css", "html", "tag"]
+    },
+    {
+      "name": "css_selector_class",
+      "comment": "Select element by class name",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6469763e3c7020636c6173733d226869676c69676874223e496d706f7274616e743c2f703e3c2f6469763e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": ".highlight"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Important"
+      },
+      "tags": ["css", "class"]
+    },
+    {
+      "name": "css_selector_id",
+      "comment": "Select element by ID",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6469763e3c7370616e2069643d226d61696e2d7469746c65223e5469746c653c2f7370616e3e3c2f6469763e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": "#main-title"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Title"
+      },
+      "tags": ["css", "id"]
+    },
+    {
+      "name": "css_selector_descendant",
+      "comment": "Select element with descendant combinator",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6469763e3c756c3e3c6c693e4974656d20313c2f6c693e3c6c693e4974656d20323c2f6c693e3c2f756c3e3c2f6469763e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": "ul li"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Item 1\nItem 2"
+      },
+      "tags": ["css", "descendant"]
+    },
+    {
+      "name": "css_selector_child_combinator",
+      "comment": "Select element with child combinator",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6469763e3c703e446972656374206368696c643c2f703e3c7370616e3e3c703e4e657374656420706172613c2f703e3c2f7370616e3e3c2f6469763e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": "div > p"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Direct child"
+      },
+      "tags": ["css", "child_combinator"]
+    },
+    {
+      "name": "css_selector_custom_delimiter",
+      "comment": "Select multiple elements with custom delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c756c3e3c6c693e4f6e653c2f6c693e3c6c693e54776f3c2f6c693e3c6c693e54687265653c2f6c693e3c2f756c3e"
+      },
+      "operations": [
+        {
+          "op": "CSS selector",
+          "args": {
+            "CSS selector": "li",
+            "Delimiter": ", "
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "One, Two, Three"
+      },
+      "tags": ["css", "delimiter"]
+    }
+  ]
+}

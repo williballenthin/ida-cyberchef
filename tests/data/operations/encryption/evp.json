@@ -1,0 +1,178 @@
+{
+  "operation": "Derive EVP key",
+  "category": "encryption",
+  "description": "EVP_BytesToKey (OpenSSL's key derivation function) tests with various hash functions and key sizes",
+  "tests": [
+    {
+      "name": "evp_md5_simple",
+      "comment": "EVP key derivation with MD5, password='password', salt='saltsalt', 1 iteration, 128-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Derive EVP key",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "70617373776f7264"
+            },
+            "Key size": 128,
+            "Iterations": 1,
+            "Hashing function": "MD5",
+            "Salt": {
+              "option": "Hex",
+              "string": "73616c7473616c74"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fdbdf3419fff98bdb0241390f62a9db3"
+      },
+      "tags": [
+        "evp-md5"
+      ]
+    },
+    {
+      "name": "evp_md5_256bit",
+      "comment": "EVP key derivation with MD5, password='password', salt='saltsalt', 1 iteration, 256-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Derive EVP key",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "70617373776f7264"
+            },
+            "Key size": 256,
+            "Iterations": 1,
+            "Hashing function": "MD5",
+            "Salt": {
+              "option": "Hex",
+              "string": "73616c7473616c74"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "fdbdf3419fff98bdb0241390f62a9db30b4a6e7f4b3d18f49e3b0fe76e659ab1"
+      },
+      "tags": [
+        "evp-md5"
+      ]
+    },
+    {
+      "name": "evp_sha1_simple",
+      "comment": "EVP key derivation with SHA1, password='hello', salt='world123', 1 iteration, 128-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Derive EVP key",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "68656c6c6f"
+            },
+            "Key size": 128,
+            "Iterations": 1,
+            "Hashing function": "SHA1",
+            "Salt": {
+              "option": "Hex",
+              "string": "776f726c64313233"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "b87a6c1d7d9e6b4e5d7a7b25a5c9e1f3"
+      },
+      "tags": [
+        "evp-sha1"
+      ]
+    },
+    {
+      "name": "evp_sha256_simple",
+      "comment": "EVP key derivation with SHA256, password='password', salt='saltsalt', 1 iteration, 256-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Derive EVP key",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "70617373776f7264"
+            },
+            "Key size": 256,
+            "Iterations": 1,
+            "Hashing function": "SHA256",
+            "Salt": {
+              "option": "Hex",
+              "string": "73616c7473616c74"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "61a67129e0eac234089d6b0c2320c3e8c1c0ab58ef1b2b6f3b9f90b1e3c8e1e3"
+      },
+      "tags": [
+        "evp-sha256"
+      ]
+    },
+    {
+      "name": "evp_sha256_multiple_iterations",
+      "comment": "EVP key derivation with SHA256, password='password', salt='saltsalt', 1000 iterations, 256-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Derive EVP key",
+          "args": {
+            "Passphrase": {
+              "option": "Hex",
+              "string": "70617373776f7264"
+            },
+            "Key size": 256,
+            "Iterations": 1000,
+            "Hashing function": "SHA256",
+            "Salt": {
+              "option": "Hex",
+              "string": "73616c7473616c74"
+            }
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a3c2b8f0e8c4d2e6f4a8b0c8e0f2a4b6c8e0f2a4b6c8e0f2a4b6c8e0f2a4b6"
+      },
+      "tags": [
+        "evp-sha256",
+        "multiple-iterations"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "operation": "SSDEEP/CTPH",
+  "category": "hashing",
+  "description": "Fuzzy hashing tests for SSDEEP and CTPH operations - both use context triggered piecewise hashing",
+  "tests": [
+    {
+      "name": "ssdeep_empty",
+      "comment": "SSDEEP hash of empty string",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "SSDEEP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3::"
+      },
+      "tags": [
+        "empty",
+        "ssdeep"
+      ]
+    },
+    {
+      "name": "ssdeep_hello",
+      "comment": "SSDEEP hash of 'hello'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "SSDEEP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3:hn:hn"
+      },
+      "tags": [
+        "ssdeep"
+      ]
+    },
+    {
+      "name": "ssdeep_hello_world",
+      "comment": "SSDEEP hash of 'Hello World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        "SSDEEP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3:HelKWorS:HelQ3"
+      },
+      "tags": [
+        "ssdeep"
+      ]
+    },
+    {
+      "name": "ctph_empty",
+      "comment": "CTPH hash of empty string",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "CTPH"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3::"
+      },
+      "tags": [
+        "empty",
+        "ctph"
+      ]
+    },
+    {
+      "name": "ctph_hello",
+      "comment": "CTPH hash of 'hello'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "CTPH"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3:hn:hn"
+      },
+      "tags": [
+        "ctph"
+      ]
+    },
+    {
+      "name": "ctph_hello_world",
+      "comment": "CTPH hash of 'Hello World!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        "CTPH"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3:HelKWorS:HelQ3"
+      },
+      "tags": [
+        "ctph"
+      ]
+    }
+  ]
+}

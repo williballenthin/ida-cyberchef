@@ -1,0 +1,263 @@
+{
+  "operation": "AES Encrypt/Decrypt",
+  "category": "encryption",
+  "description": "Tests for AES encryption and decryption using NIST FIPS 197 test vectors",
+  "tests": [
+    {
+      "name": "aes_128_ecb_encrypt",
+      "comment": "AES-128 ECB encryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "operations": [
+        {
+          "op": "AES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "2b7e151628aed2a6abf7158809cf4f3c"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Mode": "ECB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3ad77bb40d7a3660a89ecaf32466ef97"
+      },
+      "tags": ["aes-128", "ecb", "encrypt", "nist"]
+    },
+    {
+      "name": "aes_128_ecb_decrypt",
+      "comment": "AES-128 ECB decryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3ad77bb40d7a3660a89ecaf32466ef97"
+      },
+      "operations": [
+        {
+          "op": "AES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "2b7e151628aed2a6abf7158809cf4f3c"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Mode": "ECB",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "tags": ["aes-128", "ecb", "decrypt", "nist"]
+    },
+    {
+      "name": "aes_128_cbc_encrypt",
+      "comment": "AES-128 CBC encryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "operations": [
+        {
+          "op": "AES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "2b7e151628aed2a6abf7158809cf4f3c"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "7649abac8119b246cee98e9b12e9197d"
+      },
+      "tags": ["aes-128", "cbc", "encrypt", "nist"]
+    },
+    {
+      "name": "aes_128_cbc_decrypt",
+      "comment": "AES-128 CBC decryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7649abac8119b246cee98e9b12e9197d"
+      },
+      "operations": [
+        {
+          "op": "AES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "2b7e151628aed2a6abf7158809cf4f3c"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "tags": ["aes-128", "cbc", "decrypt", "nist"]
+    },
+    {
+      "name": "aes_192_ecb_encrypt",
+      "comment": "AES-192 ECB encryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "operations": [
+        {
+          "op": "AES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Mode": "ECB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "bd334f1d6e45f25ff712a214571fa5cc"
+      },
+      "tags": ["aes-192", "ecb", "encrypt", "nist"]
+    },
+    {
+      "name": "aes_256_cbc_encrypt",
+      "comment": "AES-256 CBC encryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "operations": [
+        {
+          "op": "AES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "f58c4c04d6e5f1ba779eabfb5f7bfbd6"
+      },
+      "tags": ["aes-256", "cbc", "encrypt", "nist"]
+    },
+    {
+      "name": "aes_128_ctr_encrypt",
+      "comment": "AES-128 CTR encryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "operations": [
+        {
+          "op": "AES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "2b7e151628aed2a6abf7158809cf4f3c"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+            },
+            "Mode": "CTR",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "874d6191b620e3261bef6864990db6ce"
+      },
+      "tags": ["aes-128", "ctr", "encrypt", "nist"]
+    },
+    {
+      "name": "aes_256_ecb_decrypt",
+      "comment": "AES-256 ECB decryption using NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "dc95c078a2408989ad48a21492842087"
+      },
+      "operations": [
+        {
+          "op": "AES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": ""
+            },
+            "Mode": "ECB",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6bc1bee22e409f96e93d7e117393172a"
+      },
+      "tags": ["aes-256", "ecb", "decrypt", "nist"]
+    }
+  ]
+}
