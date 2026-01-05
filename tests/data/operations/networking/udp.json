@@ -1,0 +1,127 @@
+{
+  "operation": "Parse UDP",
+  "category": "networking",
+  "description": "Parse UDP header tests for various UDP configurations",
+  "tests": [
+    {
+      "name": "parse_udp_dns",
+      "comment": "Parse UDP header for DNS traffic (port 53)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0035C35000080000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "53"
+      },
+      "tags": [
+        "udp",
+        "dns"
+      ]
+    },
+    {
+      "name": "parse_udp_dhcp_client",
+      "comment": "Parse UDP header for DHCP client traffic (port 68)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0044004300080000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "68"
+      },
+      "tags": [
+        "udp",
+        "dhcp"
+      ]
+    },
+    {
+      "name": "parse_udp_ntp",
+      "comment": "Parse UDP header for NTP traffic (port 123)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "007B007B00080000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "123"
+      },
+      "tags": [
+        "udp",
+        "ntp"
+      ]
+    },
+    {
+      "name": "parse_udp_high_port",
+      "comment": "Parse UDP header with high port number",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "C350003500080000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "50000"
+      },
+      "tags": [
+        "udp",
+        "high_port"
+      ]
+    },
+    {
+      "name": "parse_udp_with_length",
+      "comment": "Parse UDP header with specific length field",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "1F901F90001C0000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "28"
+      },
+      "tags": [
+        "udp",
+        "length"
+      ]
+    },
+    {
+      "name": "parse_udp_ephemeral_ports",
+      "comment": "Parse UDP header with ephemeral port range",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "C0A8C3D400080000"
+      },
+      "operations": [
+        "Parse UDP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "49320"
+      },
+      "tags": [
+        "udp",
+        "ephemeral"
+      ]
+    }
+  ]
+}

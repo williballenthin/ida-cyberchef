@@ -1,0 +1,140 @@
+{
+  "operation": "XPath expression",
+  "category": "extractors",
+  "description": "Extract data from XML/HTML documents using XPath queries",
+  "tests": [
+    {
+      "name": "xpath_simple_element",
+      "comment": "Extract text from simple XML element",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c726f6f743e3c7469746c653e48656c6c6f3c2f7469746c653e3c2f726f6f743e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//title"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<title>Hello</title>"
+      },
+      "tags": ["xpath", "xml", "simple"]
+    },
+    {
+      "name": "xpath_text_content",
+      "comment": "Extract text content from element",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c626f6f6b3e3c7469746c653e546865204772656174204761747362793c2f7469746c653e3c2f626f6f6b3e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//title/text()"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "The Great Gatsby"
+      },
+      "tags": ["xpath", "text"]
+    },
+    {
+      "name": "xpath_multiple_elements",
+      "comment": "Extract multiple elements with newline delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6c6973743e3c6974656d3e4170706c653c2f6974656d3e3c6974656d3e42616e616e613c2f6974656d3e3c6974656d3e4368657272793c2f6974656d3e3c2f6c6973743e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//item/text()"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Apple\nBanana\nCherry"
+      },
+      "tags": ["xpath", "multiple"]
+    },
+    {
+      "name": "xpath_attribute",
+      "comment": "Extract attribute value from element",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c6120687265663d2268747470733a2f2f6578616d706c652e636f6d223e4c696e6b3c2f613e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//a/@href"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "href=\"https://example.com\""
+      },
+      "tags": ["xpath", "attribute"]
+    },
+    {
+      "name": "xpath_custom_delimiter",
+      "comment": "Extract multiple elements with custom delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c646174613e3c76616c75653e313c2f76616c75653e3c76616c75653e323c2f76616c75653e3c76616c75653e333c2f76616c75653e3c2f646174613e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//value/text()",
+            "Result delimiter": ", "
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1, 2, 3"
+      },
+      "tags": ["xpath", "delimiter"]
+    },
+    {
+      "name": "xpath_no_match",
+      "comment": "XPath query with no matching elements",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c726f6f743e3c6974656d3e546573743c2f6974656d3e3c2f726f6f743e"
+      },
+      "operations": [
+        {
+          "op": "XPath expression",
+          "args": {
+            "XPath": "//nonexistent"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": ["xpath", "no_match"]
+    }
+  ]
+}

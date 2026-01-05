@@ -1,0 +1,111 @@
+{
+  "operation": "SM3",
+  "category": "hashing",
+  "description": "SM3 hash algorithm tests with Chinese National Standard test vectors",
+  "tests": [
+    {
+      "name": "empty",
+      "comment": "SM3 of empty string - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "SM3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1ab21d8355cfa17f8e61194831e81a8f22bec8c728fefb747ed035eb5082aa2b"
+      },
+      "tags": [
+        "standard-vector",
+        "empty"
+      ]
+    },
+    {
+      "name": "abc",
+      "comment": "SM3 of 'abc' - GB/T 32905-2016 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        "SM3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "66c7f0f462eeedd9d1f2d46bdc10e4e24167c4875cf2f7a2297da02b8f4ba8e0"
+      },
+      "tags": [
+        "gb-standard",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "long_string",
+      "comment": "SM3 of 'abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd' - GB/T 32905-2016 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6162636461626364616263646162636461626364616263646162636461626364616263646162636461626364616263646162636461626364616263646162636461626364"
+      },
+      "operations": [
+        "SM3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "debe9ff92275b8a138604889c18e5a4d6fdb70e5387e5765293dcba39c0c5732"
+      },
+      "tags": [
+        "gb-standard",
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "hello",
+      "comment": "SM3 of 'hello' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "SM3"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "becbbfaae6548b8bf0cfcad5a27183cd1be6093b1ccecb91c53f59d9b4f41e0a"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "with_args",
+      "comment": "SM3 with explicit Length and Rounds parameters (defaults are 256 and 64)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "SM3",
+          "args": {
+            "Length": 256,
+            "Rounds": 64
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "66c7f0f462eeedd9d1f2d46bdc10e4e24167c4875cf2f7a2297da02b8f4ba8e0"
+      },
+      "tags": [
+        "with-args"
+      ]
+    }
+  ]
+}

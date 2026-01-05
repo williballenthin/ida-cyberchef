@@ -1,0 +1,108 @@
+{
+  "operation": "SHA0",
+  "category": "hashing",
+  "description": "SHA-0 hash algorithm tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty",
+      "comment": "SHA0 of empty string - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "SHA0"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "f96cea198ad1dd5617ac084a3d92c6107708c0ef"
+      },
+      "tags": [
+        "standard-vector",
+        "empty"
+      ]
+    },
+    {
+      "name": "abc",
+      "comment": "SHA0 of 'abc' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        "SHA0"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0164b8a914cd2a5e74c4f7ff082c4d97f1edf880"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "long_string",
+      "comment": "SHA0 of 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071"
+      },
+      "operations": [
+        "SHA0"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "d2516ee1acfa5baf33dfc1c471e438449ef134c8"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "hello",
+      "comment": "SHA0 of 'hello' - standard test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        "SHA0"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "f3e5b324849f6667178dde01f02598c3e6ba29d5"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "with_rounds",
+      "comment": "SHA0 with explicit Rounds parameter (default is 80)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "SHA0",
+          "args": {
+            "Rounds": 80
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0164b8a914cd2a5e74c4f7ff082c4d97f1edf880"
+      },
+      "tags": [
+        "with-args"
+      ]
+    }
+  ]
+}

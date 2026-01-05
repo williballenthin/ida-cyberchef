@@ -1,0 +1,117 @@
+{
+  "operation": "To Hex Content",
+  "category": "data_format",
+  "description": "Tests for SNORT-style hex content formatting (foo|3d|bar format)",
+  "tests": [
+    {
+      "name": "to_hex_content_special_chars",
+      "comment": "Convert only special characters to hex pipe notation",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f3d626172"
+      },
+      "operations": [
+        {
+          "op": "To Hex Content",
+          "args": ["Only special chars", false]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "foo|3d|bar"
+      }
+    },
+    {
+      "name": "from_hex_content_special_chars",
+      "comment": "Parse SNORT hex pipe notation back to raw bytes",
+      "input": {
+        "type": "string",
+        "value": "foo|3d|bar"
+      },
+      "operations": [
+        "From Hex Content"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "666f6f3d626172"
+      }
+    },
+    {
+      "name": "to_hex_content_all_chars",
+      "comment": "Convert all characters to hex pipe notation",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "To Hex Content",
+          "args": ["All chars", false]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "|68||65||6c||6c||6f|"
+      }
+    },
+    {
+      "name": "from_hex_content_all_chars",
+      "comment": "Parse hex pipe notation with all chars hexed back to raw bytes",
+      "input": {
+        "type": "string",
+        "value": "|68||65||6c||6c||6f|"
+      },
+      "operations": [
+        "From Hex Content"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      }
+    },
+    {
+      "name": "to_hex_content_with_spaces",
+      "comment": "Convert special chars including spaces to hex pipe notation",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        {
+          "op": "To Hex Content",
+          "args": ["Only special chars including spaces", false]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello|20|World"
+      }
+    },
+    {
+      "name": "roundtrip_hex_content",
+      "comment": "Verify round-trip conversion: bytes -> hex content -> bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "74657374213f2a"
+      },
+      "operations": [
+        {
+          "op": "To Hex Content",
+          "args": ["Only special chars", false]
+        },
+        "From Hex Content"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "74657374213f2a"
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "operation": "To Modhex / From Modhex",
+  "category": "data_format",
+  "description": "Modhex (Yubikey encoding) tests using alphabet 'cbdefghijklnrtuv'",
+  "tests": [
+    {
+      "name": "to_modhex_hello",
+      "comment": "Encode 'Hello' bytes to Modhex - hex 48656c6c6f becomes modhex edftfhfhfi",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "operations": [
+        "To Modhex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ed ft fh fh fi"
+      },
+      "tags": ["encode", "text"]
+    },
+    {
+      "name": "from_modhex_hello",
+      "comment": "Decode Modhex 'edftfhfhfi' back to 'Hello' bytes",
+      "input": {
+        "type": "string",
+        "value": "edftfhfhfi"
+      },
+      "operations": [
+        "From Modhex"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "tags": ["decode", "text"],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_modhex_binary",
+      "comment": "Encode binary deadbeef to Modhex - should become jfcjdffi",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeef"
+      },
+      "operations": [
+        "To Modhex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "jf cj df fi"
+      },
+      "tags": ["encode", "binary"]
+    },
+    {
+      "name": "to_modhex_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        "To Modhex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": ["empty"]
+    },
+    {
+      "name": "to_modhex_simple",
+      "comment": "Encode simple bytes 00 01 02 03 to Modhex - should be cc cd ce cf",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00010203"
+      },
+      "operations": [
+        "To Modhex"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "cc cd ce cf"
+      },
+      "tags": ["encode", "simple"]
+    }
+  ]
+}

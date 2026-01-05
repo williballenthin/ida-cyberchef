@@ -1,0 +1,55 @@
+{
+  "operation": "Count occurrences",
+  "category": "utils",
+  "description": "Count occurrences of strings or patterns in input",
+  "tests": [
+    {
+      "name": "count_simple_string",
+      "comment": "Count occurrences of a simple string",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c6420686f77206172652068656c6c6f"},
+      "operations": [{"op": "Count occurrences", "args": ["hello"]}],
+      "expected": {"type": "string", "value": "2"},
+      "tags": ["count", "string"]
+    },
+    {
+      "name": "count_single_character",
+      "comment": "Count occurrences of a single character",
+      "input": {"type": "bytes", "encoding": "hex", "value": "61626162616261"},
+      "operations": [{"op": "Count occurrences", "args": ["a"]}],
+      "expected": {"type": "string", "value": "4"},
+      "tags": ["count", "character"]
+    },
+    {
+      "name": "count_no_match",
+      "comment": "Count with no matches found",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": [{"op": "Count occurrences", "args": ["xyz"]}],
+      "expected": {"type": "string", "value": "0"},
+      "tags": ["count", "no_match"]
+    },
+    {
+      "name": "count_empty_input",
+      "comment": "Count with empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Count occurrences", "args": ["test"]}],
+      "expected": {"type": "string", "value": "0"},
+      "tags": ["count", "edge_case"]
+    },
+    {
+      "name": "count_overlapping",
+      "comment": "Count overlapping occurrences",
+      "input": {"type": "bytes", "encoding": "hex", "value": "616161"},
+      "operations": [{"op": "Count occurrences", "args": ["aa"]}],
+      "expected": {"type": "string", "value": "2"},
+      "tags": ["count", "overlapping"]
+    },
+    {
+      "name": "count_case_sensitive",
+      "comment": "Count is case sensitive",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f2068656c6c6f2048454c4c4f"},
+      "operations": [{"op": "Count occurrences", "args": ["hello"]}],
+      "expected": {"type": "string", "value": "2"},
+      "tags": ["count", "case_sensitive"]
+    }
+  ]
+}

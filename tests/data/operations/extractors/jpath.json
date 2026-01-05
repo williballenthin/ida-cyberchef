@@ -1,0 +1,140 @@
+{
+  "operation": "JPath expression",
+  "category": "extractors",
+  "description": "Extract data from JSON objects using JPath queries",
+  "tests": [
+    {
+      "name": "jpath_simple_property",
+      "comment": "Extract simple property from JSON",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b226e616d65223a224a6f686e222c22616765223a33307d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "John"
+      },
+      "tags": ["jpath", "json", "simple"]
+    },
+    {
+      "name": "jpath_nested_property",
+      "comment": "Extract nested property from JSON",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b2275736572223a7b226e616d65223a22416c696365222c22656d61696c223a22616c696365406578616d706c652e636f6d227d7d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.user.name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Alice"
+      },
+      "tags": ["jpath", "nested"]
+    },
+    {
+      "name": "jpath_array_element",
+      "comment": "Extract specific array element from JSON",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b226974656d73223a5b226170706c65222c2262616e616e61222c22636865727279225d7d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.items[0]"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "apple"
+      },
+      "tags": ["jpath", "array"]
+    },
+    {
+      "name": "jpath_all_array_elements",
+      "comment": "Extract all array elements with newline delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b2270726f6475637473223a5b7b226e616d65223a224c6170746f70227d2c7b226e616d65223a224d6f757365227d2c7b226e616d65223a224b6579626f617264227d5d7d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.products[*].name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Laptop\nMouse\nKeyboard"
+      },
+      "tags": ["jpath", "array", "multiple"]
+    },
+    {
+      "name": "jpath_custom_delimiter",
+      "comment": "Extract array with custom delimiter",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b226e756d62657273223a5b312c322c332c342c355d7d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.numbers[*]",
+            "Result delimiter": ", "
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1, 2, 3, 4, 5"
+      },
+      "tags": ["jpath", "delimiter"]
+    },
+    {
+      "name": "jpath_no_match",
+      "comment": "JPath query with no matching property",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7b226e616d65223a2254657374227d"
+      },
+      "operations": [
+        {
+          "op": "JPath expression",
+          "args": {
+            "Query": "$.nonexistent"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": ["jpath", "no_match"]
+    }
+  ]
+}

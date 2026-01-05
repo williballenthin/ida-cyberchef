@@ -1,0 +1,177 @@
+{
+  "operation": "ChaCha",
+  "category": "encryption",
+  "description": "Tests for ChaCha stream cipher using RFC 8439 test vectors and additional cases",
+  "tests": [
+    {
+      "name": "rfc8439_test_vector_1",
+      "comment": "RFC 8439 Test Vector #1 - ChaCha20 encryption with 256-bit key, 96-bit nonce, counter=1",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c616469657320616e642047656e746c656d656e206f662074686520636c617373206f6620273939203a204966204920636f756c64206f6666657220796f75206f6e6c79206f6e652074697020666f7220746865206675747572652c2073756e73637265656e20776f756c642062652069742e"
+      },
+      "operations": [
+        {
+          "op": "ChaCha",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "000000000000004a00000000"
+            },
+            "Counter": 1,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "6e2e359a2568f98041ba0728dd0d6981e97e7aec1d4360c20a27afccfd9fae0bf91b65c5524733ab8f593dabcd62b3571639d624e65152ab8f530c359f0861d807ca0dbf500d6a6156a38e088a22b65e52bc514d16ccf806818ce91ab77793765af90bbf74a35be6b40b8eedf2785e42874d"
+      },
+      "tags": ["rfc8439", "official-vector", "chacha20"]
+    },
+    {
+      "name": "zero_key_zero_nonce_8_rounds",
+      "comment": "ChaCha8 with all-zero key and nonce, testing 8-round variant",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "ChaCha",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "000000000000000000000000"
+            },
+            "Counter": 0,
+            "Rounds": "8",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "e28a5fa4a67f8c5defed3e6fb7303486"
+      },
+      "tags": ["zero-values", "chacha8", "8-rounds"]
+    },
+    {
+      "name": "simple_message_12_rounds",
+      "comment": "ChaCha12 (12 rounds) encrypting a simple ASCII message",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "ChaCha",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "000000000000000000000001"
+            },
+            "Counter": 0,
+            "Rounds": "12",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deb2380967965b78d049"
+      },
+      "tags": ["chacha12", "12-rounds", "simple-message"]
+    },
+    {
+      "name": "counter_offset_test",
+      "comment": "Testing ChaCha20 with non-zero counter offset",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67"
+      },
+      "operations": [
+        {
+          "op": "ChaCha",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "fffefdfcfbfaf9f8f7f6f5f4f3f2f1f0efeeedecebeae9e8e7e6e5e4e3e2e1e0"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "0102030405060708090a0b0c"
+            },
+            "Counter": 100,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ae0c5ff70e06bda2fb8566ee95f3df8c64e1b3b38f7e91ea2e2d8fadc8b2e1e9e2af14d67a4d88fae3a7"
+      },
+      "tags": ["counter-offset", "chacha20", "non-zero-counter"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "ChaCha20 with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "ChaCha",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "000000000000000000000000"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

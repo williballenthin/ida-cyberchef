@@ -1,0 +1,215 @@
+{
+  "operation": "Blowfish",
+  "category": "encryption",
+  "description": "Tests for Blowfish encryption and decryption with various key lengths and modes",
+  "tests": [
+    {
+      "name": "blowfish_encrypt_cbc_16byte_key",
+      "comment": "Blowfish-CBC encryption with 16-byte key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdeffedcba9876543210"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "d8f532a2e1f8c0d8"
+      },
+      "tags": ["encryption", "cbc", "blowfish", "16-byte-key"]
+    },
+    {
+      "name": "blowfish_decrypt_cbc_16byte_key",
+      "comment": "Blowfish-CBC decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "d8f532a2e1f8c0d8"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdeffedcba9876543210"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0123456789abcdef"
+      },
+      "tags": ["decryption", "cbc", "blowfish", "16-byte-key"]
+    },
+    {
+      "name": "blowfish_encrypt_ecb_short_key",
+      "comment": "Blowfish-ECB encryption with short 8-byte key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "f8a2e2d5cc6b8e4a7d0f4e01c0d7d7c4"
+      },
+      "tags": ["encryption", "ecb", "blowfish", "8-byte-key"]
+    },
+    {
+      "name": "blowfish_decrypt_ecb_short_key",
+      "comment": "Blowfish-ECB decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "f8a2e2d5cc6b8e4a7d0f4e01c0d7d7c4"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "tags": ["decryption", "ecb", "blowfish", "8-byte-key"]
+    },
+    {
+      "name": "blowfish_encrypt_ctr_long_key",
+      "comment": "Blowfish-CTR encryption with 32-byte key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0e329232ea6d0d730e329232ea6d0d730e329232ea6d0d730e329232ea6d0d73"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000001"
+            },
+            "Mode": "CTR",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "22a0e9f8f5ddf5c5e26d"
+      },
+      "tags": ["encryption", "ctr", "blowfish", "32-byte-key"]
+    },
+    {
+      "name": "blowfish_roundtrip_utf8_key",
+      "comment": "Blowfish encrypt then decrypt with UTF8 key to verify roundtrip",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeefcafebabedeadbeefcafebabe"
+      },
+      "operations": [
+        {
+          "op": "Blowfish Encrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "MyBlowfishPassword"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        },
+        {
+          "op": "Blowfish Decrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "MyBlowfishPassword"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "deadbeefcafebabedeadbeefcafebabe"
+      },
+      "tags": ["roundtrip", "cbc", "blowfish", "utf8-key"]
+    }
+  ]
+}

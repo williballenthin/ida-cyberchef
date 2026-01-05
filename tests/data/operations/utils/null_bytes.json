@@ -1,0 +1,55 @@
+{
+  "operation": "Remove null bytes",
+  "category": "utils",
+  "description": "Test Remove null bytes operation for stripping 0x00 bytes from data",
+  "tests": [
+    {
+      "name": "remove_null_bytes_basic",
+      "comment": "Remove null bytes scattered throughout data",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c006c6f00576f726c64"},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": "HelloWorld"},
+      "tags": ["null_bytes", "basic"]
+    },
+    {
+      "name": "remove_null_bytes_at_start",
+      "comment": "Remove null bytes at the beginning",
+      "input": {"type": "bytes", "encoding": "hex", "value": "00000048656c6c6f"},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": "Hello"},
+      "tags": ["null_bytes", "start"]
+    },
+    {
+      "name": "remove_null_bytes_at_end",
+      "comment": "Remove null bytes at the end",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f000000"},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": "Hello"},
+      "tags": ["null_bytes", "end"]
+    },
+    {
+      "name": "remove_null_bytes_none_present",
+      "comment": "Process data with no null bytes",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c6c6f20576f726c64"},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": "Hello World"},
+      "tags": ["null_bytes", "no_nulls"]
+    },
+    {
+      "name": "remove_null_bytes_only_nulls",
+      "comment": "Process data containing only null bytes",
+      "input": {"type": "bytes", "encoding": "hex", "value": "0000000000"},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["null_bytes", "edge_case"]
+    },
+    {
+      "name": "remove_null_bytes_empty_input",
+      "comment": "Process empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Remove null bytes"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["null_bytes", "edge_case"]
+    }
+  ]
+}

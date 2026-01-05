@@ -1,0 +1,55 @@
+{
+  "operation": "Sort",
+  "category": "utils",
+  "description": "Test Sort operation with different delimiters and orders",
+  "tests": [
+    {
+      "name": "sort_alphabetical_case_sensitive",
+      "comment": "Sort lines alphabetically (case sensitive)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7a656272610a6170706c650a42616e616e610a4368657272790a64617465"},
+      "operations": [{"op": "Sort", "args": ["Line feed", false, "Alphabetical (case sensitive)"]}],
+      "expected": {"type": "string", "value": "Banana\nCherry\napple\ndate\nzebra"},
+      "tags": ["sort", "alphabetical", "case_sensitive"]
+    },
+    {
+      "name": "sort_alphabetical_case_insensitive",
+      "comment": "Sort lines alphabetically (case insensitive)",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7a656272610a6170706c650a42616e616e610a4368657272790a64617465"},
+      "operations": [{"op": "Sort", "args": ["Line feed", false, "Alphabetical (case insensitive)"]}],
+      "expected": {"type": "string", "value": "apple\nBanana\nCherry\ndate\nzebra"},
+      "tags": ["sort", "alphabetical", "case_insensitive"]
+    },
+    {
+      "name": "sort_numeric",
+      "comment": "Sort numbers numerically",
+      "input": {"type": "bytes", "encoding": "hex", "value": "3130300a32300a350a3130300a31"},
+      "operations": [{"op": "Sort", "args": ["Line feed", false, "Numeric"]}],
+      "expected": {"type": "string", "value": "1\n5\n20\n100\n100"},
+      "tags": ["sort", "numeric"]
+    },
+    {
+      "name": "sort_reverse",
+      "comment": "Sort in reverse order",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6170706c650a62616e616e610a6368657272790a64617465"},
+      "operations": [{"op": "Sort", "args": ["Line feed", true, "Alphabetical (case insensitive)"]}],
+      "expected": {"type": "string", "value": "date\ncherry\nbanana\napple"},
+      "tags": ["sort", "reverse"]
+    },
+    {
+      "name": "sort_comma_delimiter",
+      "comment": "Sort comma-separated values",
+      "input": {"type": "bytes", "encoding": "hex", "value": "7a656272612c6170706c652c62616e616e612c6368657272792c64617465"},
+      "operations": [{"op": "Sort", "args": ["Comma", false, "Alphabetical (case insensitive)"]}],
+      "expected": {"type": "string", "value": "apple,banana,cherry,date,zebra"},
+      "tags": ["sort", "comma"]
+    },
+    {
+      "name": "sort_empty",
+      "comment": "Sort empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Sort", "args": ["Line feed", false, "Alphabetical (case sensitive)"]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["sort", "edge_case"]
+    }
+  ]
+}

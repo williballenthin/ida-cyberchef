@@ -1,0 +1,102 @@
+{
+  "operation": "Compare SSDEEP/CTPH hashes",
+  "category": "hashing",
+  "description": "Tests for comparing fuzzy hashes to determine similarity between inputs",
+  "tests": [
+    {
+      "name": "compare_ssdeep_identical",
+      "comment": "Compare identical SSDEEP hashes should return 100",
+      "input": {
+        "type": "string",
+        "value": "3:hn:hn\n3:hn:hn"
+      },
+      "operations": [
+        "Compare SSDEEP hashes"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "100"
+      },
+      "tags": [
+        "ssdeep",
+        "identical"
+      ]
+    },
+    {
+      "name": "compare_ssdeep_different",
+      "comment": "Compare completely different SSDEEP hashes should return 0",
+      "input": {
+        "type": "string",
+        "value": "3:hn:hn\n3:abc:def"
+      },
+      "operations": [
+        "Compare SSDEEP hashes"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "ssdeep",
+        "different"
+      ]
+    },
+    {
+      "name": "compare_ssdeep_similar",
+      "comment": "Compare similar SSDEEP hashes should return similarity score",
+      "input": {
+        "type": "string",
+        "value": "3:HelKWorS:HelQ3\n3:HelpWorS:HelQ3"
+      },
+      "operations": [
+        "Compare SSDEEP hashes"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "94"
+      },
+      "tags": [
+        "ssdeep",
+        "similar"
+      ]
+    },
+    {
+      "name": "compare_ctph_identical",
+      "comment": "Compare identical CTPH hashes should return 100",
+      "input": {
+        "type": "string",
+        "value": "3:hn:hn\n3:hn:hn"
+      },
+      "operations": [
+        "Compare CTPH hashes"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "100"
+      },
+      "tags": [
+        "ctph",
+        "identical"
+      ]
+    },
+    {
+      "name": "compare_ctph_different",
+      "comment": "Compare completely different CTPH hashes should return 0",
+      "input": {
+        "type": "string",
+        "value": "3:hn:hn\n3:abc:def"
+      },
+      "operations": [
+        "Compare CTPH hashes"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "ctph",
+        "different"
+      ]
+    }
+  ]
+}

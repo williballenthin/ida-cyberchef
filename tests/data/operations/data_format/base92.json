@@ -1,0 +1,78 @@
+{
+  "operation": "To Base92 / From Base92",
+  "category": "data_format",
+  "description": "Base92 encoding and decoding tests",
+  "tests": [
+    {
+      "name": "to_base92_hello",
+      "comment": "Encode 'Hello' to Base92",
+      "input": {
+        "type": "string",
+        "value": "Hello"
+      },
+      "operations": [
+        "To Base92"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "3c4447443e"
+      },
+      "tags": ["encode", "text"]
+    },
+    {
+      "name": "from_base92_hello",
+      "comment": "Decode Base92 back to 'Hello'",
+      "input": {
+        "type": "string",
+        "value": "<DGGD>"
+      },
+      "operations": [
+        "From Base92"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "tags": ["decode", "text"],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - Invalid data type enum error"
+    },
+    {
+      "name": "to_base92_empty",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        "To Base92"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["empty"]
+    },
+    {
+      "name": "to_base92_binary",
+      "comment": "Encode binary data to Base92",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeef"
+      },
+      "operations": [
+        "To Base92"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "683f675b29"
+      },
+      "tags": ["encode", "binary"]
+    }
+  ]
+}

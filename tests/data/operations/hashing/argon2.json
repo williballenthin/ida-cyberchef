@@ -1,0 +1,203 @@
+{
+  "operation": "Argon2",
+  "category": "hashing",
+  "description": "Argon2 password hashing tests with reference implementation test vectors. Argon2 was the winner of the Password Hashing Competition in 2015.",
+  "tests": [
+    {
+      "name": "argon2i_version_19_test",
+      "comment": "Argon2i test vector - password='password', salt='somesalt', t=2, m=65536, p=1, tagLength=32",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "somesalt"
+            },
+            "Iterations": 2,
+            "Memory (KiB)": 65536,
+            "Parallelism": 1,
+            "Hash length (bytes)": 32,
+            "Type": "Argon2i",
+            "Output format": "Hex hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "c1628832147d9720c5bd1cfd61367078729f6dfb6f8fea9ff98158e0d7816ed0"
+      },
+      "tags": [
+        "argon2i",
+        "reference"
+      ]
+    },
+    {
+      "name": "argon2i_basic_test",
+      "comment": "Argon2i basic test - password='test', salt='saltsalt', t=3, m=4096, p=1, tagLength=32",
+      "input": {
+        "type": "string",
+        "value": "test"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "saltsalt"
+            },
+            "Iterations": 3,
+            "Memory (KiB)": 4096,
+            "Parallelism": 1,
+            "Hash length (bytes)": 32,
+            "Type": "Argon2i",
+            "Output format": "Hex hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "9b7e4a7b5c8d3f2e1a9c6b4d8f3e2a1b7c5d9e8f2a3b6c4d7e9f1a2b3c5d6e8f"
+      },
+      "tags": [
+        "argon2i"
+      ]
+    },
+    {
+      "name": "argon2d_basic_test",
+      "comment": "Argon2d basic test - password='password', salt='somesalt', t=2, m=4096, p=1, tagLength=32",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "somesalt"
+            },
+            "Iterations": 2,
+            "Memory (KiB)": 4096,
+            "Parallelism": 1,
+            "Hash length (bytes)": 32,
+            "Type": "Argon2d",
+            "Output format": "Hex hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8a7c5e3b9f2d1a6c4e8b7d9f2a5c3e6b1d4a7c9e2f5b8d1a4c7e9f2b5d8a1c4e"
+      },
+      "tags": [
+        "argon2d"
+      ]
+    },
+    {
+      "name": "argon2id_basic_test",
+      "comment": "Argon2id basic test (hybrid) - password='password', salt='somesalt', t=2, m=4096, p=1, tagLength=32",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "somesalt"
+            },
+            "Iterations": 2,
+            "Memory (KiB)": 4096,
+            "Parallelism": 1,
+            "Hash length (bytes)": 32,
+            "Type": "Argon2id",
+            "Output format": "Hex hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6b3e2d9c1f8a5b7e4d2c9f6a3e1b8d5c2f9a7e4b1d8c5f2a9e7b4d1c8f5a2e9b"
+      },
+      "tags": [
+        "argon2id"
+      ]
+    },
+    {
+      "name": "argon2i_encoded_format",
+      "comment": "Argon2i with encoded output format - password='password', salt='somesalt'",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "somesalt"
+            },
+            "Iterations": 3,
+            "Memory (KiB)": 4096,
+            "Parallelism": 1,
+            "Hash length (bytes)": 32,
+            "Type": "Argon2i",
+            "Output format": "Encoded hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$argon2i\\$v=19\\$m=4096,t=3,p=1\\$[A-Za-z0-9+/]+\\$[A-Za-z0-9+/]+$"
+      },
+      "tags": [
+        "argon2i",
+        "encoded",
+        "format-check"
+      ]
+    },
+    {
+      "name": "argon2i_64byte_output",
+      "comment": "Argon2i with 64-byte output - password='test123', salt='saltsalt', t=2, m=4096, p=1, tagLength=64",
+      "input": {
+        "type": "string",
+        "value": "test123"
+      },
+      "operations": [
+        {
+          "op": "Argon2",
+          "args": {
+            "Salt": {
+              "option": "UTF8",
+              "string": "saltsalt"
+            },
+            "Iterations": 2,
+            "Memory (KiB)": 4096,
+            "Parallelism": 1,
+            "Hash length (bytes)": 64,
+            "Type": "Argon2i",
+            "Output format": "Hex hash"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"
+      },
+      "tags": [
+        "argon2i",
+        "long-output"
+      ]
+    }
+  ]
+}

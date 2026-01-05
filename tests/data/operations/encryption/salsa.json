@@ -1,0 +1,211 @@
+{
+  "operation": "Salsa20",
+  "category": "encryption",
+  "description": "Tests for Salsa20 and XSalsa20 stream ciphers using official test vectors",
+  "tests": [
+    {
+      "name": "salsa20_zero_key_zero_nonce",
+      "comment": "Salsa20 with all-zero 256-bit key and 64-bit nonce",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "Salsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "9a97f65b9b4c721b960a672145fca8d4e32e67f9111ea979ce9c4826806aeee6e35fa93ca7fec6a9a725a87b0a06822bbd5c56b0cc4e46a7e9e3a0d69e6f7d16"
+      },
+      "tags": ["salsa20", "zero-values", "20-rounds"]
+    },
+    {
+      "name": "salsa20_simple_message",
+      "comment": "Salsa20/20 encrypting 'Hello World!' with 256-bit key",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "Salsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "0000000000000001"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "34a6be8671ebc5b2a1f8"
+      },
+      "tags": ["salsa20", "simple-message"]
+    },
+    {
+      "name": "salsa20_8_rounds",
+      "comment": "Salsa20/8 (8 rounds) with test key and nonce",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20666f78"
+      },
+      "operations": [
+        {
+          "op": "Salsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Counter": 0,
+            "Rounds": "8",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "af745e6e7b651e02b4dab012d1be4b5d6a14"
+      },
+      "tags": ["salsa20", "8-rounds", "salsa20/8"]
+    },
+    {
+      "name": "xsalsa20_extended_nonce",
+      "comment": "XSalsa20 with 256-bit key and 192-bit extended nonce",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f2c20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "XSalsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "1b27556473e985d462cd51197a9a46c76009549eac6474f206c4ee0844f68389"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "69696ee955b62b73cd62bda875fc73d68219e0036b7a0b37"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "10f98a6c54baf4b6fa72"
+      },
+      "tags": ["xsalsa20", "extended-nonce", "192-bit-nonce"]
+    },
+    {
+      "name": "xsalsa20_nacl_test_vector",
+      "comment": "XSalsa20 test vector from NaCl crypto library",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "operations": [
+        {
+          "op": "XSalsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "1b27556473e985d462cd51197a9a46c76009549eac6474f206c4ee0844f68389"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "69696ee955b62b73cd62bda875fc73d68219e0036b7a0b37"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "eea6a7251c1e72916d11c2cb214d3c252539121d8e234e652d651fa4c8cff880309e645a74e187e9d3ec25924da57730f298f9195209e8c1acf58cda636e87f5"
+      },
+      "tags": ["xsalsa20", "nacl", "official-vector"]
+    },
+    {
+      "name": "salsa20_empty_input",
+      "comment": "Salsa20 with empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Salsa20",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
+            "Nonce": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Counter": 0,
+            "Rounds": "20",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

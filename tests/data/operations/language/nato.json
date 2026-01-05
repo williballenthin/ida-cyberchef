@@ -1,0 +1,87 @@
+{
+  "operation": "Convert to NATO alphabet",
+  "category": "language",
+  "description": "Tests for Convert to NATO alphabet operation - converts characters to NATO phonetic alphabet",
+  "tests": [
+    {
+      "name": "basic_abc",
+      "comment": "Convert ABC to NATO phonetic alphabet",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": ["Convert to NATO alphabet"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "416c70686120427261766f20436861726c6965"
+      },
+      "tags": ["basic", "uppercase"]
+    },
+    {
+      "name": "distress_signal",
+      "comment": "Convert SOS distress signal to NATO alphabet",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "534f53"
+      },
+      "operations": ["Convert to NATO alphabet"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "536965727261204f7363617220536965727261"
+      },
+      "tags": ["uppercase"]
+    },
+    {
+      "name": "lowercase_xyz",
+      "comment": "Convert lowercase xyz to NATO alphabet",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "78797a"
+      },
+      "operations": ["Convert to NATO alphabet"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "582d7261792059616e6b6565205a756c75"
+      },
+      "tags": ["lowercase"]
+    },
+    {
+      "name": "numbers",
+      "comment": "Convert numbers 123 to NATO alphabet",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "313233"
+      },
+      "operations": ["Convert to NATO alphabet"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4f6e652054776f205468726565"
+      },
+      "tags": ["numbers"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "Empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Convert to NATO alphabet"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

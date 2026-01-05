@@ -1,0 +1,112 @@
+{
+  "operation": "Detect File Type",
+  "category": "forensics",
+  "description": "Tests for detecting file types based on magic bytes (file signatures)",
+  "tests": [
+    {
+      "name": "detect_png_file",
+      "comment": "Detect PNG image file by magic bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000a49444154789c6300010000050001"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "png"
+      },
+      "tags": ["file-type", "image", "png"]
+    },
+    {
+      "name": "detect_jpeg_file_ffe0",
+      "comment": "Detect JPEG image file by magic bytes (FFE0 marker)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ffd8ffe000104a46494600010100000100010000"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "jpg"
+      },
+      "tags": ["file-type", "image", "jpeg"]
+    },
+    {
+      "name": "detect_jpeg_file_ffe1",
+      "comment": "Detect JPEG image file by magic bytes (FFE1 marker)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "ffd8ffe100184578696600004d4d002a"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "jpg"
+      },
+      "tags": ["file-type", "image", "jpeg"]
+    },
+    {
+      "name": "detect_pdf_file",
+      "comment": "Detect PDF document by magic bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "255044462d312e340a25e2e3cfd30a"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "pdf"
+      },
+      "tags": ["file-type", "document", "pdf"]
+    },
+    {
+      "name": "detect_zip_file",
+      "comment": "Detect ZIP archive by magic bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "504b03041400000008000000210000000000000000000000000000000000"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "zip"
+      },
+      "tags": ["file-type", "archive", "zip"]
+    },
+    {
+      "name": "detect_gif89a_file",
+      "comment": "Detect GIF89a image file by magic bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "474946383961010001000000"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "gif"
+      },
+      "tags": ["file-type", "image", "gif"]
+    },
+    {
+      "name": "detect_elf_file",
+      "comment": "Detect ELF executable by magic bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "7f454c4601010100000000000000000002003e0001000000"
+      },
+      "operations": ["Detect File Type"],
+      "expected": {
+        "type": "string",
+        "value": "elf"
+      },
+      "tags": ["file-type", "executable", "elf"]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "operation": "Protobuf Decode",
+  "category": "networking",
+  "description": "Protobuf encoding and decoding tests for various data types",
+  "tests": [
+    {
+      "name": "decode_protobuf_varint",
+      "comment": "Decode protobuf message with single varint field",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "089601"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "150"
+      },
+      "tags": [
+        "protobuf",
+        "varint"
+      ]
+    },
+    {
+      "name": "decode_protobuf_string",
+      "comment": "Decode protobuf message with string field",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0A0474657374"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test"
+      },
+      "tags": [
+        "protobuf",
+        "string"
+      ]
+    },
+    {
+      "name": "decode_protobuf_multiple_fields",
+      "comment": "Decode protobuf message with multiple fields",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "08960112047465737418E807"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test"
+      },
+      "tags": [
+        "protobuf",
+        "multiple"
+      ]
+    },
+    {
+      "name": "decode_protobuf_nested",
+      "comment": "Decode protobuf message with nested message",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "1A0508960112047465737"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "field"
+      },
+      "tags": [
+        "protobuf",
+        "nested"
+      ]
+    },
+    {
+      "name": "decode_protobuf_boolean",
+      "comment": "Decode protobuf message with boolean field",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2001"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "true"
+      },
+      "tags": [
+        "protobuf",
+        "boolean"
+      ]
+    },
+    {
+      "name": "decode_protobuf_fixed32",
+      "comment": "Decode protobuf message with fixed32 field",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2D0A000000"
+      },
+      "operations": [
+        "Protobuf Decode"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "10"
+      },
+      "tags": [
+        "protobuf",
+        "fixed32"
+      ]
+    }
+  ]
+}

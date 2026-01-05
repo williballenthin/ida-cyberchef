@@ -1,0 +1,103 @@
+{
+  "operation": "Morse Code",
+  "category": "encryption",
+  "description": "Tests for To Morse Code and From Morse Code operations using International Morse Code (ITU standard)",
+  "tests": [
+    {
+      "name": "to_morse_basic_uppercase",
+      "comment": "Convert uppercase HELLO to Morse code with default format (-/.)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": ["To Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2e2e2e2e202e202e2d2e2e202e2d2e2e202d2d2d"
+      },
+      "tags": ["encode", "uppercase", "basic"]
+    },
+    {
+      "name": "to_morse_sos",
+      "comment": "Convert SOS distress signal to Morse code",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "534f53"
+      },
+      "operations": ["To Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2e2e2e202d2d2d202e2e2e"
+      },
+      "tags": ["encode", "uppercase", "distress-signal"]
+    },
+    {
+      "name": "to_morse_alphanumeric",
+      "comment": "Convert MORSE123 with letters and numbers to Morse code",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4d4f525345313233"
+      },
+      "operations": ["To Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2d2d202d2d2d202e2d2e202e2e2e202e202e2d2d2d2d202e2e2d2d2d202e2e2e2d2d"
+      },
+      "tags": ["encode", "alphanumeric"]
+    },
+    {
+      "name": "to_morse_short_text",
+      "comment": "Convert short text HI to Morse code",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4849"
+      },
+      "operations": ["To Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2e2e2e2e202e2e"
+      },
+      "tags": ["encode", "short-text"]
+    },
+    {
+      "name": "from_morse_basic",
+      "comment": "Decode Morse code back to HELLO",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2e2e2e2e202e202e2d2e2e202e2d2e2e202d2d2d"
+      },
+      "operations": ["From Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "tags": ["decode", "basic"]
+    },
+    {
+      "name": "from_morse_sos",
+      "comment": "Decode SOS distress signal from Morse code",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2e2e2e202d2d2d202e2e2e"
+      },
+      "operations": ["From Morse Code"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "534f53"
+      },
+      "tags": ["decode", "distress-signal"]
+    }
+  ]
+}

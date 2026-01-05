@@ -1,0 +1,127 @@
+{
+  "operation": "Parse IPv4 header",
+  "category": "networking",
+  "description": "Parse IPv4 header tests for various header configurations",
+  "tests": [
+    {
+      "name": "parse_ipv4_basic_tcp",
+      "comment": "Parse basic IPv4 header with TCP protocol",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4500002800004000400600C0A8010101C0A80102"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Version"
+      },
+      "tags": [
+        "ipv4",
+        "tcp"
+      ]
+    },
+    {
+      "name": "parse_ipv4_udp_protocol",
+      "comment": "Parse IPv4 header with UDP protocol",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4500002800004000400011000A0000010A000002"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Version"
+      },
+      "tags": [
+        "ipv4",
+        "udp"
+      ]
+    },
+    {
+      "name": "parse_ipv4_icmp_protocol",
+      "comment": "Parse IPv4 header with ICMP protocol",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4500002800004000400001008C0A00010C0A0002"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Version"
+      },
+      "tags": [
+        "ipv4",
+        "icmp"
+      ]
+    },
+    {
+      "name": "parse_ipv4_with_df_flag",
+      "comment": "Parse IPv4 header with Don't Fragment flag set",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4500003C12344000800600C0A801010C0A0002"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Don't Fragment"
+      },
+      "tags": [
+        "ipv4",
+        "flags"
+      ]
+    },
+    {
+      "name": "parse_ipv4_high_ttl",
+      "comment": "Parse IPv4 header with maximum TTL",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "45000028000040FF0600C0A8010101C0A80102"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "255"
+      },
+      "tags": [
+        "ipv4",
+        "ttl"
+      ]
+    },
+    {
+      "name": "parse_ipv4_loopback",
+      "comment": "Parse IPv4 header with loopback addresses",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4500002800004000400600007F0000017F000001"
+      },
+      "operations": [
+        "Parse IPv4 header"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "127.0.0.1"
+      },
+      "tags": [
+        "ipv4",
+        "loopback"
+      ]
+    }
+  ]
+}

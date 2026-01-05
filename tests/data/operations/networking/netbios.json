@@ -1,0 +1,137 @@
+{
+  "operation": "NetBIOS Name Encoding",
+  "category": "networking",
+  "description": "Encode and decode NetBIOS names per RFC 1001",
+  "tests": [
+    {
+      "name": "encode_netbios_simple",
+      "comment": "Encode simple NetBIOS name 'TEST' (padded to 16 bytes with spaces)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54455354202020202020202020202020"
+      },
+      "operations": [
+        "Encode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "45464546464645464341434143414341434143414341434143414341434143414341"
+      },
+      "tags": [
+        "netbios",
+        "encode"
+      ]
+    },
+    {
+      "name": "decode_netbios_simple",
+      "comment": "Decode NetBIOS encoded name back to 'TEST'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "45464546464645464341434143414341434143414341434143414341434143414341"
+      },
+      "operations": [
+        "Decode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54455354202020202020202020202020"
+      },
+      "tags": [
+        "netbios",
+        "decode"
+      ]
+    },
+    {
+      "name": "encode_netbios_workstation",
+      "comment": "Encode NetBIOS workstation name 'WORKSTATION' with suffix",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "574f524b53544154494f4e20202020"
+      },
+      "operations": [
+        "Encode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "46464446454246434644454246544145494f4e4341434143414341"
+      },
+      "tags": [
+        "netbios",
+        "encode",
+        "workstation"
+      ]
+    },
+    {
+      "name": "roundtrip_netbios_name",
+      "comment": "Encode then decode NetBIOS name 'SERVER' should return original",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "53455256455220202020202020202020"
+      },
+      "operations": [
+        "Encode NetBIOS Name",
+        "Decode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "53455256455220202020202020202020"
+      },
+      "tags": [
+        "netbios",
+        "roundtrip"
+      ]
+    },
+    {
+      "name": "encode_netbios_with_suffix",
+      "comment": "Encode NetBIOS name 'DOMAIN' with workstation service suffix 0x00",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "444f4d41494e2020202020202020200"
+      },
+      "operations": [
+        "Encode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "45444446414549434d41494e4341434143414341434143414341"
+      },
+      "tags": [
+        "netbios",
+        "encode",
+        "suffix"
+      ]
+    },
+    {
+      "name": "decode_netbios_asterisk",
+      "comment": "Decode NetBIOS wildcard name (asterisk)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "43414141414141414141414141414141414141414141414141414141414141414141"
+      },
+      "operations": [
+        "Decode NetBIOS Name"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "2a202020202020202020202020202000"
+      },
+      "tags": [
+        "netbios",
+        "decode",
+        "wildcard"
+      ]
+    }
+  ]
+}

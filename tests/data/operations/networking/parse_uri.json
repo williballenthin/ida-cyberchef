@@ -1,0 +1,127 @@
+{
+  "operation": "Parse URI",
+  "category": "networking",
+  "description": "Parse and pretty-print URI components",
+  "tests": [
+    {
+      "name": "parse_complete_uri",
+      "comment": "Parse URI with all components: scheme, userinfo, host, port, path, query, fragment",
+      "input": {
+        "type": "string",
+        "value": "https://user:pass@example.com:8080/path/to/resource?query=1&param=value#fragment"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\thttps\nUsername:\tuser\nPassword:\tpass\nHostname:\texample.com\nPort:\t\t8080\nPath name:\t/path/to/resource\nArguments:\tquery=1&param=value\nFragment:\tfragment"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "complete"
+      ]
+    },
+    {
+      "name": "parse_simple_http_url",
+      "comment": "Parse simple HTTP URL without credentials or port",
+      "input": {
+        "type": "string",
+        "value": "http://example.com/index.html"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\thttp\nHostname:\texample.com\nPort:\t\t80\nPath name:\t/index.html"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "simple"
+      ]
+    },
+    {
+      "name": "parse_uri_with_query_params",
+      "comment": "Parse URI with multiple query parameters",
+      "input": {
+        "type": "string",
+        "value": "https://api.example.com/search?q=test&limit=10&offset=20"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\thttps\nHostname:\tapi.example.com\nPort:\t\t443\nPath name:\t/search\nArguments:\tq=test&limit=10&offset=20"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "query"
+      ]
+    },
+    {
+      "name": "parse_uri_with_fragment",
+      "comment": "Parse URI with fragment identifier",
+      "input": {
+        "type": "string",
+        "value": "https://example.com/page.html#section-2"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\thttps\nHostname:\texample.com\nPort:\t\t443\nPath name:\t/page.html\nFragment:\tsection-2"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "fragment"
+      ]
+    },
+    {
+      "name": "parse_uri_with_encoded_chars",
+      "comment": "Parse URI with percent-encoded characters",
+      "input": {
+        "type": "string",
+        "value": "https://example.com/path%20with%20spaces?key=value%20here"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\thttps\nHostname:\texample.com\nPort:\t\t443\nPath name:\t/path%20with%20spaces\nArguments:\tkey=value%20here"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "encoded"
+      ]
+    },
+    {
+      "name": "parse_ftp_uri",
+      "comment": "Parse FTP URI with credentials",
+      "input": {
+        "type": "string",
+        "value": "ftp://ftpuser:ftppass@ftp.example.com:21/files/document.pdf"
+      },
+      "operations": [
+        "Parse URI"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Protocol:\tftp\nUsername:\tftpuser\nPassword:\tftppass\nHostname:\tftp.example.com\nPort:\t\t21\nPath name:\t/files/document.pdf"
+      },
+      "tags": [
+        "uri",
+        "parse",
+        "ftp"
+      ]
+    }
+  ]
+}

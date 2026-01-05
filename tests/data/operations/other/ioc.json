@@ -1,0 +1,87 @@
+{
+  "operation": "Index of Coincidence",
+  "category": "other",
+  "description": "Index of Coincidence tests for text randomness analysis",
+  "tests": [
+    {
+      "name": "ioc_english_text",
+      "comment": "IOC of English text should be around 0.066",
+      "input": {
+        "type": "string",
+        "value": "The quick brown fox jumps over the lazy dog. This is a sample English text for testing the Index of Coincidence calculation."
+      },
+      "operations": ["Index of Coincidence"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["ioc", "english"],
+      "skip": true,
+      "skipReason": "Index of Coincidence HTML output format needs verification - should show IC ~0.066"
+    },
+    {
+      "name": "ioc_repeated_chars",
+      "comment": "IOC of repeated characters (high coincidence)",
+      "input": {
+        "type": "string",
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "operations": ["Index of Coincidence"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["ioc", "high"],
+      "skip": true,
+      "skipReason": "Index of Coincidence HTML output format needs verification - should show IC ~1"
+    },
+    {
+      "name": "ioc_random_chars",
+      "comment": "IOC of random characters (low coincidence)",
+      "input": {
+        "type": "string",
+        "value": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      },
+      "operations": ["Index of Coincidence"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["ioc", "low"],
+      "skip": true,
+      "skipReason": "Index of Coincidence HTML output format needs verification - should show low IC"
+    },
+    {
+      "name": "ioc_mixed_text",
+      "comment": "IOC of mixed case English text",
+      "input": {
+        "type": "string",
+        "value": "Hello World! This is a TEST message with MIXED case letters."
+      },
+      "operations": ["Index of Coincidence"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["ioc", "mixed"],
+      "skip": true,
+      "skipReason": "Index of Coincidence HTML output format needs verification"
+    },
+    {
+      "name": "ioc_short_text",
+      "comment": "IOC with minimal text input",
+      "input": {
+        "type": "string",
+        "value": "abc"
+      },
+      "operations": ["Index of Coincidence"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["ioc", "edge-case"],
+      "skip": true,
+      "skipReason": "Index of Coincidence HTML output format needs verification"
+    }
+  ]
+}

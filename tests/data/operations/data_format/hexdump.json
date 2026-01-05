@@ -1,0 +1,111 @@
+{
+  "operation": "To Hexdump",
+  "category": "data_format",
+  "description": "Tests for hexdump formatting and parsing operations",
+  "tests": [
+    {
+      "name": "to_hexdump_basic",
+      "comment": "Convert simple ASCII text to hexdump format",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        "To Hexdump"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00000000  48 65 6c 6c 6f 20 57 6f 72 6c 64                 Hello World"
+      }
+    },
+    {
+      "name": "from_hexdump_basic",
+      "comment": "Parse standard hexdump format back to raw bytes",
+      "input": {
+        "type": "string",
+        "value": "00000000  48 65 6c 6c 6f 20 57 6f 72 6c 64                 Hello World"
+      },
+      "operations": [
+        "From Hexdump"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      }
+    },
+    {
+      "name": "to_hexdump_width_8",
+      "comment": "Convert bytes to hexdump with custom width of 8 bytes per line",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0102030405060708090a0b0c0d0e0f10"
+      },
+      "operations": [
+        {
+          "op": "To Hexdump",
+          "args": [8, false, false, false]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00000000  01 02 03 04 05 06 07 08  ........\n00000008  09 0a 0b 0c 0d 0e 0f 10  ........"
+      }
+    },
+    {
+      "name": "from_hexdump_multiline",
+      "comment": "Parse multi-line hexdump back to raw bytes",
+      "input": {
+        "type": "string",
+        "value": "00000000  01 02 03 04 05 06 07 08  ........\n00000008  09 0a 0b 0c 0d 0e 0f 10  ........"
+      },
+      "operations": [
+        "From Hexdump"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0102030405060708090a0b0c0d0e0f10"
+      }
+    },
+    {
+      "name": "to_hexdump_uppercase",
+      "comment": "Convert bytes to hexdump with uppercase hex digits",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeef"
+      },
+      "operations": [
+        {
+          "op": "To Hexdump",
+          "args": [16, true, false, false]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00000000  DE AD BE EF                                      ...."
+      }
+    },
+    {
+      "name": "roundtrip_hexdump",
+      "comment": "Verify round-trip conversion: bytes -> hexdump -> bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20666f78"
+      },
+      "operations": [
+        "To Hexdump",
+        "From Hexdump"
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20666f78"
+      }
+    }
+  ]
+}

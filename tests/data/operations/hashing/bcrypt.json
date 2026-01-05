@@ -1,0 +1,130 @@
+{
+  "operation": "Bcrypt",
+  "category": "hashing",
+  "description": "Bcrypt password hashing tests. Note: Bcrypt generates random salts, so these tests verify hash format and that different inputs produce different outputs",
+  "tests": [
+    {
+      "name": "bcrypt_rounds_4",
+      "comment": "Bcrypt with 4 rounds - verify output format starts with $2a$04$",
+      "input": {
+        "type": "string",
+        "value": "password"
+      },
+      "operations": [
+        {
+          "op": "Bcrypt",
+          "args": {
+            "Rounds": 4
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$2[aby]\\$04\\$[./A-Za-z0-9]{53}$"
+      },
+      "tags": [
+        "bcrypt",
+        "format-check"
+      ]
+    },
+    {
+      "name": "bcrypt_rounds_10",
+      "comment": "Bcrypt with 10 rounds (default) - verify output format starts with $2a$10$",
+      "input": {
+        "type": "string",
+        "value": "test123"
+      },
+      "operations": [
+        {
+          "op": "Bcrypt",
+          "args": {
+            "Rounds": 10
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$2[aby]\\$10\\$[./A-Za-z0-9]{53}$"
+      },
+      "tags": [
+        "bcrypt",
+        "format-check"
+      ]
+    },
+    {
+      "name": "bcrypt_empty_password",
+      "comment": "Bcrypt with empty password - verify it still generates valid hash",
+      "input": {
+        "type": "string",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Bcrypt",
+          "args": {
+            "Rounds": 4
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$2[aby]\\$04\\$[./A-Za-z0-9]{53}$"
+      },
+      "tags": [
+        "bcrypt",
+        "empty",
+        "format-check"
+      ]
+    },
+    {
+      "name": "bcrypt_long_password",
+      "comment": "Bcrypt with long password - verify hash generation",
+      "input": {
+        "type": "string",
+        "value": "this is a very long password that contains many characters to test bcrypt handling of longer inputs"
+      },
+      "operations": [
+        {
+          "op": "Bcrypt",
+          "args": {
+            "Rounds": 4
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$2[aby]\\$04\\$[./A-Za-z0-9]{53}$"
+      },
+      "tags": [
+        "bcrypt",
+        "long-input",
+        "format-check"
+      ]
+    },
+    {
+      "name": "bcrypt_special_chars",
+      "comment": "Bcrypt with special characters in password",
+      "input": {
+        "type": "string",
+        "value": "p@ssw0rd!#$%"
+      },
+      "operations": [
+        {
+          "op": "Bcrypt",
+          "args": {
+            "Rounds": 4
+          }
+        }
+      ],
+      "expected": {
+        "type": "regex",
+        "value": "^\\$2[aby]\\$04\\$[./A-Za-z0-9]{53}$"
+      },
+      "tags": [
+        "bcrypt",
+        "special-chars",
+        "format-check"
+      ]
+    }
+  ]
+}

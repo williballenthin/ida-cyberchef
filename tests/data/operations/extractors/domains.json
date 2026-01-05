@@ -1,0 +1,132 @@
+{
+  "operation": "Extract domains",
+  "category": "extractors",
+  "description": "Tests for extracting fully qualified domain names from text using regex patterns",
+  "tests": [
+    {
+      "name": "extract_single_domain",
+      "comment": "Extract a single domain name from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5669736974206578616d706c652e636f6d20666f72206d6f726520696e666f"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "example.com"
+      },
+      "tags": [
+        "extractor",
+        "domain"
+      ]
+    },
+    {
+      "name": "extract_multiple_domains",
+      "comment": "Extract multiple domain names from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "436865636b206578616d706c652e636f6d20616e6420746573742e6f7267"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "example.com\ntest.org"
+      },
+      "tags": [
+        "extractor",
+        "domain",
+        "multiple"
+      ]
+    },
+    {
+      "name": "extract_domain_with_subdomain",
+      "comment": "Extract domain with subdomain",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "476f20746f207777772e6578616d706c652e636f6d"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "www.example.com"
+      },
+      "tags": [
+        "extractor",
+        "domain",
+        "subdomain"
+      ]
+    },
+    {
+      "name": "extract_domains_different_tlds",
+      "comment": "Extract domains with different TLDs",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "536974657320617420746573742e636f2e756b20616e64206578616d706c652e696f"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test.co.uk\nexample.io"
+      },
+      "tags": [
+        "extractor",
+        "domain",
+        "tld"
+      ]
+    },
+    {
+      "name": "extract_domains_no_match",
+      "comment": "No domains found in text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4a7573742073696d706c6520746578742077697468206e6f20646f6d61696e73"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "extractor",
+        "domain",
+        "no_match"
+      ]
+    },
+    {
+      "name": "extract_domain_with_hyphen",
+      "comment": "Extract domain with hyphen in name",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "566973697420746573742d736974652e6578616d706c652e636f6d"
+      },
+      "operations": [
+        "Extract domains"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "test-site.example.com"
+      },
+      "tags": [
+        "extractor",
+        "domain",
+        "hyphen"
+      ]
+    }
+  ]
+}

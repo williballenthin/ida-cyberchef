@@ -1,0 +1,143 @@
+{
+  "operation": "Shake",
+  "category": "hashing",
+  "description": "Shake extendable output function tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty_shake256",
+      "comment": "SHAKE256 of empty string with 512-bit output - NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Shake",
+          "args": {
+            "Capacity": "256",
+            "Size": 512
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "46b9dd2b0ba88d13233b3feb743eeb243fcd52ea62b81b82b50c27646ed5762fd75dc4ddd8c0f200cb05019d67b592f6fc821c49479ab48640292eacb3b7c4be"
+      },
+      "tags": [
+        "nist",
+        "standard-vector",
+        "empty",
+        "shake256"
+      ]
+    },
+    {
+      "name": "abc_shake256",
+      "comment": "SHAKE256 of 'abc' with 512-bit output - NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Shake",
+          "args": {
+            "Capacity": "256",
+            "Size": 512
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "483366601360a8771c6863080cc4114d8db44530f8f1e1ee4f94ea37e78b5739d5a15bef186a5386c75744c0527e1faa9f8726e462a12a4feb06bd8801e751e4"
+      },
+      "tags": [
+        "nist",
+        "standard-vector",
+        "shake256"
+      ]
+    },
+    {
+      "name": "empty_shake128",
+      "comment": "SHAKE128 of empty string with 256-bit output - NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Shake",
+          "args": {
+            "Capacity": "128",
+            "Size": 256
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "7f9c2ba4e88f827d616045507605853ed73b8093f6efbc88eb1a6eacfa66ef26"
+      },
+      "tags": [
+        "nist",
+        "standard-vector",
+        "empty",
+        "shake128"
+      ]
+    },
+    {
+      "name": "abc_shake128",
+      "comment": "SHAKE128 of 'abc' with 256-bit output - NIST test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Shake",
+          "args": {
+            "Capacity": "128",
+            "Size": 256
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "5881092dd818bf5cf8a3ddb793fbcba74097d5c526a6d35f97b83351940f2cc8"
+      },
+      "tags": [
+        "nist",
+        "standard-vector",
+        "shake128"
+      ]
+    },
+    {
+      "name": "hello_shake256",
+      "comment": "SHAKE256 of 'hello' with 512-bit output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "68656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Shake",
+          "args": {
+            "Capacity": "256",
+            "Size": 512
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1234075ae4a1e77316cf2d8000974581a343b9ebbca7e3d1db83394c30f221626f594e4f0de63902349a5ea5781213215813919f92a4d86d127466e3d07e8be3"
+      },
+      "tags": [
+        "standard-vector",
+        "shake256"
+      ]
+    }
+  ]
+}

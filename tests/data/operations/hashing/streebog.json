@@ -1,0 +1,138 @@
+{
+  "operation": "Streebog",
+  "category": "hashing",
+  "description": "Streebog (GOST R 34.11-2012) hash algorithm tests with standard test vectors",
+  "tests": [
+    {
+      "name": "empty_256",
+      "comment": "Streebog-256 of empty string - GOST R 34.11-2012 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Streebog",
+          "args": {
+            "Digest length": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3f539a213e97c802cc229d474c6aa32a825a360b2a933a949fd925208d9ce1bb"
+      },
+      "tags": [
+        "gost",
+        "standard-vector",
+        "empty",
+        "streebog-256"
+      ]
+    },
+    {
+      "name": "m1_256",
+      "comment": "Streebog-256 of test message M1 (012345...) - GOST R 34.11-2012 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "303132333435363738393031323334353637383930313233343536373839303132333435363738393031323334353637383930313233343536373839303132"
+      },
+      "operations": [
+        {
+          "op": "Streebog",
+          "args": {
+            "Digest length": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "9d151eefd8590b89daa6ba6cb74af9275dd051026bb149a452fd84e5e57b5500"
+      },
+      "tags": [
+        "gost",
+        "standard-vector",
+        "streebog-256"
+      ]
+    },
+    {
+      "name": "empty_512",
+      "comment": "Streebog-512 of empty string - GOST R 34.11-2012 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Streebog",
+          "args": {
+            "Digest length": "512"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8e945da209aa869f0455928529bcae4679e9873ab707b55315f56ceb98bef0a7362f715528356ee83cda5f2aac4c6ad2ba3a715c1bcd81cb8e9f90bf4c1c1a8a"
+      },
+      "tags": [
+        "gost",
+        "standard-vector",
+        "empty",
+        "streebog-512"
+      ]
+    },
+    {
+      "name": "m1_512",
+      "comment": "Streebog-512 of test message M1 (012345...) - GOST R 34.11-2012 test vector",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "303132333435363738393031323334353637383930313233343536373839303132333435363738393031323334353637383930313233343536373839303132"
+      },
+      "operations": [
+        {
+          "op": "Streebog",
+          "args": {
+            "Digest length": "512"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1b54d01a4af5b9d5cc3d86d68d285462b19abc2475222f35c085122be4ba1ffa00ad30f8767b3a82384c6574f024c311e2a481332b08ef7f41797891c1646f48"
+      },
+      "tags": [
+        "gost",
+        "standard-vector",
+        "streebog-512"
+      ]
+    },
+    {
+      "name": "abc_256",
+      "comment": "Streebog-256 of 'abc'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Streebog",
+          "args": {
+            "Digest length": "256"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "4e2919cf137ed41ec4fb6270c61826cc4fffb660341e0af3688cd0626d23b481"
+      },
+      "tags": [
+        "standard-vector",
+        "streebog-256"
+      ]
+    }
+  ]
+}

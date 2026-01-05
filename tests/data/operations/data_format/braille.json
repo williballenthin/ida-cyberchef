@@ -1,0 +1,103 @@
+{
+  "operation": "To Braille / From Braille",
+  "category": "data_format",
+  "description": "Six-dot Braille encoding and decoding tests",
+  "tests": [
+    {
+      "name": "to_braille_hello",
+      "comment": "Convert 'hello' to Braille symbols",
+      "input": {
+        "type": "string",
+        "value": "hello"
+      },
+      "operations": [
+        "To Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "⠓⠑⠇⠇⠕"
+      },
+      "tags": ["encode", "text"]
+    },
+    {
+      "name": "from_braille_hello",
+      "comment": "Convert Braille symbols back to 'hello'",
+      "input": {
+        "type": "string",
+        "value": "⠓⠑⠇⠇⠕"
+      },
+      "operations": [
+        "From Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "hello"
+      },
+      "tags": ["decode", "text"]
+    },
+    {
+      "name": "to_braille_numbers",
+      "comment": "Convert '123' to Braille symbols",
+      "input": {
+        "type": "string",
+        "value": "123"
+      },
+      "operations": [
+        "To Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "⠼⠁⠃⠉"
+      },
+      "tags": ["encode", "numbers"]
+    },
+    {
+      "name": "from_braille_numbers",
+      "comment": "Convert Braille symbols back to '123'",
+      "input": {
+        "type": "string",
+        "value": "⠼⠁⠃⠉"
+      },
+      "operations": [
+        "From Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "123"
+      },
+      "tags": ["decode", "numbers"]
+    },
+    {
+      "name": "to_braille_mixed",
+      "comment": "Convert 'Hello World!' to Braille",
+      "input": {
+        "type": "string",
+        "value": "Hello World!"
+      },
+      "operations": [
+        "To Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "⠠⠓⠑⠇⠇⠕ ⠠⠺⠕⠗⠇⠙⠖"
+      },
+      "tags": ["encode", "mixed"]
+    },
+    {
+      "name": "from_braille_mixed",
+      "comment": "Convert Braille symbols back to 'Hello World!'",
+      "input": {
+        "type": "string",
+        "value": "⠠⠓⠑⠇⠇⠕ ⠠⠺⠕⠗⠇⠙⠖"
+      },
+      "operations": [
+        "From Braille"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "Hello World!"
+      },
+      "tags": ["decode", "mixed"]
+    }
+  ]
+}

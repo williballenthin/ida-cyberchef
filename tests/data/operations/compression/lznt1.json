@@ -1,0 +1,87 @@
+{
+  "operation": "LZNT1 Decompress",
+  "category": "compression",
+  "description": "Tests for LZNT1 decompression operation (Windows NTFS compression format)",
+  "tests": [
+    {
+      "name": "lznt1_decompress_hello",
+      "comment": "Decompress LZNT1 uncompressed block containing 'Hello!'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "063048656c6c6f21"
+      },
+      "operations": ["LZNT1 Decompress"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f21"
+      },
+      "tags": ["decompress", "uncompressed-block"]
+    },
+    {
+      "name": "lznt1_decompress_empty",
+      "comment": "Decompress LZNT1 empty data",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0030"
+      },
+      "operations": ["LZNT1 Decompress"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["decompress", "empty", "edge-case"]
+    },
+    {
+      "name": "lznt1_decompress_test",
+      "comment": "Decompress LZNT1 uncompressed block containing 'Test'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "043054657374"
+      },
+      "operations": ["LZNT1 Decompress"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54657374"
+      },
+      "tags": ["decompress", "uncompressed-block"]
+    },
+    {
+      "name": "lznt1_decompress_repeated",
+      "comment": "Decompress LZNT1 uncompressed block with repeated characters 'AAAA'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "043041414141"
+      },
+      "operations": ["LZNT1 Decompress"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41414141"
+      },
+      "tags": ["decompress", "uncompressed-block", "repeated-pattern"]
+    },
+    {
+      "name": "lznt1_decompress_single_byte",
+      "comment": "Decompress LZNT1 uncompressed block with single byte 'X'",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "013058"
+      },
+      "operations": ["LZNT1 Decompress"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "58"
+      },
+      "tags": ["decompress", "uncompressed-block", "edge-case"]
+    }
+  ]
+}

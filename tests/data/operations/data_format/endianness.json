@@ -1,0 +1,119 @@
+{
+  "operation": "Swap endianness",
+  "category": "data_format",
+  "description": "Tests for swapping byte order between big-endian and little-endian",
+  "tests": [
+    {
+      "name": "swap_endianness_4_byte_words",
+      "comment": "Swap endianness of 4-byte words in hex format",
+      "input": {
+        "type": "string",
+        "value": "deadbeef"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 4, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "efbeadde"
+      }
+    },
+    {
+      "name": "swap_endianness_2_byte_words",
+      "comment": "Swap endianness of 2-byte words in hex format",
+      "input": {
+        "type": "string",
+        "value": "0102030405060708"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 2, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0201040306050807"
+      }
+    },
+    {
+      "name": "swap_endianness_8_byte_words",
+      "comment": "Swap endianness of 8-byte words for 64-bit values",
+      "input": {
+        "type": "string",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 8, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "efcdab8967452301"
+      }
+    },
+    {
+      "name": "swap_endianness_multiple_words",
+      "comment": "Swap endianness of multiple 4-byte words",
+      "input": {
+        "type": "string",
+        "value": "12345678aabbccdd"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 4, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "78563412ddccbbaa"
+      }
+    },
+    {
+      "name": "swap_endianness_roundtrip",
+      "comment": "Verify swapping endianness twice returns to original",
+      "input": {
+        "type": "string",
+        "value": "cafebabe"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 4, true]
+        },
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 4, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "cafebabe"
+      }
+    },
+    {
+      "name": "swap_endianness_incomplete_word",
+      "comment": "Swap endianness with incomplete word and padding",
+      "input": {
+        "type": "string",
+        "value": "010203"
+      },
+      "operations": [
+        {
+          "op": "Swap endianness",
+          "args": ["Hex", 4, true]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "03020100"
+      }
+    }
+  ]
+}

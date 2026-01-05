@@ -1,0 +1,255 @@
+{
+  "operation": "Jq",
+  "category": "code_tidy",
+  "description": "Tests for Jq JSON processor with various query expressions",
+  "tests": [
+    {
+      "name": "jq_identity",
+      "comment": "Identity operation - output the input as-is",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": "."
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "{\n  \"name\": \"Alice\",\n  \"age\": 30\n}"
+      },
+      "tags": [
+        "jq",
+        "identity",
+        "basic"
+      ]
+    },
+    {
+      "name": "jq_field_access",
+      "comment": "Access a specific field from JSON object",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "\"Alice\""
+      },
+      "tags": [
+        "jq",
+        "field_access"
+      ]
+    },
+    {
+      "name": "jq_nested_field",
+      "comment": "Access nested field in JSON object",
+      "input": {
+        "type": "string",
+        "value": "{\"user\":{\"name\":\"Bob\",\"email\":\"bob@example.com\"}}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".user.name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "\"Bob\""
+      },
+      "tags": [
+        "jq",
+        "nested",
+        "field_access"
+      ]
+    },
+    {
+      "name": "jq_array_iteration",
+      "comment": "Iterate over array elements",
+      "input": {
+        "type": "string",
+        "value": "[1,2,3,4,5]"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".[]"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1\n2\n3\n4\n5"
+      },
+      "tags": [
+        "jq",
+        "array",
+        "iteration"
+      ]
+    },
+    {
+      "name": "jq_array_map_field",
+      "comment": "Extract field from each array element",
+      "input": {
+        "type": "string",
+        "value": "{\"users\":[{\"name\":\"Alice\"},{\"name\":\"Bob\"}]}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".users[].name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "\"Alice\"\n\"Bob\""
+      },
+      "tags": [
+        "jq",
+        "array",
+        "map"
+      ]
+    },
+    {
+      "name": "jq_array_index",
+      "comment": "Access array element by index",
+      "input": {
+        "type": "string",
+        "value": "[\"first\",\"second\",\"third\"]"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".[1]"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "\"second\""
+      },
+      "tags": [
+        "jq",
+        "array",
+        "index"
+      ]
+    },
+    {
+      "name": "jq_array_length",
+      "comment": "Get length of array",
+      "input": {
+        "type": "string",
+        "value": "[1,2,3,4,5]"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": "length"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "5"
+      },
+      "tags": [
+        "jq",
+        "array",
+        "length"
+      ]
+    },
+    {
+      "name": "jq_pipe_operator",
+      "comment": "Use pipe operator to chain operations",
+      "input": {
+        "type": "string",
+        "value": "{\"users\":[{\"name\":\"Alice\",\"age\":30},{\"name\":\"Bob\",\"age\":25}]}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".users | .[0] | .name"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "\"Alice\""
+      },
+      "tags": [
+        "jq",
+        "pipe",
+        "chain"
+      ]
+    },
+    {
+      "name": "jq_keys",
+      "comment": "Get keys from JSON object",
+      "input": {
+        "type": "string",
+        "value": "{\"name\":\"Alice\",\"age\":30,\"city\":\"NYC\"}"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": "keys"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "[\n  \"age\",\n  \"city\",\n  \"name\"\n]"
+      },
+      "tags": [
+        "jq",
+        "keys"
+      ]
+    },
+    {
+      "name": "jq_empty_array",
+      "comment": "Process empty array",
+      "input": {
+        "type": "string",
+        "value": "[]"
+      },
+      "operations": [
+        {
+          "op": "Jq",
+          "args": {
+            "Query": ".[]"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "jq",
+        "empty",
+        "edge_case"
+      ]
+    }
+  ]
+}

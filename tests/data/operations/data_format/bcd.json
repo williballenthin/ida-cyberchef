@@ -1,0 +1,119 @@
+{
+  "operation": "To BCD",
+  "category": "data_format",
+  "description": "Tests for Binary-Coded Decimal (BCD) encoding and decoding",
+  "tests": [
+    {
+      "name": "to_bcd_simple_number",
+      "comment": "Convert decimal number 123 to packed BCD (8421 scheme)",
+      "input": {
+        "type": "string",
+        "value": "123"
+      },
+      "operations": [
+        {
+          "op": "To BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0123"
+      }
+    },
+    {
+      "name": "from_bcd_simple_number",
+      "comment": "Convert packed BCD 0x0123 back to decimal 123",
+      "input": {
+        "type": "string",
+        "value": "0123"
+      },
+      "operations": [
+        {
+          "op": "From BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "123"
+      }
+    },
+    {
+      "name": "to_bcd_larger_number",
+      "comment": "Convert decimal number 98765 to packed BCD",
+      "input": {
+        "type": "string",
+        "value": "98765"
+      },
+      "operations": [
+        {
+          "op": "To BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "098765"
+      }
+    },
+    {
+      "name": "from_bcd_larger_number",
+      "comment": "Convert packed BCD 0x098765 back to decimal 98765",
+      "input": {
+        "type": "string",
+        "value": "098765"
+      },
+      "operations": [
+        {
+          "op": "From BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "98765"
+      }
+    },
+    {
+      "name": "roundtrip_bcd",
+      "comment": "Verify round-trip conversion: decimal -> BCD -> decimal",
+      "input": {
+        "type": "string",
+        "value": "42"
+      },
+      "operations": [
+        {
+          "op": "To BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        },
+        {
+          "op": "From BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "42"
+      }
+    },
+    {
+      "name": "to_bcd_zero",
+      "comment": "Convert decimal zero to packed BCD",
+      "input": {
+        "type": "string",
+        "value": "0"
+      },
+      "operations": [
+        {
+          "op": "To BCD",
+          "args": ["8 4 2 1", true, false, "Hex"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "00"
+      }
+    }
+  ]
+}

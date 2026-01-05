@@ -1,0 +1,116 @@
+{
+  "operation": "DateTime Delta",
+  "category": "datetime",
+  "description": "Calculate new DateTime values given an input DateTime and a time difference (delta)",
+  "tests": [
+    {
+      "name": "datetime_delta_add_days",
+      "comment": "Add 7 days to epoch date",
+      "input": {
+        "type": "string",
+        "value": "01/01/1970 00:00:00"
+      },
+      "operations": [
+        {
+          "op": "DateTime Delta",
+          "args": [
+            "DD/MM/YYYY HH:mm:ss",
+            "Standard",
+            "7",
+            "Days"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "08/01/1970"
+      },
+      "tags": [
+        "datetime",
+        "delta"
+      ]
+    },
+    {
+      "name": "datetime_delta_add_hours",
+      "comment": "Add 24 hours to Y2K",
+      "input": {
+        "type": "string",
+        "value": "01/01/2000 00:00:00"
+      },
+      "operations": [
+        {
+          "op": "DateTime Delta",
+          "args": [
+            "DD/MM/YYYY HH:mm:ss",
+            "Standard",
+            "24",
+            "Hours"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "02/01/2000"
+      },
+      "tags": [
+        "datetime",
+        "delta",
+        "y2k"
+      ]
+    },
+    {
+      "name": "datetime_delta_subtract_months",
+      "comment": "Subtract 3 months from a date",
+      "input": {
+        "type": "string",
+        "value": "01/04/2023 12:00:00"
+      },
+      "operations": [
+        {
+          "op": "DateTime Delta",
+          "args": [
+            "DD/MM/YYYY HH:mm:ss",
+            "Standard",
+            "-3",
+            "Months"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "01/01/2023"
+      },
+      "tags": [
+        "datetime",
+        "delta"
+      ]
+    },
+    {
+      "name": "datetime_delta_add_years",
+      "comment": "Add 1 year to a date",
+      "input": {
+        "type": "string",
+        "value": "15/06/2020 08:30:00"
+      },
+      "operations": [
+        {
+          "op": "DateTime Delta",
+          "args": [
+            "DD/MM/YYYY HH:mm:ss",
+            "Standard",
+            "1",
+            "Years"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "15/06/2021"
+      },
+      "tags": [
+        "datetime",
+        "delta"
+      ]
+    }
+  ]
+}

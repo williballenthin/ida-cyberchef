@@ -1,0 +1,147 @@
+{
+  "operation": "Extract IP addresses",
+  "category": "extractors",
+  "description": "Tests for extracting IPv4 and IPv6 addresses from text using regex patterns",
+  "tests": [
+    {
+      "name": "extract_single_ipv4",
+      "comment": "Extract a single IPv4 address from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5365727665722049502069732031302e302e302e31"
+      },
+      "operations": [
+        "Extract IP addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "10.0.0.1"
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "ipv4"
+      ]
+    },
+    {
+      "name": "extract_multiple_ipv4",
+      "comment": "Extract multiple IPv4 addresses from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "436f6e6e656374696f6e732066726f6d203139322e3136382e312e3120616e642031302e3235352e3235352e323535"
+      },
+      "operations": [
+        "Extract IP addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "192.168.1.1\n10.255.255.255"
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "ipv4",
+        "multiple"
+      ]
+    },
+    {
+      "name": "extract_single_ipv6",
+      "comment": "Extract a single IPv6 address from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "495076362061646472657373203266303a3a313233343a353637383a393061623a63646566"
+      },
+      "operations": [
+        {
+          "op": "Extract IP addresses",
+          "args": {
+            "IPv4": false,
+            "IPv6": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "2f0::1234:5678:90ab:cdef"
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "ipv6"
+      ]
+    },
+    {
+      "name": "extract_mixed_ipv4_and_ipv6",
+      "comment": "Extract both IPv4 and IPv6 addresses from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "536572766572206174203139322e3136382e312e31206f7220323030313a306462383a38353a61333a3a386132653a303337303a37333334"
+      },
+      "operations": [
+        {
+          "op": "Extract IP addresses",
+          "args": {
+            "IPv4": true,
+            "IPv6": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "192.168.1.1\n2001:0db8:85:a3::8a2e:0370:7334"
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "mixed"
+      ]
+    },
+    {
+      "name": "extract_ips_no_match",
+      "comment": "No IP addresses found in text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4a7573742073696d706c6520746578742077697468206e6f204950206164647265737365732e"
+      },
+      "operations": [
+        "Extract IP addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "no_match"
+      ]
+    },
+    {
+      "name": "extract_public_ipv4",
+      "comment": "Extract public IPv4 addresses",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5075626c69632049507320382e382e382e3820616e6420312e312e312e31"
+      },
+      "operations": [
+        "Extract IP addresses"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8.8.8.8\n1.1.1.1"
+      },
+      "tags": [
+        "extractor",
+        "ip",
+        "ipv4",
+        "public"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "operation": "Extract MAC addresses",
+  "category": "extractors",
+  "description": "Extract MAC addresses in various formats from text",
+  "tests": [
+    {
+      "name": "extract_mac_colon_format",
+      "comment": "Extract MAC address in colon format",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4e4943204d41433a2041413a42423a43433a44443a45453a4646"
+      },
+      "operations": ["Extract MAC addresses"],
+      "expected": {
+        "type": "string",
+        "value": "AA:BB:CC:DD:EE:FF"
+      },
+      "tags": ["mac", "colon"]
+    },
+    {
+      "name": "extract_mac_hyphen_format",
+      "comment": "Extract MAC address in hyphen format",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4e4943204d41433a2030302d31412d32422d33432d34442d3545"
+      },
+      "operations": ["Extract MAC addresses"],
+      "expected": {
+        "type": "string",
+        "value": "00-1A-2B-3C-4D-5E"
+      },
+      "tags": ["mac", "hyphen"]
+    },
+    {
+      "name": "extract_multiple_macs",
+      "comment": "Extract multiple MAC addresses from text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4465766963652031204d41433a2031322d33342d35362d37382d39412d42432c204465766963652032204d41433a2046463a45453a44443a43433a42423a4141"
+      },
+      "operations": ["Extract MAC addresses"],
+      "expected": {
+        "type": "string",
+        "value": "12-34-56-78-9A-BC\nFF:EE:DD:CC:BB:AA"
+      },
+      "tags": ["mac", "multiple"]
+    },
+    {
+      "name": "extract_mac_lowercase",
+      "comment": "Extract MAC address with lowercase hex",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "526f757465723a2061613a62623a63633a64643a65653a6666"
+      },
+      "operations": ["Extract MAC addresses"],
+      "expected": {
+        "type": "string",
+        "value": "aa:bb:cc:dd:ee:ff"
+      },
+      "tags": ["mac", "lowercase"]
+    },
+    {
+      "name": "extract_mac_unique",
+      "comment": "Extract unique MAC addresses with duplicates removed",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4d41433a2041413a42423a43433a44443a45453a46462c204d41433a2041413a42423a43433a44443a45453a4646"
+      },
+      "operations": [
+        {
+          "op": "Extract MAC addresses",
+          "args": {
+            "Unique": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "AA:BB:CC:DD:EE:FF"
+      },
+      "tags": ["mac", "unique"]
+    },
+    {
+      "name": "extract_mac_no_match",
+      "comment": "No MAC addresses in text",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4e6f204d41432061646472657373657320686572652e"
+      },
+      "operations": ["Extract MAC addresses"],
+      "expected": {
+        "type": "string",
+        "value": ""
+      },
+      "tags": ["mac", "no_match"]
+    }
+  ]
+}

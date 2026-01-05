@@ -1,0 +1,92 @@
+{
+  "operation": "Entropy",
+  "category": "other",
+  "description": "Shannon entropy calculation tests for randomness detection",
+  "tests": [
+    {
+      "name": "entropy_low_repeated_chars",
+      "comment": "Low entropy: repeated 'a' characters should have entropy close to 0",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "61616161616161616161616161616161"
+      },
+      "operations": ["Entropy"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["entropy", "low"],
+      "skip": true,
+      "skipReason": "Entropy HTML output format needs verification - should show entropy ~0"
+    },
+    {
+      "name": "entropy_high_random_bytes",
+      "comment": "High entropy: varied bytes should have entropy close to 8",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a5c9e3f71b8d4a2e6f91c3b5d7e9f1a3"
+      },
+      "operations": ["Entropy"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["entropy", "high"],
+      "skip": true,
+      "skipReason": "Entropy HTML output format needs verification - should show high entropy"
+    },
+    {
+      "name": "entropy_english_text",
+      "comment": "Medium entropy: English text should have entropy between 3.5-5",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421205468697320697320612074657374206d6573736167652e"
+      },
+      "operations": ["Entropy"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["entropy", "text"],
+      "skip": true,
+      "skipReason": "Entropy HTML output format needs verification - should show entropy 3.5-5"
+    },
+    {
+      "name": "entropy_single_byte",
+      "comment": "Edge case: single byte has entropy 0",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "41"
+      },
+      "operations": ["Entropy"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["entropy", "edge-case"],
+      "skip": true,
+      "skipReason": "Entropy HTML output format needs verification"
+    },
+    {
+      "name": "entropy_two_different_bytes",
+      "comment": "Two different bytes alternating (entropy = 1 bit)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "abababababababab"
+      },
+      "operations": ["Entropy"],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["entropy", "medium"],
+      "skip": true,
+      "skipReason": "Entropy HTML output format needs verification - should show entropy ~1"
+    }
+  ]
+}

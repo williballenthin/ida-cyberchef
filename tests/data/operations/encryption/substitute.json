@@ -1,0 +1,136 @@
+{
+  "operation": "Substitute",
+  "category": "encryption",
+  "description": "Tests for Substitute cipher allowing custom byte-to-byte substitution",
+  "tests": [
+    {
+      "name": "basic alphabet rotation",
+      "comment": "Default substitution rotates alphabet by 3 (like Caesar cipher)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": ["Substitute"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "585a41"
+      },
+      "tags": ["basic", "rotation"]
+    },
+    {
+      "name": "custom substitution",
+      "comment": "Custom plaintext to ciphertext mapping",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48454c4c4f"
+      },
+      "operations": [
+        {
+          "op": "Substitute",
+          "args": {
+            "Plaintext": "HELO",
+            "Ciphertext": "XYZQ"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "58595a5a51"
+      },
+      "tags": ["custom"]
+    },
+    {
+      "name": "reverse alphabet",
+      "comment": "Substitute with reversed alphabet (A→Z, B→Y, etc.)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243"
+      },
+      "operations": [
+        {
+          "op": "Substitute",
+          "args": {
+            "Plaintext": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "Ciphertext": "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "5a5958"
+      },
+      "tags": ["reverse", "atbash"]
+    },
+    {
+      "name": "ignore case enabled",
+      "comment": "With ignore case, lowercase matches uppercase substitution",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "616263"
+      },
+      "operations": [
+        {
+          "op": "Substitute",
+          "args": {
+            "Plaintext": "ABC",
+            "Ciphertext": "XYZ",
+            "Ignore case": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "78797a"
+      },
+      "tags": ["ignore-case", "lowercase"]
+    },
+    {
+      "name": "empty input",
+      "comment": "Empty input should produce empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": ["Substitute"],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    },
+    {
+      "name": "no matching characters",
+      "comment": "Text with no characters in plaintext remains unchanged",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "313233"
+      },
+      "operations": [
+        {
+          "op": "Substitute",
+          "args": {
+            "Plaintext": "ABC",
+            "Ciphertext": "XYZ"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "313233"
+      },
+      "tags": ["edge-case", "no-match"]
+    }
+  ]
+}

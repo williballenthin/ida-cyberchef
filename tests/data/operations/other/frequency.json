@@ -1,0 +1,132 @@
+{
+  "operation": "Frequency distribution",
+  "category": "other",
+  "description": "Byte frequency distribution tests",
+  "tests": [
+    {
+      "name": "frequency_single_byte",
+      "comment": "Frequency distribution of repeated single byte",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414141414141"
+      },
+      "operations": [
+        {
+          "op": "Frequency distribution",
+          "args": {
+            "Show 0%s": true,
+            "Show ASCII": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["frequency", "single"],
+      "skip": true,
+      "skipReason": "Frequency distribution HTML output format needs verification"
+    },
+    {
+      "name": "frequency_mixed_bytes",
+      "comment": "Frequency distribution of mixed bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c64"
+      },
+      "operations": [
+        {
+          "op": "Frequency distribution",
+          "args": {
+            "Show 0%s": true,
+            "Show ASCII": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["frequency", "mixed"],
+      "skip": true,
+      "skipReason": "Frequency distribution HTML output format needs verification"
+    },
+    {
+      "name": "frequency_hide_zeros",
+      "comment": "Frequency distribution without showing 0% values",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "414243444546"
+      },
+      "operations": [
+        {
+          "op": "Frequency distribution",
+          "args": {
+            "Show 0%s": false,
+            "Show ASCII": true
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["frequency", "hide-zeros"],
+      "skip": true,
+      "skipReason": "Frequency distribution HTML output format needs verification"
+    },
+    {
+      "name": "frequency_no_ascii",
+      "comment": "Frequency distribution without ASCII display",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Frequency distribution",
+          "args": {
+            "Show 0%s": true,
+            "Show ASCII": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["frequency", "no-ascii"],
+      "skip": true,
+      "skipReason": "Frequency distribution HTML output format needs verification"
+    },
+    {
+      "name": "frequency_uniform_bytes",
+      "comment": "Frequency distribution of uniform byte distribution",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "000102030405060708090a0b0c0d0e0f"
+      },
+      "operations": [
+        {
+          "op": "Frequency distribution",
+          "args": {
+            "Show 0%s": false,
+            "Show ASCII": false
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "placeholder"
+      },
+      "tags": ["frequency", "uniform"],
+      "skip": true,
+      "skipReason": "Frequency distribution HTML output format needs verification"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "operation": "Generic Code Beautify",
+  "category": "code_tidy",
+  "description": "Tests for Generic Code Beautify operation - formatting C-style languages",
+  "tests": [
+    {
+      "name": "beautify_simple_c_function",
+      "comment": "Beautify simple C function",
+      "input": {
+        "type": "string",
+        "value": "int add(int a,int b){return a+b;}"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "int add(int a, int b) {\n    return a + b;\n}"
+      },
+      "tags": [
+        "beautify",
+        "c",
+        "function",
+        "simple"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_java_class",
+      "comment": "Beautify Java class with method",
+      "input": {
+        "type": "string",
+        "value": "public class Test{public int getValue(){return 42;}}"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "public class Test {\n    public int getValue() {\n        return 42;\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "java",
+        "class"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_cpp_function",
+      "comment": "Beautify C++ function with namespace",
+      "input": {
+        "type": "string",
+        "value": "namespace math{int multiply(int x,int y){return x*y;}}"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "namespace math {\n    int multiply(int x, int y) {\n        return x * y;\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "cpp",
+        "namespace"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_php_function",
+      "comment": "Beautify PHP function",
+      "input": {
+        "type": "string",
+        "value": "<?php function greet($name){return \"Hello, \".$name;} ?>"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "<?php\nfunction greet($name) {\n    return \"Hello, \" . $name;\n}\n?>"
+      },
+      "tags": [
+        "beautify",
+        "php",
+        "function"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_if_statement",
+      "comment": "Beautify if-else statement",
+      "input": {
+        "type": "string",
+        "value": "if(x>0){result=1;}else{result=-1;}"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "if (x > 0) {\n    result = 1;\n} else {\n    result = -1;\n}"
+      },
+      "tags": [
+        "beautify",
+        "conditional",
+        "if_else"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    },
+    {
+      "name": "beautify_nested_blocks",
+      "comment": "Beautify nested code blocks",
+      "input": {
+        "type": "string",
+        "value": "void process(){if(valid){for(int i=0;i<10;i++){data[i]=i*2;}}}"
+      },
+      "operations": [
+        "Generic Code Beautify"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "void process() {\n    if (valid) {\n        for (int i = 0; i < 10; i++) {\n            data[i] = i * 2;\n        }\n    }\n}"
+      },
+      "tags": [
+        "beautify",
+        "nested",
+        "loops"
+      ],
+      "skip": true,
+      "skipReason": "CyberChef string input handling broken - needs verification"
+    }
+  ]
+}

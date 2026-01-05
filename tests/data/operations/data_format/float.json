@@ -1,0 +1,145 @@
+{
+  "operation": "To Float",
+  "category": "data_format",
+  "description": "Tests for IEEE 754 floating point conversion operations",
+  "tests": [
+    {
+      "name": "to_float_single_precision",
+      "comment": "Convert 4 bytes to IEEE 754 single precision float (3.14159)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4049 0fda"
+      },
+      "operations": [
+        {
+          "op": "To Float",
+          "args": ["Big Endian", "Float (4 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3.1415898799896240234375"
+      }
+    },
+    {
+      "name": "from_float_single_precision",
+      "comment": "Convert IEEE 754 single precision float 3.14159 to bytes",
+      "input": {
+        "type": "string",
+        "value": "3.14159"
+      },
+      "operations": [
+        {
+          "op": "From Float",
+          "args": ["Big Endian", "Float (4 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "40490fda"
+      }
+    },
+    {
+      "name": "to_float_little_endian",
+      "comment": "Convert 4 bytes to float with little endian byte order",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0000803f"
+      },
+      "operations": [
+        {
+          "op": "To Float",
+          "args": ["Little Endian", "Float (4 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1"
+      }
+    },
+    {
+      "name": "from_float_little_endian",
+      "comment": "Convert float 1.0 to bytes with little endian byte order",
+      "input": {
+        "type": "string",
+        "value": "1.0"
+      },
+      "operations": [
+        {
+          "op": "From Float",
+          "args": ["Little Endian", "Float (4 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0000803f"
+      }
+    },
+    {
+      "name": "to_float_double_precision",
+      "comment": "Convert 8 bytes to IEEE 754 double precision float",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "400921fb54442d18"
+      },
+      "operations": [
+        {
+          "op": "To Float",
+          "args": ["Big Endian", "Double (8 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3.141592653589793"
+      }
+    },
+    {
+      "name": "from_float_double_precision",
+      "comment": "Convert double precision float to 8 bytes",
+      "input": {
+        "type": "string",
+        "value": "3.141592653589793"
+      },
+      "operations": [
+        {
+          "op": "From Float",
+          "args": ["Big Endian", "Double (8 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "400921fb54442d18"
+      }
+    },
+    {
+      "name": "roundtrip_float",
+      "comment": "Verify round-trip conversion: bytes -> float -> bytes",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "42c80000"
+      },
+      "operations": [
+        {
+          "op": "To Float",
+          "args": ["Big Endian", "Float (4 bytes)", "Space"]
+        },
+        {
+          "op": "From Float",
+          "args": ["Big Endian", "Float (4 bytes)", "Space"]
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "42c80000"
+      }
+    }
+  ]
+}

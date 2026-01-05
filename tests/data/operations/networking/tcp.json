@@ -1,0 +1,127 @@
+{
+  "operation": "Parse TCP",
+  "category": "networking",
+  "description": "Parse TCP header tests for various TCP flags and configurations",
+  "tests": [
+    {
+      "name": "parse_tcp_syn",
+      "comment": "Parse TCP header with SYN flag (connection initiation)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00501F90000000010000000050022000000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SYN"
+      },
+      "tags": [
+        "tcp",
+        "syn"
+      ]
+    },
+    {
+      "name": "parse_tcp_ack",
+      "comment": "Parse TCP header with ACK flag",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00501F900000000100000001501000002000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ACK"
+      },
+      "tags": [
+        "tcp",
+        "ack"
+      ]
+    },
+    {
+      "name": "parse_tcp_syn_ack",
+      "comment": "Parse TCP header with SYN and ACK flags (connection acceptance)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "1F90005000000001000000015012200000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "SYN"
+      },
+      "tags": [
+        "tcp",
+        "syn_ack"
+      ]
+    },
+    {
+      "name": "parse_tcp_fin",
+      "comment": "Parse TCP header with FIN flag (connection termination)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00501F900000000100000001501100002000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "FIN"
+      },
+      "tags": [
+        "tcp",
+        "fin"
+      ]
+    },
+    {
+      "name": "parse_tcp_rst",
+      "comment": "Parse TCP header with RST flag (connection reset)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00501F900000000100000000500420000000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "RST"
+      },
+      "tags": [
+        "tcp",
+        "rst"
+      ]
+    },
+    {
+      "name": "parse_tcp_psh_ack",
+      "comment": "Parse TCP header with PSH and ACK flags (data transfer)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "00501F900000000100000001501820000000000000"
+      },
+      "operations": [
+        "Parse TCP"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "PSH"
+      },
+      "tags": [
+        "tcp",
+        "psh_ack"
+      ]
+    }
+  ]
+}

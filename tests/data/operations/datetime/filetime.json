@@ -1,0 +1,138 @@
+{
+  "operation": "Windows Filetime",
+  "category": "datetime",
+  "description": "Convert between Windows Filetime and UNIX timestamps",
+  "tests": [
+    {
+      "name": "unix_to_filetime_epoch",
+      "comment": "Convert Unix epoch (0) to Windows Filetime",
+      "input": {
+        "type": "string",
+        "value": "0"
+      },
+      "operations": [
+        {
+          "op": "UNIX Timestamp to Windows Filetime",
+          "args": [
+            "Seconds (s)",
+            "Decimal"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "116444736000000000"
+      },
+      "tags": [
+        "datetime",
+        "filetime",
+        "epoch"
+      ]
+    },
+    {
+      "name": "unix_to_filetime_y2k",
+      "comment": "Convert Y2K timestamp to Windows Filetime",
+      "input": {
+        "type": "string",
+        "value": "946684800"
+      },
+      "operations": [
+        {
+          "op": "UNIX Timestamp to Windows Filetime",
+          "args": [
+            "Seconds (s)",
+            "Decimal"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "125911584000000000"
+      },
+      "tags": [
+        "datetime",
+        "filetime",
+        "y2k"
+      ]
+    },
+    {
+      "name": "filetime_to_unix_epoch",
+      "comment": "Convert Windows Filetime for epoch back to Unix timestamp",
+      "input": {
+        "type": "string",
+        "value": "116444736000000000"
+      },
+      "operations": [
+        {
+          "op": "Windows Filetime to UNIX Timestamp",
+          "args": [
+            "Seconds (s)",
+            "Decimal"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "datetime",
+        "filetime",
+        "epoch"
+      ]
+    },
+    {
+      "name": "filetime_to_unix_y2k",
+      "comment": "Convert Windows Filetime for Y2K back to Unix timestamp",
+      "input": {
+        "type": "string",
+        "value": "125911584000000000"
+      },
+      "operations": [
+        {
+          "op": "Windows Filetime to UNIX Timestamp",
+          "args": [
+            "Seconds (s)",
+            "Decimal"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "946684800"
+      },
+      "tags": [
+        "datetime",
+        "filetime",
+        "y2k"
+      ]
+    },
+    {
+      "name": "unix_to_filetime_hex_le",
+      "comment": "Convert Unix timestamp to Windows Filetime in little-endian hex",
+      "input": {
+        "type": "string",
+        "value": "0"
+      },
+      "operations": [
+        {
+          "op": "UNIX Timestamp to Windows Filetime",
+          "args": [
+            "Seconds (s)",
+            "Hex (little endian)"
+          ]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "019db1ded53e8000"
+      },
+      "tags": [
+        "datetime",
+        "filetime",
+        "hex",
+        "epoch"
+      ]
+    }
+  ]
+}

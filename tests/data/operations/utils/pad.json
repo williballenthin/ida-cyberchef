@@ -1,0 +1,55 @@
+{
+  "operation": "Pad lines",
+  "category": "utils",
+  "description": "Add padding characters to the beginning or end of each line",
+  "tests": [
+    {
+      "name": "pad_start_spaces",
+      "comment": "Pad lines at start with spaces",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e6532"},
+      "operations": [{"op": "Pad lines", "args": ["Start", 5, " "]}],
+      "expected": {"type": "string", "value": "     line1\n     line2"},
+      "tags": ["pad", "start", "spaces"]
+    },
+    {
+      "name": "pad_end_spaces",
+      "comment": "Pad lines at end with spaces",
+      "input": {"type": "bytes", "encoding": "hex", "value": "6c696e65310a6c696e6532"},
+      "operations": [{"op": "Pad lines", "args": ["End", 5, " "]}],
+      "expected": {"type": "string", "value": "line1     \nline2     "},
+      "tags": ["pad", "end", "spaces"]
+    },
+    {
+      "name": "pad_start_zeros",
+      "comment": "Pad lines at start with zeros",
+      "input": {"type": "bytes", "encoding": "hex", "value": "313233\n343536"},
+      "operations": [{"op": "Pad lines", "args": ["Start", 3, "0"]}],
+      "expected": {"type": "string", "value": "000123\n000456"},
+      "tags": ["pad", "start", "zeros"]
+    },
+    {
+      "name": "pad_single_line",
+      "comment": "Pad single line",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74657374"},
+      "operations": [{"op": "Pad lines", "args": ["Start", 4, "-"]}],
+      "expected": {"type": "string", "value": "----test"},
+      "tags": ["pad", "single_line"]
+    },
+    {
+      "name": "pad_empty_input",
+      "comment": "Pad empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": [{"op": "Pad lines", "args": ["Start", 5, " "]}],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["pad", "edge_case"]
+    },
+    {
+      "name": "pad_special_character",
+      "comment": "Pad with special character",
+      "input": {"type": "bytes", "encoding": "hex", "value": "746578740a6d6f7265"},
+      "operations": [{"op": "Pad lines", "args": ["End", 3, "*"]}],
+      "expected": {"type": "string", "value": "text***\nmore***"},
+      "tags": ["pad", "special_char"]
+    }
+  ]
+}

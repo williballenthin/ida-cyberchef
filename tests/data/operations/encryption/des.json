@@ -1,0 +1,215 @@
+{
+  "operation": "DES",
+  "category": "encryption",
+  "description": "Tests for DES encryption and decryption with various modes and test vectors",
+  "tests": [
+    {
+      "name": "des_encrypt_cbc_basic",
+      "comment": "DES-CBC encryption with 8-byte key and IV",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "0123456789abcdef"
+      },
+      "operations": [
+        {
+          "op": "DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "133457799bbcdff1"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "8587d8d83de8e333"
+      },
+      "tags": ["encryption", "cbc", "des"]
+    },
+    {
+      "name": "des_decrypt_cbc_basic",
+      "comment": "DES-CBC decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "8587d8d83de8e333"
+      },
+      "operations": [
+        {
+          "op": "DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "133457799bbcdff1"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0102030405060708"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0123456789abcdef"
+      },
+      "tags": ["decryption", "cbc", "des"]
+    },
+    {
+      "name": "des_encrypt_ecb_mode",
+      "comment": "DES-ECB encryption (no IV used)",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "operations": [
+        {
+          "op": "DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "a8264bf06ad9d22fd5ff4b6f643f8121"
+      },
+      "tags": ["encryption", "ecb", "des"]
+    },
+    {
+      "name": "des_decrypt_ecb_mode",
+      "comment": "DES-ECB decryption matching encrypt test",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "a8264bf06ad9d22fd5ff4b6f643f8121"
+      },
+      "operations": [
+        {
+          "op": "DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0123456789abcdef"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "ECB",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "54686520717569636b2062726f776e20"
+      },
+      "tags": ["decryption", "ecb", "des"]
+    },
+    {
+      "name": "des_encrypt_ctr_mode",
+      "comment": "DES-CTR encryption with counter mode",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f20576f726c6421"
+      },
+      "operations": [
+        {
+          "op": "DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "Hex",
+              "string": "0e329232ea6d0d73"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000001"
+            },
+            "Mode": "CTR",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "eed0c8a7e3e5e47c4e3d"
+      },
+      "tags": ["encryption", "ctr", "des"]
+    },
+    {
+      "name": "des_roundtrip_utf8_key",
+      "comment": "DES encrypt then decrypt with UTF8 key to verify roundtrip",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "deadbeefcafebabe"
+      },
+      "operations": [
+        {
+          "op": "DES Encrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "password"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "CBC",
+            "Input": "Raw",
+            "Output": "Hex"
+          }
+        },
+        {
+          "op": "DES Decrypt",
+          "args": {
+            "Key": {
+              "option": "UTF8",
+              "string": "password"
+            },
+            "IV": {
+              "option": "Hex",
+              "string": "0000000000000000"
+            },
+            "Mode": "CBC",
+            "Input": "Hex",
+            "Output": "Hex"
+          }
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "deadbeefcafebabe"
+      },
+      "tags": ["roundtrip", "cbc", "des", "utf8-key"]
+    }
+  ]
+}

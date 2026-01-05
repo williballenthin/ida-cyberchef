@@ -1,0 +1,99 @@
+{
+  "operation": "Luhn Checksum",
+  "category": "hashing",
+  "description": "Luhn Checksum algorithm tests using standard test vectors (credit card validation)",
+  "tests": [
+    {
+      "name": "luhn_valid_visa",
+      "comment": "Valid Visa card number (test number) with correct Luhn checksum",
+      "input": {
+        "type": "string",
+        "value": "4532015112830366"
+      },
+      "operations": [
+        "Luhn Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6"
+      },
+      "tags": [
+        "valid",
+        "credit-card"
+      ]
+    },
+    {
+      "name": "luhn_mastercard",
+      "comment": "Valid MasterCard number (test number) with correct Luhn checksum",
+      "input": {
+        "type": "string",
+        "value": "5425233430109903"
+      },
+      "operations": [
+        "Luhn Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3"
+      },
+      "tags": [
+        "valid",
+        "credit-card"
+      ]
+    },
+    {
+      "name": "luhn_simple",
+      "comment": "Simple number 79927398713 - classic Luhn test vector",
+      "input": {
+        "type": "string",
+        "value": "79927398713"
+      },
+      "operations": [
+        "Luhn Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "3"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "luhn_short_number",
+      "comment": "Short number 123456 Luhn checksum calculation",
+      "input": {
+        "type": "string",
+        "value": "123456"
+      },
+      "operations": [
+        "Luhn Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "6"
+      },
+      "tags": [
+        "standard-vector"
+      ]
+    },
+    {
+      "name": "luhn_zeros",
+      "comment": "All zeros - edge case for Luhn checksum",
+      "input": {
+        "type": "string",
+        "value": "0000000000000000"
+      },
+      "operations": [
+        "Luhn Checksum"
+      ],
+      "expected": {
+        "type": "string",
+        "value": "0"
+      },
+      "tags": [
+        "edge-case"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "operation": "Convert Leet Speak",
+  "category": "language",
+  "description": "Tests for Convert Leet Speak operation with bidirectional conversions",
+  "tests": [
+    {
+      "name": "to_leet_basic",
+      "comment": "Convert basic text to leet speak: LEET → 1337",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c454554"
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "To Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "31333337"
+      },
+      "tags": ["to-leet", "basic"]
+    },
+    {
+      "name": "from_leet_basic",
+      "comment": "Convert leet speak back to text: 1337 → LEET",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "31333337"
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "From Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4c454554"
+      },
+      "tags": ["from-leet", "basic"]
+    },
+    {
+      "name": "to_leet_test",
+      "comment": "Convert TEST to 7357 in leet speak",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "54455354"
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "To Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "37333537"
+      },
+      "tags": ["to-leet"]
+    },
+    {
+      "name": "to_leet_mixed_case",
+      "comment": "Convert mixed case text: Hello → H3110",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "48656c6c6f"
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "To Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "4833313130"
+      },
+      "tags": ["to-leet", "mixed-case"]
+    },
+    {
+      "name": "to_leet_with_spaces",
+      "comment": "Convert text with spaces preserving them: EAT BEEF → 347 833F",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "454154204245454620"
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "To Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": "333437203833334620"
+      },
+      "tags": ["to-leet", "special-chars", "spaces"]
+    },
+    {
+      "name": "empty_input",
+      "comment": "Empty input should return empty output",
+      "input": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "operations": [
+        {
+          "op": "Convert Leet Speak",
+          "args": {
+            "Direction": "To Leet Speak"
+          }
+        }
+      ],
+      "expected": {
+        "type": "bytes",
+        "encoding": "hex",
+        "value": ""
+      },
+      "tags": ["edge-case", "empty-input"]
+    }
+  ]
+}

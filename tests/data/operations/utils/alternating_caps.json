@@ -1,0 +1,55 @@
+{
+  "operation": "Alternating Caps",
+  "category": "utils",
+  "description": "Convert text to alternating caps (spongecase)",
+  "tests": [
+    {
+      "name": "alternating_caps_basic",
+      "comment": "Convert text to alternating caps",
+      "input": {"type": "bytes", "encoding": "hex", "value": "68656c6c6f20776f726c64"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "hElLo WoRlD"},
+      "tags": ["case", "alternating"]
+    },
+    {
+      "name": "alternating_caps_lowercase",
+      "comment": "Alternating caps on lowercase text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "74686973206973206120746573742074657874"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "tHiS Is a tEsT TeXt"},
+      "tags": ["case", "alternating", "lowercase"]
+    },
+    {
+      "name": "alternating_caps_uppercase",
+      "comment": "Alternating caps on uppercase text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48454c4c4f"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "hElLo"},
+      "tags": ["case", "alternating", "uppercase"]
+    },
+    {
+      "name": "alternating_caps_mixed",
+      "comment": "Alternating caps on mixed case text",
+      "input": {"type": "bytes", "encoding": "hex", "value": "48656c4c6f20576f524c64"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "hElLo WoRlD"},
+      "tags": ["case", "alternating", "mixed"]
+    },
+    {
+      "name": "alternating_caps_numbers",
+      "comment": "Alternating caps with numbers and symbols",
+      "input": {"type": "bytes", "encoding": "hex", "value": "616263313233"},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": "aBc123"},
+      "tags": ["case", "alternating", "numbers"]
+    },
+    {
+      "name": "alternating_caps_empty",
+      "comment": "Alternating caps on empty input",
+      "input": {"type": "bytes", "encoding": "hex", "value": ""},
+      "operations": ["Alternating Caps"],
+      "expected": {"type": "string", "value": ""},
+      "tags": ["case", "alternating", "edge_case"]
+    }
+  ]
+}

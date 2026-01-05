@@ -1,0 +1,121 @@
+{
+  "operation": "To Base / From Base",
+  "category": "data_format",
+  "description": "Arbitrary base conversion tests for decimal numbers",
+  "tests": [
+    {
+      "name": "to_base_binary",
+      "comment": "Convert decimal 42 to binary (base 2)",
+      "input": {
+        "type": "string",
+        "value": "42"
+      },
+      "operations": [
+        {
+          "op": "To Base",
+          "args": [2]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "101010"
+      },
+      "tags": ["binary", "encode"]
+    },
+    {
+      "name": "from_base_binary",
+      "comment": "Convert binary 101010 to decimal",
+      "input": {
+        "type": "string",
+        "value": "101010"
+      },
+      "operations": [
+        {
+          "op": "From Base",
+          "args": [2]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "42"
+      },
+      "tags": ["binary", "decode"]
+    },
+    {
+      "name": "to_base_36",
+      "comment": "Convert decimal 1234567890 to base 36",
+      "input": {
+        "type": "string",
+        "value": "1234567890"
+      },
+      "operations": [
+        {
+          "op": "To Base",
+          "args": [36]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "kf12oi"
+      },
+      "tags": ["base36", "encode"]
+    },
+    {
+      "name": "from_base_36",
+      "comment": "Convert base 36 'kf12oi' to decimal",
+      "input": {
+        "type": "string",
+        "value": "kf12oi"
+      },
+      "operations": [
+        {
+          "op": "From Base",
+          "args": [36]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "1234567890"
+      },
+      "tags": ["base36", "decode"]
+    },
+    {
+      "name": "to_base_16",
+      "comment": "Convert decimal 255 to hexadecimal (base 16)",
+      "input": {
+        "type": "string",
+        "value": "255"
+      },
+      "operations": [
+        {
+          "op": "To Base",
+          "args": [16]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "ff"
+      },
+      "tags": ["hex", "encode"]
+    },
+    {
+      "name": "from_base_16",
+      "comment": "Convert hexadecimal 'ff' to decimal",
+      "input": {
+        "type": "string",
+        "value": "ff"
+      },
+      "operations": [
+        {
+          "op": "From Base",
+          "args": [16]
+        }
+      ],
+      "expected": {
+        "type": "string",
+        "value": "255"
+      },
+      "tags": ["hex", "decode"]
+    }
+  ]
+}
